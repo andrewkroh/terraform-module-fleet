@@ -1,0 +1,368 @@
+// Licensed to Elasticsearch B.V. under one or more contributor
+// license agreements. See the NOTICE file distributed with
+// this work for additional information regarding copyright
+// ownership. Elasticsearch B.V. licenses this file to you under
+// the Apache License, Version 2.0 (the "License"); you may
+// not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
+package module
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"path/filepath"
+	"sort"
+	"strings"
+	"text/template"
+
+	"golang.org/x/exp/maps"
+
+	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/fleetpkg"
+	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/terraform"
+)
+
+type Terraform struct {
+	Name string
+	File *terraform.File
+}
+
+// Generate generates a Terraform module.
+func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inputName string) (*Terraform, error) {
+	// Read in the package metadata.
+	pkg, err := fleetpkg.Load(filepath.Join(packagesDir, packageName))
+	if err != nil {
+		return nil, err
+	}
+
+	var (
+		manifest            = pkg.Manifest
+		policyTemplate      *fleetpkg.PolicyTemplate
+		policyTemplateInput *fleetpkg.Input
+		dataStream          *fleetpkg.DataStream
+		stream              *fleetpkg.Stream
+	)
+
+	// Policy template.
+	{
+		if policyTemplateName == "" {
+			policyTemplate = &pkg.Manifest.PolicyTemplates[0]
+			policyTemplateName = policyTemplate.Name
+		} else {
+			for i, pt := range pkg.Manifest.PolicyTemplates {
+				if pt.Name == policyTemplateName {
+					policyTemplate = &pkg.Manifest.PolicyTemplates[i]
+					break
+				}
+			}
+			if policyTemplate == nil {
+				return nil, fmt.Errorf("policy template %q not found", policyTemplateName)
+			}
+		}
+
+		for i, input := range policyTemplate.Inputs {
+			if input.Type == inputName {
+				policyTemplateInput = &policyTemplate.Inputs[i]
+				break
+			}
+		}
+		if policyTemplateInput == nil {
+			return nil, fmt.Errorf("input %q was not found within policy template %q", inputName, policyTemplateName)
+		}
+	}
+	// Data stream.
+	{
+		ds, found := pkg.DataStreams[dataStreamName]
+		if !found {
+			return nil, fmt.Errorf("data stream %q was not found in the package", dataStreamName)
+		}
+		dataStream = &ds
+	}
+	// Input type.
+	{
+		for i, s := range dataStream.Manifest.Streams {
+			if s.Input == inputName {
+				stream = &dataStream.Manifest.Streams[i]
+				break
+			}
+		}
+		if stream == nil {
+			return nil, fmt.Errorf("input type %q was not found in data stream %q", inputName, dataStreamName)
+		}
+	}
+
+	tfVariables := map[string]terraform.Variable{
+		"fleet_agent_policy_id": {
+			Type:        "string",
+			Description: "Agent policy ID to add the package policy to.",
+		},
+		"fleet_data_stream_namespace": {
+			Type:        "string",
+			Description: "Namespace to use for the data stream.",
+			Default:     &terraform.NullableValue{Value: "default"},
+		},
+		"fleet_package_version": {
+			Type:        "string",
+			Description: "Version of the " + pkg.Manifest.Name + " package to use.",
+			Default:     &terraform.NullableValue{Value: pkg.Manifest.Version},
+		},
+	}
+
+	// Iterate over all variables in the package and create Terraform variables.
+	packageLevelVarAssociations, err := addVariables(pkg.Manifest.Vars, tfVariables)
+	if err != nil {
+		return nil, err
+	}
+	policyTemplateLevelVarAssociations, err := addVariables(policyTemplate.Vars, tfVariables)
+	if err != nil {
+		return nil, err
+	}
+	inputLevelVarAssociations, err := addVariables(policyTemplateInput.Vars, tfVariables)
+	if err != nil {
+		return nil, err
+	}
+	dataStreamVarAssociations, err := addVariables(stream.Vars, tfVariables)
+	if err != nil {
+		return nil, err
+	}
+
+	packageLevelVarExpression, err := buildVariableExpression(packageLevelVarAssociations)
+	if err != nil {
+		return nil, err
+	}
+	inputLevelVarExpression, err := buildVariableExpression(inputLevelVarAssociations)
+	if err != nil {
+		return nil, err
+	}
+	// Empirically it appears that input package policy template variables are treated
+	// the same as data stream variables.
+	dataStreamVarExpression, err := buildVariableExpression(dataStreamVarAssociations, policyTemplateLevelVarAssociations)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get a list of data streams so that we can disable all the ones not being
+	// used. This avoids validation errors for required variables.
+	allDataStreams := maps.Keys(pkg.DataStreams)
+	if len(policyTemplate.DataStreams) > 0 {
+		allDataStreams = policyTemplate.DataStreams
+	}
+	sort.Strings(allDataStreams)
+
+	tf := &terraform.File{
+		Comment:   "Generated by fleet-terraform-generator - DO NOT EDIT",
+		Variables: tfVariables,
+		Modules: map[string]terraform.Module{
+			"fleet_package_policy": {
+				Source: "../../fleet_package_policy",
+				Params: toMap(FleetPackagePolicyModule{
+					AgentPolicyID:           "${var.fleet_agent_policy_id}",
+					PackagePolicyName:       manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}",
+					PackageName:             manifest.Name,
+					PackageVersion:          "${var.fleet_package_version}",
+					Namespace:               "${var.fleet_data_stream_namespace}",
+					PolicyTemplate:          policyTemplate.Name,
+					DataStream:              dataStreamName,
+					InputType:               stream.Input,
+					PackageVariablesJSON:    packageLevelVarExpression,
+					InputVariablesJSON:      inputLevelVarExpression,
+					DataStreamVariablesJSON: dataStreamVarExpression,
+					AllDataStreams:          allDataStreams,
+				}),
+			},
+		},
+		Outputs: map[string]terraform.Output{
+			"id": {
+				Description: "Package policy ID",
+				Value:       "${module.fleet_package_policy.id}",
+			},
+		},
+	}
+
+	return &Terraform{
+		Name: moduleName(packageName, policyTemplateName, dataStreamName, inputName),
+		File: tf,
+	}, nil
+}
+
+func addVariables(vars []fleetpkg.Var, m map[string]terraform.Variable) (associations map[string]string, err error) {
+	associations = make(map[string]string, len(vars))
+	for _, v := range vars {
+		tfName, err := addVariable(v, m)
+		if err != nil {
+			return nil, err
+		}
+		associations[v.Name] = tfName
+	}
+
+	return associations, nil
+}
+
+func addVariable(v fleetpkg.Var, m map[string]terraform.Variable) (tfName string, err error) {
+	tfVar := terraform.Variable{
+		Description: v.Description,
+	}
+
+	if tfVar.Type, err = dataType(v); err != nil {
+		return "", err
+	}
+	if tfVar.Type == "string" && isSensitive(v) {
+		tfVar.Sensitive = terraform.Ptr(true)
+	}
+	if v.Required {
+		tfVar.Nullable = terraform.Ptr(false)
+	}
+	if v.Default != nil {
+		// Pass the default to Terraform.
+		tfVar.Default = &terraform.NullableValue{Value: v.Default}
+	} else if !v.Required {
+		tfVar.Default = &terraform.NullableValue{}
+	}
+
+	// Append yaml suffix to indicate to users that they must yamlencode() the value.
+	name := v.Name
+	if v.Type == "yaml" {
+		name += "_yaml"
+	}
+
+	// Don't allow variables shadowing. If Fleet allows it then this may need changed.
+	if existing, found := m[name]; found {
+		return "", fmt.Errorf("duplicate variable found [%#v, %#v]", existing, tfVar)
+	}
+	m[name] = tfVar
+	return name, nil
+}
+
+func isSensitive(v fleetpkg.Var) bool {
+	name := strings.ToLower(v.Name)
+	switch {
+	case v.Type == "password",
+		strings.Contains(name, "token") && !strings.Contains(name, "file"),
+		strings.Contains(name, "api_key"),
+		strings.Contains(name, "secret"):
+		return true
+	default:
+		return false
+	}
+}
+
+func dataType(v fleetpkg.Var) (string, error) {
+	var tfType string
+	switch v.Type {
+	case "bool":
+		tfType = "bool"
+	case "integer":
+		tfType = "number"
+	case "password", "email", "select", "text", "textarea", "time_zone", "url", "yaml":
+		tfType = "string"
+	default:
+		// package-spec controls the allow types.
+		return "", fmt.Errorf("unknown fleet variable type %q", v.Type)
+	}
+
+	if v.Multi {
+		tfType = "list(" + tfType + ")"
+	}
+	return tfType, nil
+}
+
+type FleetPackagePolicyModule struct {
+	AgentPolicyID           string   `json:"agent_policy_id"`
+	PackagePolicyName       string   `json:"package_policy_name,omitempty"`
+	PackageName             string   `json:"package_name"`
+	PackageVersion          string   `json:"package_version"`
+	Namespace               string   `json:"namespace"`
+	PolicyTemplate          string   `json:"policy_template"`
+	DataStream              string   `json:"data_stream"`
+	InputType               string   `json:"input_type"`
+	PackageVariablesJSON    string   `json:"package_variables_json,omitempty"`
+	InputVariablesJSON      string   `json:"input_variables_json,omitempty"`
+	DataStreamVariablesJSON string   `json:"data_stream_variables_json,omitempty"`
+	AllDataStreams          []string `json:"all_data_streams"`
+}
+
+func toMap(v any) map[string]any {
+	buf := new(bytes.Buffer)
+
+	enc := json.NewEncoder(buf)
+	enc.SetEscapeHTML(false)
+	if err := enc.Encode(v); err != nil {
+		panic(err)
+	}
+
+	var m map[string]any
+	dec := json.NewDecoder(buf)
+	dec.UseNumber()
+	if err := dec.Decode(&m); err != nil {
+		panic(err)
+	}
+
+	return m
+}
+
+var variableExpressionTemplate = template.Must(template.New("jsonencode").
+	Option("missingkey=error").
+	Parse(`${jsonencode({
+{{- range $fleetVar, $tfVar := . }}
+  {{ $fleetVar }} = var.{{ $tfVar }}
+{{- end }}
+})}`))
+
+func buildVariableExpression(associations ...map[string]string) (string, error) {
+	allAssociations := joinMaps(associations...)
+
+	if len(allAssociations) == 0 {
+		return "", nil
+	}
+
+	buf := new(bytes.Buffer)
+	if err := variableExpressionTemplate.Execute(buf, allAssociations); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
+}
+
+func joinMaps(maps ...map[string]string) map[string]string {
+	if len(maps) == 0 {
+		return nil
+	}
+	if len(maps) == 1 {
+		return maps[0]
+	}
+
+	out := map[string]string{}
+	for _, m := range maps {
+		for k, v := range m {
+			if _, found := out[k]; found {
+				panic("Multiple definitions for variable " + k)
+			}
+			out[k] = v
+		}
+	}
+
+	return out
+}
+
+func moduleName(integration, policyTemplate, dataStream, input string) string {
+	name := []string{integration}
+	// Most policy templates are named the same as their integrations so
+	// remove that to keep names shorter.
+	if integration != policyTemplate {
+		name = append(name, policyTemplate)
+	}
+	if policyTemplate != dataStream {
+		name = append(name, dataStream)
+	}
+	name = append(name, strings.ReplaceAll(input, "/", "_"))
+	return strings.Join(name, "_")
+}
