@@ -38,7 +38,7 @@ type Variable struct {
 	Validation  *Validation    `json:"validation,omitempty"`
 }
 
-// NullableValue is type that can be used in conjunction with encoding/json omitempty
+// NullableValue is type that can be used in conjunction with encoding/json 'omitempty'
 // to obtain the ability to represent a field as non-present, null, or non-null.
 type NullableValue struct {
 	Value any
@@ -47,8 +47,6 @@ type NullableValue struct {
 func (v *NullableValue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.Value)
 }
-
-// Need a type that can render as JSON null,
 
 type Validation struct {
 	Condition    string `json:"condition"`

@@ -21,13 +21,20 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 
 	"gopkg.in/yaml.v3"
 )
 
+type FileMetadata struct {
+	File   string `json:"-"` // File from which field was read.
+	Line   int    `json:"-"` // Line from which field was read.
+	Column int    `json:"-"` // Column from which field was read.
+}
+
 type Integration struct {
-	Manifest    Manifest              `json:"manifest"`
-	DataStreams map[string]DataStream `json:"data_streams"`
+	Manifest    Manifest               `json:"manifest"`
+	DataStreams map[string]*DataStream `json:"data_streams"`
 }
 
 type DataStream struct {
@@ -93,6 +100,21 @@ type Var struct {
 	Required    bool     `json:"required"`
 	ShowUser    bool     `json:"show_user" yaml:"show_user"`
 	Options     []Option `json:"options"` // List of options for 'type: select'.
+
+	Meta FileMetadata `json:"-"`
+}
+
+func (f *Var) UnmarshalYAML(value *yaml.Node) error {
+	// Prevent recursion by creating a new type that does not implement Unmarshaler.
+	type notVar Var
+	x := (*notVar)(f)
+
+	if err := value.Decode(&x); err != nil {
+		return err
+	}
+	f.Meta.Line = value.Line
+	f.Meta.Column = value.Column
+	return nil
 }
 
 type Option struct {
@@ -158,7 +180,7 @@ func Load(path string) (*Integration, error) {
 
 	integration := &Integration{
 		Manifest:    manifest,
-		DataStreams: map[string]DataStream{},
+		DataStreams: map[string]*DataStream{},
 	}
 
 	dataStreams, err := filepath.Glob(filepath.Join(path, "data_stream/*/manifest.yml"))
@@ -170,7 +192,7 @@ func Load(path string) (*Integration, error) {
 		if err := readYAML(f, &dataStreamManifest, true); err != nil {
 			return nil, err
 		}
-		integration.DataStreams[filepath.Base(filepath.Dir(f))] = DataStream{
+		integration.DataStreams[filepath.Base(filepath.Dir(f))] = &DataStream{
 			Manifest: dataStreamManifest,
 		}
 	}
@@ -191,5 +213,45 @@ func readYAML(path string, v any, strict bool) error {
 	if err := dec.Decode(v); err != nil {
 		return fmt.Errorf("failed reading %s: %w", path, err)
 	}
+	annotateFileMetadata(path, v)
 	return nil
+}
+
+// annotateFileMetadata sets the file name on any types that contains FileMetadata.
+func annotateFileMetadata(file string, v any) {
+	fileAnnotator{Name: file}.Annotate(reflect.ValueOf(v))
+}
+
+type fileAnnotator struct {
+	Name string
+}
+
+func (a fileAnnotator) Annotate(val reflect.Value) {
+	// Need an addressable value in order to edit the metadata value.
+	if val.CanAddr() {
+		if m, ok := val.Addr().Interface().(*FileMetadata); ok {
+			m.File = a.Name
+			return
+		}
+	}
+
+	switch val.Kind() {
+	case reflect.Pointer:
+		a.Annotate(val.Elem())
+	case reflect.Struct:
+		for i := 0; i < val.NumField(); i++ {
+			valueField := val.Field(i)
+			a.Annotate(valueField)
+		}
+	case reflect.Slice:
+		for i := 0; i < val.Len(); i++ {
+			a.Annotate(val.Index(i))
+		}
+	case reflect.Map:
+		itr := val.MapRange()
+		for itr.Next() {
+			// NOTE: This can only edit the map value if it is addressable (aka a pointer).
+			a.Annotate(itr.Value())
+		}
+	}
 }

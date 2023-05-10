@@ -3,6 +3,7 @@ module github.com/elastic/terraform-module-fleet/fleet-terraform-generator
 go 1.19
 
 require (
+	github.com/google/go-cmp v0.5.8
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53
