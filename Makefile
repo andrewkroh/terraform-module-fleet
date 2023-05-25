@@ -6,6 +6,7 @@ modules: install
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out fleet_integrations \
 		"aws/cloudtrail/*/aws-s3" \
 		"github/*/issues/httpjson" \
+		"ti_abusech/*/*/httpjson" \
 		"ti_recordedfuture/*/*/httpjson"
 
 .PHONY: install

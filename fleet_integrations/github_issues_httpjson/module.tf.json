@@ -13,6 +13,11 @@
       "default": "https://api.github.com",
       "nullable": false
     },
+    "enable_request_tracer": {
+      "type": "bool",
+      "description": "The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-httpjson.html#_request_tracer_filename) for details.",
+      "default": null
+    },
     "filter": {
       "type": "string",
       "description": "Indicates which sorts of issues to return. \nCan be one of - `assigned`, `created`, `mentioned`, `subscribed`, `repos`, `all`. \n`assigned` means issues assigned to you. `created` means issues created by you. `mentioned` means issues mentioning you. `subscribed` means issues you're subscribed to updates for. `all` or repos means all issues you can see, regardless of participation or creation.",
@@ -30,7 +35,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the github package to use.",
-      "default": "1.10.2"
+      "default": "1.11.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -115,6 +120,7 @@
       "data_stream": "issues",
       "data_stream_variables_json": "${jsonencode({\n  access_token = var.access_token\n  api_url = var.api_url\n  filter = var.filter\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  labels = var.labels\n  owner = var.owner\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  repo = var.repo\n  since = var.since\n  ssl = var.ssl_yaml\n  state = var.state\n  tags = var.tags\n})}",
       "input_type": "httpjson",
+      "input_variables_json": "${jsonencode({\n  enable_request_tracer = var.enable_request_tracer\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "github",
       "package_policy_name": "github-issues-${var.fleet_data_stream_namespace}",
