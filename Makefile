@@ -5,7 +5,9 @@ all: fmt docs modules validate
 modules: install
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out fleet_integrations \
 		"aws/cloudtrail/*/aws-s3" \
+		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"github/*/issues/httpjson" \
+		"google_workspace/*/*/httpjson" \
 		"ti_abusech/*/*/httpjson" \
 		"ti_recordedfuture/*/*/httpjson"
 
