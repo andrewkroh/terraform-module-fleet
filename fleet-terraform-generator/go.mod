@@ -3,11 +3,11 @@ module github.com/elastic/terraform-module-fleet/fleet-terraform-generator
 go 1.19
 
 require (
+	github.com/andrewkroh/go-fleetpkg v0.0.3
 	github.com/google/go-cmp v0.5.8
 	github.com/spf13/cobra v1.7.0
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53
-	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -19,4 +19,5 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

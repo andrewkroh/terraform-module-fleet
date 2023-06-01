@@ -27,11 +27,11 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/andrewkroh/go-fleetpkg"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"golang.org/x/exp/maps"
 
-	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/fleetpkg"
 	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/terraform"
 )
 
@@ -43,7 +43,7 @@ type Terraform struct {
 // Generate generates a Terraform module.
 func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inputName string) (*Terraform, error) {
 	// Read in the package metadata.
-	pkg, err := fleetpkg.Load(filepath.Join(packagesDir, packageName))
+	pkg, err := fleetpkg.Read(filepath.Join(packagesDir, packageName))
 	if err != nil {
 		return nil, err
 	}
@@ -237,13 +237,13 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable) (tfName string, er
 	if tfVar.Type == "string" && isSensitive(v) {
 		tfVar.Sensitive = terraform.Ptr(true)
 	}
-	if v.Required {
+	if v.Required != nil && *v.Required {
 		tfVar.Nullable = terraform.Ptr(false)
 	}
 	if v.Default != nil {
 		// Pass the default to Terraform.
 		tfVar.Default = &terraform.NullableValue{Value: v.Default}
-	} else if !v.Required {
+	} else if v.Required != nil && !*v.Required {
 		tfVar.Default = &terraform.NullableValue{}
 	}
 
@@ -257,14 +257,14 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable) (tfName string, er
 	if existing, found := m[name]; found {
 		if existing.Fleet != nil {
 			msg := fmt.Sprintf("duplicate variable %q found at both\n\t%s:%d\n\t%s:%d", name,
-				existing.Fleet.Meta.File, existing.Fleet.Meta.Line,
-				v.Meta.File, v.Meta.Line)
+				existing.Fleet.Path(), existing.Fleet.Line(),
+				v.Path(), v.Line())
 			if diff := cmp.Diff(*existing.Fleet, v, cmpopts.IgnoreFields(fleetpkg.Var{}, "Meta")); diff != "" {
 				return "", fmt.Errorf(msg+"\ndiff:\n%s", diff)
 			}
 			return "", errors.New(msg)
 		}
-		return "", fmt.Errorf("duplicate variable named %q found at %s:%d", name, v.Meta.File, v.Meta.Line)
+		return "", fmt.Errorf("duplicate variable named %q found at %s:%d", name, v.Path(), v.Line())
 	}
 	m[name] = moduleVariable{Fleet: &v, Terraform: tfVar}
 	return name, nil
@@ -305,7 +305,7 @@ func dataType(v fleetpkg.Var) (string, error) {
 		return "", fmt.Errorf("unknown fleet variable type %q", v.Type)
 	}
 
-	if v.Multi {
+	if v.Multi != nil && *v.Multi {
 		tfType = "list(" + tfType + ")"
 	}
 	return tfType, nil

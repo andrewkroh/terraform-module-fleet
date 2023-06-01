@@ -23,9 +23,9 @@ import (
 	"sort"
 	"strings"
 
-	"golang.org/x/exp/maps"
+	"github.com/andrewkroh/go-fleetpkg"
 
-	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/fleetpkg"
+	"golang.org/x/exp/maps"
 )
 
 type Specifier struct {
@@ -142,7 +142,7 @@ func walkPackages(dir string, walk func(pkg *fleetpkg.Integration, err error) er
 	}
 
 	for _, manifestPath := range allPackages {
-		integration, err := fleetpkg.Load(filepath.Dir(manifestPath))
+		integration, err := fleetpkg.Read(filepath.Dir(manifestPath))
 		if err = walk(integration, err); err != nil {
 			return err
 		}
