@@ -23,6 +23,7 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -354,9 +355,12 @@ func toMap(v any) map[string]any {
 
 var variableExpressionTemplate = template.Must(template.New("jsonencode").
 	Option("missingkey=error").
+	Funcs(template.FuncMap{
+		"quoteIfNeeded": quoteIfNeeded,
+	}).
 	Parse(`${jsonencode({
 {{- range $fleetVar, $tfVar := . }}
-  {{ $fleetVar }} = var.{{ $tfVar }}
+  {{ quoteIfNeeded $fleetVar }} = var.{{ $tfVar }}
 {{- end }}
 })}`))
 
@@ -407,4 +411,11 @@ func moduleName(integration, policyTemplate, dataStream, input string) string {
 	}
 	name = append(name, strings.ReplaceAll(input, "/", "_"))
 	return strings.Join(name, "_")
+}
+
+func quoteIfNeeded(name string) string {
+	if strings.Contains(name, ".") {
+		return strconv.Quote(name)
+	}
+	return name
 }
