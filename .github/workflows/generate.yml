@@ -1,0 +1,58 @@
+# This is a hack to update the fleet_integrations/* modules daily.
+# One issue is that there may be unreleased changes in that repo.
+name: generate
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  integrations:
+    permissions:
+      # Allow job to write to the branch.
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version: 1.20.x
+          cache-dependency-path: fleet-terraform-generator/go.sum
+
+      - uses: actions/checkout@v3
+        with:
+          repository: elastic/integrations
+          path: integrations
+
+      - name: move integrations dir
+        run: mv integrations ../
+
+      - name: integration commit
+        id: integrations
+        working-directory: ../integrations
+        run: echo "commit=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: update fleet_integrations modules
+        run: make modules
+
+      - name: check for modified fleet_integrations modules
+        id: is-changed
+        run: echo "modified=$(if git status --porcelain --untracked-files=no | grep -q -E 'module.tf.json$'; then echo "true"; else echo "false"; fi)" >> $GITHUB_OUTPUT
+
+      - name: commit updated modules
+        if: steps.is-changed.outputs.modified == 'true'
+        env:
+          INTEGRATIONS_COMMIT: ${{ steps.integrations.outputs.commit }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -u ./fleet_integrations
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -m "Update to elastic/integrations@${INTEGRATIONS_COMMIT}
+          
+          Update modules based on https://github.com/elastic/integrations/commit/${INTEGRATIONS_COMMIT}"
+          git push
