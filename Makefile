@@ -12,7 +12,10 @@ fleet-modules: install
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
 		"ti_abusech/*/*/httpjson" \
-		"ti_recordedfuture/*/*/httpjson"
+		"ti_recordedfuture/*/*/httpjson" \
+		"cel/*/*" \
+		"logs/*/*" \
+		"sql/*/*"
 
 .PHONY: install
 install:
