@@ -5,6 +5,11 @@
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
     },
+    "fleet_data_stream_description": {
+      "type": "string",
+      "description": "Description to use for the data stream.",
+      "default": ""
+    },
     "fleet_data_stream_namespace": {
       "type": "string",
       "description": "Namespace to use for the data stream.",
@@ -14,6 +19,11 @@
       "type": "string",
       "description": "Version of the barracuda_cloudgen_firewall package to use.",
       "default": "1.3.0"
+    },
+    "fleet_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to use at the end of the generated Policy Name.",
+      "default": ""
     },
     "listen_address": {
       "type": "string",
@@ -73,10 +83,11 @@
       ],
       "data_stream": "log",
       "data_stream_variables_json": "${jsonencode({\n  listen_address = var.listen_address\n  listen_port = var.listen_port\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  ssl = var.ssl_yaml\n  tags = var.tags\n  versions = var.versions\n})}",
+      "description": "${var.fleet_data_stream_description}",
       "input_type": "lumberjack",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "barracuda_cloudgen_firewall",
-      "package_policy_name": "barracuda_cloudgen_firewall-log-${var.fleet_data_stream_namespace}",
+      "package_policy_name": "barracuda_cloudgen_firewall-log-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "barracuda_cloudgen_firewall",
       "source": "../../fleet_package_policy"

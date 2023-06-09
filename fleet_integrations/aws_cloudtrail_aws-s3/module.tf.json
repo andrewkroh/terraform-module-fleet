@@ -43,6 +43,11 @@
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
     },
+    "fleet_data_stream_description": {
+      "type": "string",
+      "description": "Description to use for the data stream.",
+      "default": ""
+    },
     "fleet_data_stream_namespace": {
       "type": "string",
       "description": "Namespace to use for the data stream.",
@@ -52,6 +57,11 @@
       "type": "string",
       "description": "Version of the aws package to use.",
       "default": "1.43.0"
+    },
+    "fleet_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to use at the end of the generated Policy Name.",
+      "default": ""
     },
     "max_number_of_messages": {
       "type": "number",
@@ -125,10 +135,11 @@
       ],
       "data_stream": "cloudtrail",
       "data_stream_variables_json": "${jsonencode({\n  api_timeout = var.api_timeout\n  cloudtrail_digest_regex = var.cloudtrail_digest_regex\n  cloudtrail_insight_regex = var.cloudtrail_insight_regex\n  cloudtrail_regex = var.cloudtrail_regex\n  fips_enabled = var.fips_enabled\n  max_number_of_messages = var.max_number_of_messages\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  queue_url = var.queue_url\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
+      "description": "${var.fleet_data_stream_description}",
       "input_type": "aws-s3",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "aws",
-      "package_policy_name": "aws-cloudtrail-${var.fleet_data_stream_namespace}",
+      "package_policy_name": "aws-cloudtrail-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}",
       "package_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  proxy_url = var.proxy_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "cloudtrail",

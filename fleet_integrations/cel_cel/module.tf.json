@@ -16,6 +16,11 @@
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
     },
+    "fleet_data_stream_description": {
+      "type": "string",
+      "description": "Description to use for the data stream.",
+      "default": ""
+    },
     "fleet_data_stream_namespace": {
       "type": "string",
       "description": "Namespace to use for the data stream.",
@@ -25,6 +30,11 @@
       "type": "string",
       "description": "Version of the cel package to use.",
       "default": "1.0.0"
+    },
+    "fleet_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to use at the end of the generated Policy Name.",
+      "default": ""
     },
     "oauth_azure_resource": {
       "type": "string",
@@ -216,10 +226,11 @@
       "all_data_streams": [],
       "data_stream": "",
       "data_stream_variables_json": "${jsonencode({\n  \"data_stream.dataset\" = var.data_stream_dataset\n  enable_request_tracer = var.enable_request_tracer\n  oauth_azure_resource = var.oauth_azure_resource\n  oauth_azure_tenant_id = var.oauth_azure_tenant_id\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  oauth_google_credentials_file = var.oauth_google_credentials_file\n  oauth_google_credentials_json = var.oauth_google_credentials_json\n  oauth_google_delegated_account = var.oauth_google_delegated_account\n  oauth_google_jwt_file = var.oauth_google_jwt_file\n  oauth_google_jwt_json = var.oauth_google_jwt_json\n  oauth_id = var.oauth_id\n  oauth_provider = var.oauth_provider\n  oauth_scopes = var.oauth_scopes\n  oauth_secret = var.oauth_secret\n  oauth_token_url = var.oauth_token_url\n  password = var.password\n  pipeline = var.pipeline\n  processors = var.processors_yaml\n  program = var.program\n  regexp = var.regexp_yaml\n  resource_interval = var.resource_interval\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  resource_url = var.resource_url\n  state = var.state_yaml\n  tags = var.tags\n  username = var.username\n})}",
+      "description": "${var.fleet_data_stream_description}",
       "input_type": "cel",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "cel",
-      "package_policy_name": "cel--${var.fleet_data_stream_namespace}",
+      "package_policy_name": "cel-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "cel",
       "source": "../../fleet_package_policy"
