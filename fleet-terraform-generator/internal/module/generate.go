@@ -190,9 +190,9 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terr
 	}
 	sort.Strings(allDataStreams)
 
-	PackagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
-	if len(strings.TrimSpace(dataStreamName)) == 0 {
-		PackagePolicyName = manifest.Name + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
+	packagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
+	if dataStreamName == "" {
+		packagePolicyName = manifest.Name + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
 	}
 
 	tf := &terraform.File{
@@ -203,7 +203,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terr
 				Source: "../../fleet_package_policy",
 				Params: toMap(FleetPackagePolicyModule{
 					AgentPolicyID:           "${var.fleet_agent_policy_id}",
-					PackagePolicyName:       PackagePolicyName,
+					PackagePolicyName:       packagePolicyName,
 					PackageName:             manifest.Name,
 					PackageVersion:          "${var.fleet_package_version}",
 					Namespace:               "${var.fleet_data_stream_namespace}",
