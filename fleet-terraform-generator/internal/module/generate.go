@@ -259,7 +259,7 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable) (tfName string, er
 			msg := fmt.Sprintf("duplicate variable %q found at both\n\t%s:%d\n\t%s:%d", name,
 				existing.Fleet.Path(), existing.Fleet.Line(),
 				v.Path(), v.Line())
-			if diff := cmp.Diff(*existing.Fleet, v, cmpopts.IgnoreFields(fleetpkg.Var{}, "Meta")); diff != "" {
+			if diff := cmp.Diff(*existing.Fleet, v, cmpopts.IgnoreFields(fleetpkg.Var{}, "FileMetadata")); diff != "" {
 				return "", fmt.Errorf(msg+"\ndiff:\n%s", diff)
 			}
 			return "", errors.New(msg)
