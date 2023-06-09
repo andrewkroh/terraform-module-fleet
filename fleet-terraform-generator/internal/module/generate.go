@@ -40,9 +40,12 @@ type Terraform struct {
 	File *terraform.File
 }
 
+var allowVarShadowing bool
+
 // Generate generates a Terraform module.
-func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terraform, error) {
+func Generate(path, policyTemplateName, dataStreamName, inputName string, allowVariableShadowing bool) (*Terraform, error) {
 	// Read in the package metadata.
+	allowVarShadowing = allowVariableShadowing
 	pkg, err := fleetpkg.Read(path)
 	if err != nil {
 		return nil, err
@@ -282,17 +285,19 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable) (tfName string, er
 	}
 
 	// Don't allow variables shadowing. See https://github.com/elastic/package-spec/issues/421
-	if existing, found := m[name]; found {
-		if existing.Fleet != nil {
-			msg := fmt.Sprintf("duplicate variable %q found at both\n\t%s:%d\n\t%s:%d", name,
-				existing.Fleet.Path(), existing.Fleet.Line(),
-				v.Path(), v.Line())
-			if diff := cmp.Diff(*existing.Fleet, v, cmpopts.IgnoreFields(fleetpkg.Var{}, "FileMetadata")); diff != "" {
-				return "", fmt.Errorf(msg+"\ndiff:\n%s", diff)
+	if !allowVarShadowing {
+		if existing, found := m[name]; found {
+			if existing.Fleet != nil {
+				msg := fmt.Sprintf("duplicate variable %q found at both\n\t%s:%d\n\t%s:%d", name,
+					existing.Fleet.Path(), existing.Fleet.Line(),
+					v.Path(), v.Line())
+				if diff := cmp.Diff(*existing.Fleet, v, cmpopts.IgnoreFields(fleetpkg.Var{}, "FileMetadata")); diff != "" {
+					return "", fmt.Errorf(msg+"\ndiff:\n%s", diff)
+				}
+				return "", errors.New(msg)
 			}
-			return "", errors.New(msg)
+			return "", fmt.Errorf("duplicate variable named %q found at %s:%d", name, v.Path(), v.Line())
 		}
-		return "", fmt.Errorf("duplicate variable named %q found at %s:%d", name, v.Path(), v.Line())
 	}
 	m[name] = moduleVariable{Fleet: &v, Terraform: tfVar}
 	return name, nil

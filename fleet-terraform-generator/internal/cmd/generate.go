@@ -31,11 +31,12 @@ import (
 )
 
 const (
-	generatePackageFlagName        = "package"
-	generatePolicyTemplateFlagName = "policy-template"
-	generateDataStreamFlagName     = "data-stream"
-	generateInputFlagName          = "input"
-	generateOutputPathFlagName     = "out"
+	generatePackageFlagName                = "package"
+	generatePolicyTemplateFlagName         = "policy-template"
+	generateDataStreamFlagName             = "data-stream"
+	generateInputFlagName                  = "input"
+	generateOutputPathFlagName             = "out"
+	generateAllowVariableShadowingFlagName = "allow-var-shadow"
 )
 
 func GenerateCmd() *cobra.Command {
@@ -57,6 +58,8 @@ func GenerateCmd() *cobra.Command {
 
 	cmd.Flags().StringP(generateInputFlagName, "i", "", "Input name.")
 	must(cmd.MarkFlagRequired(generateInputFlagName))
+
+	cmd.PersistentFlags().Bool(generateAllowVariableShadowingFlagName, false, "Allow generator to process when encountering Variable Shadowing")
 
 	cmd.PersistentFlags().String(generateOutputPathFlagName, "", "Output path. It creates a new sub-directory named based on the package, policy template, data stream, and input.")
 	must(cmd.MarkPersistentFlagRequired(generateOutputPathFlagName))
@@ -92,6 +95,10 @@ func generateModuleRunE(cmd *cobra.Command, _ []string) error {
 	if err != nil {
 		return err
 	}
+	allowVariableShadowing, err := cmd.Flags().GetBool(generateAllowVariableShadowingFlagName)
+	if err != nil {
+		return err
+	}
 	outputDir, err := cmd.Flags().GetString(generateOutputPathFlagName)
 	if err != nil {
 		return err
@@ -104,7 +111,7 @@ func generateModuleRunE(cmd *cobra.Command, _ []string) error {
 		return fmt.Errorf("output dir %q is not a directory", outputDir)
 	}
 
-	err = generateTerraformModuleToDisk(pkgsDir, packageName, policyTemplateName, dataStreamName, inputName, outputDir)
+	err = generateTerraformModuleToDisk(pkgsDir, packageName, policyTemplateName, dataStreamName, inputName, outputDir, allowVariableShadowing)
 	if err != nil {
 		s := module.Specifier{
 			Integration:    packageName,
@@ -133,7 +140,10 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 	if !info.IsDir() {
 		return fmt.Errorf("output dir %q is not a directory", outputDir)
 	}
-
+	allowVariableShadowing, err := cmd.Flags().GetBool(generateAllowVariableShadowingFlagName)
+	if err != nil {
+		return err
+	}
 	specs, err := module.List(pkgsDir)
 	if err != nil {
 		return err
@@ -146,7 +156,7 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 
 	var errs []error
 	for _, s := range specs {
-		if err = generateTerraformModuleToDisk(s.Path, s.Integration, s.PolicyTemplate, s.DataStream, s.Input, outputDir); err != nil {
+		if err = generateTerraformModuleToDisk(s.Path, s.Integration, s.PolicyTemplate, s.DataStream, s.Input, outputDir, allowVariableShadowing); err != nil {
 			errs = append(errs, fmt.Errorf("error generating module for %s: %w", s.String(), err))
 		}
 	}
@@ -157,8 +167,8 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func generateTerraformModuleToDisk(path, packageName, policyTemplateName, dataStreamName, inputName, outputDir string) error {
-	tf, err := module.Generate(path, policyTemplateName, dataStreamName, inputName)
+func generateTerraformModuleToDisk(path, packageName, policyTemplateName, dataStreamName, inputName, outputDir string, allowVariableShadowing bool) error {
+	tf, err := module.Generate(path, policyTemplateName, dataStreamName, inputName, allowVariableShadowing)
 	if err != nil {
 		return err
 	}
