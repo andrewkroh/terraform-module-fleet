@@ -146,7 +146,7 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 
 	var errs []error
 	for _, s := range specs {
-		if err = generateTerraformModuleToDisk(pkgsDir, s.Integration, s.PolicyTemplate, s.DataStream, s.Input, outputDir); err != nil {
+		if err = generateTerraformModuleToDisk(s.Path, s.Integration, s.PolicyTemplate, s.DataStream, s.Input, outputDir); err != nil {
 			errs = append(errs, fmt.Errorf("error generating module for %s: %w", s.String(), err))
 		}
 	}
@@ -157,8 +157,8 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func generateTerraformModuleToDisk(pkgsDir, packageName, policyTemplateName, dataStreamName, inputName, outputDir string) error {
-	tf, err := module.Generate(pkgsDir, packageName, policyTemplateName, dataStreamName, inputName)
+func generateTerraformModuleToDisk(path, packageName, policyTemplateName, dataStreamName, inputName, outputDir string) error {
+	tf, err := module.Generate(path, policyTemplateName, dataStreamName, inputName)
 	if err != nil {
 		return err
 	}

@@ -22,7 +22,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"path/filepath"
 	"sort"
 	"strings"
 	"text/template"
@@ -41,9 +40,9 @@ type Terraform struct {
 }
 
 // Generate generates a Terraform module.
-func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inputName string) (*Terraform, error) {
+func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terraform, error) {
 	// Read in the package metadata.
-	pkg, err := fleetpkg.Read(filepath.Join(packagesDir, packageName))
+	pkg, err := fleetpkg.Read(path)
 	if err != nil {
 		return nil, err
 	}
@@ -57,22 +56,23 @@ func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inpu
 	)
 
 	// Policy template.
-	{
-		if policyTemplateName == "" {
-			policyTemplate = &pkg.Manifest.PolicyTemplates[0]
-			policyTemplateName = policyTemplate.Name
-		} else {
-			for i, pt := range pkg.Manifest.PolicyTemplates {
-				if pt.Name == policyTemplateName {
-					policyTemplate = &pkg.Manifest.PolicyTemplates[i]
-					break
-				}
-			}
-			if policyTemplate == nil {
-				return nil, fmt.Errorf("policy template %q not found", policyTemplateName)
+
+	if policyTemplateName == "" {
+		policyTemplate = &pkg.Manifest.PolicyTemplates[0]
+		policyTemplateName = policyTemplate.Name
+	} else {
+		for i, pt := range pkg.Manifest.PolicyTemplates {
+			if pt.Name == policyTemplateName {
+				policyTemplate = &pkg.Manifest.PolicyTemplates[i]
+				break
 			}
 		}
+		if policyTemplate == nil {
+			return nil, fmt.Errorf("policy template %q not found", policyTemplateName)
+		}
+	}
 
+	if pkg.Manifest.Type != "input" {
 		for i, input := range policyTemplate.Inputs {
 			if input.Type == inputName {
 				policyTemplateInput = &policyTemplate.Inputs[i]
@@ -82,25 +82,26 @@ func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inpu
 		if policyTemplateInput == nil {
 			return nil, fmt.Errorf("input %q was not found within policy template %q", inputName, policyTemplateName)
 		}
-	}
-	// Data stream.
-	{
-		ds, found := pkg.DataStreams[dataStreamName]
-		if !found {
-			return nil, fmt.Errorf("data stream %q was not found in the package", dataStreamName)
-		}
-		dataStream = ds
-	}
-	// Input type.
-	{
-		for i, s := range dataStream.Manifest.Streams {
-			if s.Input == inputName {
-				stream = &dataStream.Manifest.Streams[i]
-				break
+
+		// Data stream.
+		{
+			ds, found := pkg.DataStreams[dataStreamName]
+			if !found {
+				return nil, fmt.Errorf("data stream %q was not found in the package", dataStreamName)
 			}
+			dataStream = ds
 		}
-		if stream == nil {
-			return nil, fmt.Errorf("input type %q was not found in data stream %q", inputName, dataStreamName)
+		// Input type.
+		{
+			for i, s := range dataStream.Manifest.Streams {
+				if s.Input == inputName {
+					stream = &dataStream.Manifest.Streams[i]
+					break
+				}
+			}
+			if stream == nil {
+				return nil, fmt.Errorf("input type %q was not found in data stream %q", inputName, dataStreamName)
+			}
 		}
 	}
 
@@ -136,13 +137,19 @@ func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inpu
 	if err != nil {
 		return nil, fmt.Errorf("error adding policy template level variables: %w", err)
 	}
-	inputLevelVarAssociations, err := addVariables(policyTemplateInput.Vars, tfVariables)
-	if err != nil {
-		return nil, fmt.Errorf("error adding input level variables: %w", err)
+	var inputLevelVarAssociations map[string]string
+	if policyTemplateInput != nil {
+		inputLevelVarAssociations, err = addVariables(policyTemplateInput.Vars, tfVariables)
+		if err != nil {
+			return nil, fmt.Errorf("error adding input level variables: %w", err)
+		}
 	}
-	dataStreamVarAssociations, err := addVariables(stream.Vars, tfVariables)
-	if err != nil {
-		return nil, fmt.Errorf("error adding data stream level variables: %w", err)
+	var dataStreamVarAssociations map[string]string
+	if stream != nil {
+		dataStreamVarAssociations, err = addVariables(stream.Vars, tfVariables)
+		if err != nil {
+			return nil, fmt.Errorf("error adding data stream level variables: %w", err)
+		}
 	}
 
 	packageLevelVarExpression, err := buildVariableExpression(packageLevelVarAssociations)
@@ -182,7 +189,7 @@ func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inpu
 					Namespace:               "${var.fleet_data_stream_namespace}",
 					PolicyTemplate:          policyTemplate.Name,
 					DataStream:              dataStreamName,
-					InputType:               stream.Input,
+					InputType:               inputName,
 					PackageVariablesJSON:    packageLevelVarExpression,
 					InputVariablesJSON:      inputLevelVarExpression,
 					DataStreamVariablesJSON: dataStreamVarExpression,
@@ -199,7 +206,7 @@ func Generate(packagesDir, packageName, policyTemplateName, dataStreamName, inpu
 	}
 
 	return &Terraform{
-		Name: moduleName(packageName, policyTemplateName, dataStreamName, inputName),
+		Name: moduleName(manifest.Name, policyTemplateName, dataStreamName, inputName),
 		File: tf,
 	}, nil
 }
@@ -395,7 +402,7 @@ func moduleName(integration, policyTemplate, dataStream, input string) string {
 	if integration != policyTemplate {
 		name = append(name, policyTemplate)
 	}
-	if policyTemplate != dataStream {
+	if policyTemplate != dataStream && dataStream != "" {
 		name = append(name, dataStream)
 	}
 	name = append(name, strings.ReplaceAll(input, "/", "_"))

@@ -35,7 +35,8 @@ resource "restapi_object" "package_policy" {
         enabled = true
         vars    = var.input_variables_json == null ? null : jsondecode(var.input_variables_json)
         streams = merge({
-          "${var.package_name}.${var.data_stream}" = {
+          // Input packages don't have a data_stream value and use package_name.policy_template.
+          "${var.package_name}.%{if var.data_stream != ""}${var.data_stream}%{else}${var.policy_template}%{endif}" = {
             enabled = true
             vars    = var.data_stream_variables_json == null ? null : jsondecode(var.data_stream_variables_json)
           }

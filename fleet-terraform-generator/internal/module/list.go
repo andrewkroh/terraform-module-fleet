@@ -33,6 +33,8 @@ type Specifier struct {
 	PolicyTemplate string
 	DataStream     string
 	Input          string
+
+	Path string
 }
 
 func (s Specifier) String() string {
@@ -90,6 +92,7 @@ func List(dir string) (Specifiers, error) {
 					Integration:    pkg.Manifest.Name,
 					PolicyTemplate: pt.Name,
 					Input:          pt.Input,
+					Path:           pkg.Path(),
 				})
 			}
 			return nil
@@ -118,6 +121,7 @@ func List(dir string) (Specifiers, error) {
 								PolicyTemplate: pt.Name,
 								DataStream:     dsName,
 								Input:          ptInput.Type,
+								Path:           pkg.Path(),
 							})
 							break
 						}
