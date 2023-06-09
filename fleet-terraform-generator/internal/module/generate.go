@@ -256,7 +256,7 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable) (tfName string, er
 	}
 
 	// Append yaml suffix to indicate to users that they must yamlencode() the value.
-	name := v.Name
+	name := strings.ReplaceAll(v.Name, ".", "_")
 	if v.Type == "yaml" {
 		name += "_yaml"
 	}
