@@ -137,7 +137,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terr
 		"fleet_policy_name_suffix": {
 			Terraform: terraform.Variable{
 				Type:        "string",
-				Description: "Suffix to use at the end of the generated Policy Name.",
+				Description: "Suffix to append to the end of the package policy name.",
 				Default:     &terraform.NullableValue{Value: ""},
 			},
 		},
