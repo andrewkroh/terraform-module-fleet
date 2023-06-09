@@ -134,6 +134,13 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terr
 				Default:     &terraform.NullableValue{Value: pkg.Manifest.Version},
 			},
 		},
+		"fleet_policy_name_suffix": {
+			Terraform: terraform.Variable{
+				Type:        "string",
+				Description: "Suffix to use at the end of the generated Policy Name.",
+				Default:     &terraform.NullableValue{Value: ""},
+			},
+		},
 	}
 
 	// Iterate over all variables in the package and create Terraform variables.
@@ -183,9 +190,9 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terr
 	}
 	sort.Strings(allDataStreams)
 
-	PackagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}"
+	PackagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
 	if len(strings.TrimSpace(dataStreamName)) == 0 {
-		PackagePolicyName = manifest.Name + "-${var.fleet_data_stream_namespace}"
+		PackagePolicyName = manifest.Name + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
 	}
 
 	tf := &terraform.File{
