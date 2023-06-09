@@ -27,9 +27,10 @@ resource "restapi_object" "package_policy" {
       name    = var.package_name
       version = var.package_version
     }
-    name      = local.policy_name
-    namespace = var.namespace
-    vars      = var.package_variables_json
+    name        = local.policy_name
+    namespace   = var.namespace
+    description = var.description
+    vars        = var.package_variables_json
     inputs = {
       "${var.policy_template}-${var.input_type}" = {
         enabled = true

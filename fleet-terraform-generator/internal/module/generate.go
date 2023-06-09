@@ -120,6 +120,13 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terr
 				Default:     &terraform.NullableValue{Value: "default"},
 			},
 		},
+		"fleet_data_stream_description": {
+			Terraform: terraform.Variable{
+				Type:        "string",
+				Description: "Description to use for the data stream.",
+				Default:     &terraform.NullableValue{Value: ""},
+			},
+		},
 		"fleet_package_version": {
 			Terraform: terraform.Variable{
 				Type:        "string",
@@ -188,6 +195,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string) (*Terr
 					PackageName:             manifest.Name,
 					PackageVersion:          "${var.fleet_package_version}",
 					Namespace:               "${var.fleet_data_stream_namespace}",
+					Description:             "${var.fleet_data_stream_description}",
 					PolicyTemplate:          policyTemplate.Name,
 					DataStream:              dataStreamName,
 					InputType:               inputName,
@@ -325,6 +333,7 @@ type FleetPackagePolicyModule struct {
 	PackageName             string   `json:"package_name"`
 	PackageVersion          string   `json:"package_version"`
 	Namespace               string   `json:"namespace"`
+	Description             string   `json:"description"`
 	PolicyTemplate          string   `json:"policy_template"`
 	DataStream              string   `json:"data_stream"`
 	InputType               string   `json:"input_type"`
