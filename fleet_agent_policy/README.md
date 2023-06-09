@@ -29,7 +29,7 @@ No modules.
 | <a name="input_data_output_id"></a> [data\_output\_id](#input\_data\_output\_id) | ID of the Fleet data output. Use this to choose a non-default output. | `string` | `null` | no |
 | <a name="input_description"></a> [description](#input\_description) | Description of Agent policy. | `string` | n/a | yes |
 | <a name="input_fleet_server_host_id"></a> [fleet\_server\_host\_id](#input\_fleet\_server\_host\_id) | ID of the Fleet server host. Use this to choose a non-default Fleet server address. | `string` | `null` | no |
-| <a name="input_inactivity_timeout_sec"></a> [inactivity\_timeout\_sec](#input\_inactivity\_timeout\_sec) | An agent will automatically change to inactive status and be filtered out | `number` | `1800` | no |
+| <a name="input_inactivity_timeout_sec"></a> [inactivity\_timeout\_sec](#input\_inactivity\_timeout\_sec) | An agent will automatically change to inactive status and be filtered out | `number` | `3600` | no |
 | <a name="input_monitor_logs"></a> [monitor\_logs](#input\_monitor\_logs) | n/a | `bool` | `true` | no |
 | <a name="input_monitor_metrics"></a> [monitor\_metrics](#input\_monitor\_metrics) | n/a | `bool` | `true` | no |
 | <a name="input_monitoring_output_id"></a> [monitoring\_output\_id](#input\_monitoring\_output\_id) | ID of the Fleet monitoring output. Use this to choose a non-default output. | `string` | `null` | no |
@@ -40,6 +40,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_enrollment_token"></a> [enrollment\_token](#output\_enrollment\_token) | n/a |
-| <a name="output_policy_id"></a> [policy\_id](#output\_policy\_id) | n/a |
+| <a name="output_enrollment_token"></a> [enrollment\_token](#output\_enrollment\_token) | Token that can be used to enroll Agents into the policy. |
+| <a name="output_id"></a> [id](#output\_id) | n/a |
 <!-- END_TF_DOCS -->

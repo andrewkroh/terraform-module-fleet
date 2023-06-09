@@ -41,7 +41,7 @@ jobs:
 
       - name: check for modified fleet_integrations modules
         id: is-changed
-        run: echo "modified=$(if git status --porcelain --untracked-files=no | grep -q -E 'module.tf.json$'; then echo "true"; else echo "false"; fi)" >> $GITHUB_OUTPUT
+        run: echo "modified=$(if git status --porcelain --untracked-files=no | grep -q -E 'module.tf.json$|README.md$'; then echo "true"; else echo "false"; fi)" >> $GITHUB_OUTPUT
 
       - name: commit updated modules
         if: steps.is-changed.outputs.modified == 'true'

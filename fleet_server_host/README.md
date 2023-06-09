@@ -32,5 +32,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_host_id"></a> [host\_id](#output\_host\_id) | n/a |
+| <a name="output_id"></a> [id](#output\_id) | n/a |
 <!-- END_TF_DOCS -->

@@ -33,5 +33,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_output_id"></a> [output\_id](#output\_output\_id) | n/a |
+| <a name="output_id"></a> [id](#output\_id) | n/a |
 <!-- END_TF_DOCS -->
