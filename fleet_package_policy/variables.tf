@@ -29,7 +29,7 @@ variable "namespace" {
 }
 
 variable "description" {
-  description = "Description to apply to data streams."
+  description = "Description to apply to the package policy."
   type        = string
   default     = ""
 }
