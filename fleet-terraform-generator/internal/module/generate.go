@@ -126,7 +126,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, allowV
 		"fleet_package_policy_description": {
 			Terraform: terraform.Variable{
 				Type:        "string",
-				Description: "Description to use for the data stream.",
+				Description: "Description to use for the package policy.",
 				Default:     &terraform.NullableValue{Value: ""},
 			},
 		},

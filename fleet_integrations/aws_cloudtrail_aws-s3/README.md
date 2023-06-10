@@ -31,7 +31,7 @@ No resources.
 | <a name="input_fips_enabled"></a> [fips\_enabled](#input\_fips\_enabled) | Enabling this option changes the service name from `s3` to `s3-fips` for connecting to the correct service endpoint. | `bool` | `false` | no |
 | <a name="input_fleet_agent_policy_id"></a> [fleet\_agent\_policy\_id](#input\_fleet\_agent\_policy\_id) | Agent policy ID to add the package policy to. | `string` | n/a | yes |
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
-| <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the data stream. | `string` | `""` | no |
+| <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
 | <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the aws package to use. | `string` | `"1.43.0"` | no |
 | <a name="input_max_number_of_messages"></a> [max\_number\_of\_messages](#input\_max\_number\_of\_messages) | The maximum number of SQS messages that can be inflight at any time. | `number` | `5` | no |

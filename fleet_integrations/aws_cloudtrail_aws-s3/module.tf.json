@@ -50,7 +50,7 @@
     },
     "fleet_package_policy_description": {
       "type": "string",
-      "description": "Description to use for the data stream.",
+      "description": "Description to use for the package policy.",
       "default": ""
     },
     "fleet_package_policy_name_suffix": {
