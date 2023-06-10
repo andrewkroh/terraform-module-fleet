@@ -10,25 +10,25 @@
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
     },
-    "fleet_data_stream_description": {
-      "type": "string",
-      "description": "Description to use for the data stream.",
-      "default": ""
-    },
     "fleet_data_stream_namespace": {
       "type": "string",
       "description": "Namespace to use for the data stream.",
       "default": "default"
     },
+    "fleet_package_policy_description": {
+      "type": "string",
+      "description": "Description to use for the data stream.",
+      "default": ""
+    },
+    "fleet_package_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to append to the end of the package policy name.",
+      "default": ""
+    },
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
       "default": "1.12.0"
-    },
-    "fleet_policy_name_suffix": {
-      "type": "string",
-      "description": "Suffix to use at the end of the generated Policy Name.",
-      "default": ""
     },
     "http_client_timeout": {
       "type": "string",
@@ -90,12 +90,12 @@
       ],
       "data_stream": "url",
       "data_stream_variables_json": "${jsonencode({\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n  url = var.url\n})}",
-      "description": "${var.fleet_data_stream_description}",
+      "description": "${var.fleet_package_policy_description}",
       "input_type": "httpjson",
       "input_variables_json": "${jsonencode({\n  enable_request_tracer = var.enable_request_tracer\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "ti_abusech",
-      "package_policy_name": "ti_abusech-url-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}",
+      "package_policy_name": "ti_abusech-url-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "ti_abusech",
       "source": "../../fleet_package_policy"
