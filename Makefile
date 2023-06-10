@@ -14,7 +14,7 @@ fleet-modules: install
 		"ti_abusech/*/*/httpjson" \
 		"ti_recordedfuture/*/*/httpjson" \
 		"cel/*/*" \
-		"logs/*/*" \
+		"log/*/*" \
 		"sql/*/*"
 
 .PHONY: install
