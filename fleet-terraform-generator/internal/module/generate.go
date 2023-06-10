@@ -123,10 +123,17 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, allowV
 				Default:     &terraform.NullableValue{Value: "default"},
 			},
 		},
-		"fleet_data_stream_description": {
+		"fleet_package_policy_description": {
 			Terraform: terraform.Variable{
 				Type:        "string",
 				Description: "Description to use for the data stream.",
+				Default:     &terraform.NullableValue{Value: ""},
+			},
+		},
+		"fleet_package_policy_name_suffix": {
+			Terraform: terraform.Variable{
+				Type:        "string",
+				Description: "Suffix to append to the end of the package policy name.",
 				Default:     &terraform.NullableValue{Value: ""},
 			},
 		},
@@ -135,13 +142,6 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, allowV
 				Type:        "string",
 				Description: "Version of the " + pkg.Manifest.Name + " package to use.",
 				Default:     &terraform.NullableValue{Value: pkg.Manifest.Version},
-			},
-		},
-		"fleet_policy_name_suffix": {
-			Terraform: terraform.Variable{
-				Type:        "string",
-				Description: "Suffix to append to the end of the package policy name.",
-				Default:     &terraform.NullableValue{Value: ""},
 			},
 		},
 	}
@@ -193,9 +193,9 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, allowV
 	}
 	sort.Strings(allDataStreams)
 
-	packagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
+	packagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}"
 	if dataStreamName == "" {
-		packagePolicyName = manifest.Name + "-${var.fleet_data_stream_namespace}${var.fleet_policy_name_suffix}"
+		packagePolicyName = manifest.Name + "-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}"
 	}
 
 	tf := &terraform.File{
@@ -210,7 +210,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, allowV
 					PackageName:             manifest.Name,
 					PackageVersion:          "${var.fleet_package_version}",
 					Namespace:               "${var.fleet_data_stream_namespace}",
-					Description:             "${var.fleet_data_stream_description}",
+					Description:             "${var.fleet_package_policy_description}",
 					PolicyTemplate:          policyTemplate.Name,
 					DataStream:              dataStreamName,
 					InputType:               inputName,
