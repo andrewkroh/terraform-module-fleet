@@ -11,6 +11,7 @@ fleet-terraform-generator generate [flags]
 ```
   -d, --data-stream string       Data stream name.
   -h, --help                     help for generate
+      --ignore-var-shadow        Ignore variable shadowing errors in Fleet packages.
   -i, --input string             Input name.
       --out string               Output path. It creates a new sub-directory named based on the package, policy template, data stream, and input.
   -p, --package string           Package name.

@@ -15,6 +15,16 @@
       "description": "Namespace to use for the data stream.",
       "default": "default"
     },
+    "fleet_package_policy_description": {
+      "type": "string",
+      "description": "Description to use for the package policy.",
+      "default": ""
+    },
+    "fleet_package_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to append to the end of the package policy name.",
+      "default": ""
+    },
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sql package to use.",
@@ -49,10 +59,11 @@
       "all_data_streams": [],
       "data_stream": "",
       "data_stream_variables_json": "${jsonencode({\n  driver = var.driver\n  hosts = var.hosts\n  period = var.period\n  sql_queries = var.sql_queries_yaml\n})}",
+      "description": "${var.fleet_package_policy_description}",
       "input_type": "sql/metrics",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "sql",
-      "package_policy_name": "sql--${var.fleet_data_stream_namespace}",
+      "package_policy_name": "sql-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "sql",
       "source": "../../fleet_package_policy"

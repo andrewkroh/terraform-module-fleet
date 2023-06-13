@@ -28,6 +28,12 @@ variable "namespace" {
   default     = "default"
 }
 
+variable "description" {
+  description = "Description to apply to the package policy."
+  type        = string
+  default     = ""
+}
+
 variable "policy_template" {
   description = "Name of the policy template (see the integration's manifest.yml)."
   type        = string

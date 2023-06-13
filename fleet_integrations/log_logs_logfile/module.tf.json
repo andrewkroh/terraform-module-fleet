@@ -6,7 +6,7 @@
       "description": "Here YAML configuration options can be used to be added to your configuration. Be careful using this as it might break your configuration file.\n",
       "default": ""
     },
-    "data_stream.dataset": {
+    "data_stream_dataset": {
       "type": "string",
       "description": "Set the name for your dataset. Changing the dataset will send the data to a different index. You can't use `-` in the name of a dataset and only valid characters for [Elasticsearch index names](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html).\n",
       "nullable": false
@@ -19,6 +19,16 @@
       "type": "string",
       "description": "Namespace to use for the data stream.",
       "default": "default"
+    },
+    "fleet_package_policy_description": {
+      "type": "string",
+      "description": "Description to use for the package policy.",
+      "default": ""
+    },
+    "fleet_package_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to append to the end of the package policy name.",
+      "default": ""
     },
     "fleet_package_version": {
       "type": "string",
@@ -51,11 +61,12 @@
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  data_stream.dataset = var.data_stream.dataset\n  paths = var.paths\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  paths = var.paths\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
+      "description": "${var.fleet_package_policy_description}",
       "input_type": "logfile",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "log",
-      "package_policy_name": "log--${var.fleet_data_stream_namespace}",
+      "package_policy_name": "log-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "logs",
       "source": "../../fleet_package_policy"

@@ -38,6 +38,16 @@
       "description": "Namespace to use for the data stream.",
       "default": "default"
     },
+    "fleet_package_policy_description": {
+      "type": "string",
+      "description": "Description to use for the package policy.",
+      "default": ""
+    },
+    "fleet_package_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to append to the end of the package policy name.",
+      "default": ""
+    },
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use.",
@@ -100,10 +110,11 @@
       ],
       "data_stream": "threat",
       "data_stream_variables_json": "${jsonencode({\n  api_token = var.api_token\n  custom_url = var.custom_url\n  enable_request_tracer = var.enable_request_tracer\n  endpoint = var.endpoint\n  entity = var.entity\n  interval = var.interval\n  list = var.list\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  tags = var.tags\n  timeout = var.timeout\n})}",
+      "description": "${var.fleet_package_policy_description}",
       "input_type": "httpjson",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "ti_recordedfuture",
-      "package_policy_name": "ti_recordedfuture-threat-${var.fleet_data_stream_namespace}",
+      "package_policy_name": "ti_recordedfuture-threat-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "ti_recordedfuture",
       "source": "../../fleet_package_policy"

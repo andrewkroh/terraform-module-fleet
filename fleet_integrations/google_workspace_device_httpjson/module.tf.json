@@ -26,6 +26,16 @@
       "description": "Namespace to use for the data stream.",
       "default": "default"
     },
+    "fleet_package_policy_description": {
+      "type": "string",
+      "description": "Description to use for the package policy.",
+      "default": ""
+    },
+    "fleet_package_policy_name_suffix": {
+      "type": "string",
+      "description": "Suffix to append to the end of the package policy name.",
+      "default": ""
+    },
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
@@ -128,11 +138,12 @@
       ],
       "data_stream": "device",
       "data_stream_variables_json": "${jsonencode({\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n})}",
+      "description": "${var.fleet_package_policy_description}",
       "input_type": "httpjson",
       "input_variables_json": "${jsonencode({\n  api_host = var.api_host\n  delegated_account = var.delegated_account\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  jwt_file = var.jwt_file\n  jwt_json = var.jwt_json\n  user_key = var.user_key\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "google_workspace",
-      "package_policy_name": "google_workspace-device-${var.fleet_data_stream_namespace}",
+      "package_policy_name": "google_workspace-device-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "google_workspace",
       "source": "../../fleet_package_policy"
