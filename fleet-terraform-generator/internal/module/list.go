@@ -82,7 +82,7 @@ func List(dir string) (Specifiers, error) {
 	// Generate the product of policy_template x data_stream x input.
 	err := walkPackages(dir, func(pkg *fleetpkg.Integration, err error) error {
 		if err != nil {
-			log.Println(err)
+			log.Println("[WARN] Ignoring package:", err)
 			return nil
 		}
 
