@@ -40,12 +40,9 @@ type Terraform struct {
 	File *terraform.File
 }
 
-var allowVarShadowing bool
-
 // Generate generates a Terraform module.
-func Generate(path, policyTemplateName, dataStreamName, inputName string, allowVariableShadowing bool) (*Terraform, error) {
+func Generate(path, policyTemplateName, dataStreamName, inputName string, ignoreVariableShadowing bool) (*Terraform, error) {
 	// Read in the package metadata.
-	allowVarShadowing = allowVariableShadowing
 	pkg, err := fleetpkg.Read(path)
 	if err != nil {
 		return nil, err
@@ -147,24 +144,24 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, allowV
 	}
 
 	// Iterate over all variables in the package and create Terraform variables.
-	packageLevelVarAssociations, err := addVariables(pkg.Manifest.Vars, tfVariables)
+	packageLevelVarAssociations, err := addVariables(pkg.Manifest.Vars, tfVariables, ignoreVariableShadowing)
 	if err != nil {
 		return nil, fmt.Errorf("error adding package level variables: %w", err)
 	}
-	policyTemplateLevelVarAssociations, err := addVariables(policyTemplate.Vars, tfVariables)
+	policyTemplateLevelVarAssociations, err := addVariables(policyTemplate.Vars, tfVariables, ignoreVariableShadowing)
 	if err != nil {
 		return nil, fmt.Errorf("error adding policy template level variables: %w", err)
 	}
 	var inputLevelVarAssociations map[string]string
 	if policyTemplateInput != nil {
-		inputLevelVarAssociations, err = addVariables(policyTemplateInput.Vars, tfVariables)
+		inputLevelVarAssociations, err = addVariables(policyTemplateInput.Vars, tfVariables, ignoreVariableShadowing)
 		if err != nil {
 			return nil, fmt.Errorf("error adding input level variables: %w", err)
 		}
 	}
 	var dataStreamVarAssociations map[string]string
 	if stream != nil {
-		dataStreamVarAssociations, err = addVariables(stream.Vars, tfVariables)
+		dataStreamVarAssociations, err = addVariables(stream.Vars, tfVariables, ignoreVariableShadowing)
 		if err != nil {
 			return nil, fmt.Errorf("error adding data stream level variables: %w", err)
 		}
@@ -244,10 +241,10 @@ type moduleVariable struct {
 // It returns an error if a variable with the given name already exists in the Terraform
 // module. It returns an associations mapping that contains a mapping of Fleet variable
 // names to Terraform variable names.
-func addVariables(vars []fleetpkg.Var, m map[string]moduleVariable) (associations map[string]string, err error) {
+func addVariables(vars []fleetpkg.Var, m map[string]moduleVariable, ignoreShadowing bool) (associations map[string]string, err error) {
 	associations = make(map[string]string, len(vars))
 	for _, v := range vars {
-		tfName, err := addVariable(v, m)
+		tfName, err := addVariable(v, m, ignoreShadowing)
 		if err != nil {
 			return nil, fmt.Errorf("error adding variable %q: %w", v.Name, err)
 		}
@@ -257,7 +254,7 @@ func addVariables(vars []fleetpkg.Var, m map[string]moduleVariable) (association
 	return associations, nil
 }
 
-func addVariable(v fleetpkg.Var, m map[string]moduleVariable) (tfName string, err error) {
+func addVariable(v fleetpkg.Var, m map[string]moduleVariable, ignoreShadowing bool) (tfName string, err error) {
 	tfVar := terraform.Variable{
 		Description: v.Description,
 	}
@@ -285,7 +282,7 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable) (tfName string, er
 	}
 
 	// Don't allow variables shadowing. See https://github.com/elastic/package-spec/issues/421
-	if !allowVarShadowing {
+	if !ignoreShadowing {
 		if existing, found := m[name]; found {
 			if existing.Fleet != nil {
 				msg := fmt.Sprintf("duplicate variable %q found at both\n\t%s:%d\n\t%s:%d", name,

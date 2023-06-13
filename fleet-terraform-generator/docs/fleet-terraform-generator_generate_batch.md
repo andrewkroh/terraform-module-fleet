@@ -15,6 +15,7 @@ fleet-terraform-generator generate batch [flags]
 ### Options inherited from parent commands
 
 ```
+      --ignore-var-shadow     Ignore variable shadowing errors in Fleet packages.
       --out string            Output path. It creates a new sub-directory named based on the package, policy template, data stream, and input.
       --packages-dir string   Directory containing Fleet packages.
 ```

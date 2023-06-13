@@ -31,12 +31,12 @@ import (
 )
 
 const (
-	generatePackageFlagName                = "package"
-	generatePolicyTemplateFlagName         = "policy-template"
-	generateDataStreamFlagName             = "data-stream"
-	generateInputFlagName                  = "input"
-	generateOutputPathFlagName             = "out"
-	generateAllowVariableShadowingFlagName = "allow-var-shadow"
+	generatePackageFlagName                 = "package"
+	generatePolicyTemplateFlagName          = "policy-template"
+	generateDataStreamFlagName              = "data-stream"
+	generateInputFlagName                   = "input"
+	generateOutputPathFlagName              = "out"
+	generateIgnoreVariableShadowingFlagName = "ignore-var-shadow"
 )
 
 func GenerateCmd() *cobra.Command {
@@ -59,7 +59,7 @@ func GenerateCmd() *cobra.Command {
 	cmd.Flags().StringP(generateInputFlagName, "i", "", "Input name.")
 	must(cmd.MarkFlagRequired(generateInputFlagName))
 
-	cmd.PersistentFlags().Bool(generateAllowVariableShadowingFlagName, false, "Allow generator to process when encountering Variable Shadowing")
+	cmd.PersistentFlags().Bool(generateIgnoreVariableShadowingFlagName, false, "Ignore variable shadowing errors in Fleet packages.")
 
 	cmd.PersistentFlags().String(generateOutputPathFlagName, "", "Output path. It creates a new sub-directory named based on the package, policy template, data stream, and input.")
 	must(cmd.MarkPersistentFlagRequired(generateOutputPathFlagName))
@@ -95,7 +95,7 @@ func generateModuleRunE(cmd *cobra.Command, _ []string) error {
 	if err != nil {
 		return err
 	}
-	allowVariableShadowing, err := cmd.Flags().GetBool(generateAllowVariableShadowingFlagName)
+	allowVariableShadowing, err := cmd.Flags().GetBool(generateIgnoreVariableShadowingFlagName)
 	if err != nil {
 		return err
 	}
@@ -140,7 +140,7 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 	if !info.IsDir() {
 		return fmt.Errorf("output dir %q is not a directory", outputDir)
 	}
-	allowVariableShadowing, err := cmd.Flags().GetBool(generateAllowVariableShadowingFlagName)
+	allowVariableShadowing, err := cmd.Flags().GetBool(generateIgnoreVariableShadowingFlagName)
 	if err != nil {
 		return err
 	}
