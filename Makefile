@@ -11,8 +11,13 @@ fleet-modules: install
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
+		"system/*/application/winlog" \
+		"system/*/security/winlog" \
 		"ti_abusech/*/*/httpjson" \
 		"ti_recordedfuture/*/*/httpjson" \
+		"windows/*/powershell*/winlog" \
+		"windows/*/*sysmon*/winlog" \
+		"winlog/*/*/winlog" \
 		"cel/*/*" \
 		"log/*/*" \
 		"sql/*/*"
