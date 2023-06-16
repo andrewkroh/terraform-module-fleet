@@ -33,7 +33,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the log package to use.",
-      "default": "2.0.0"
+      "default": "2.1.0"
     },
     "paths": {
       "type": "list(string)",
