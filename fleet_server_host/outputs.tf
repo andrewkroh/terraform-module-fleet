@@ -1,3 +1,3 @@
 output "id" {
-  value = restapi_object.fleet_host.id
+  value = elasticstack_fleet_server_host.fleet_host.id
 }

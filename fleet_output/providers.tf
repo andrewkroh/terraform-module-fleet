@@ -1,8 +1,8 @@
 terraform {
   required_providers {
-    restapi = {
-      source  = "Mastercard/restapi"
-      version = ">= 1.18.0"
+    elasticstack = {
+      source  = "elastic/elasticstack"
+      version = "~> 0.6.2"
     }
   }
 }

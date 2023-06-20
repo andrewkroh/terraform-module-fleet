@@ -1,3 +1,3 @@
 output "id" {
-  value = restapi_object.elasticsearch_output.id
+  value = elasticstack_fleet_output.elasticsearch_output.id
 }
