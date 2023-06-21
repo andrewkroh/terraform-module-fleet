@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_restapi"></a> [restapi](#requirement\_restapi) | >= 1.18.0 |
+| <a name="requirement_elasticstack"></a> [elasticstack](#requirement\_elasticstack) | ~> 0.6.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_restapi"></a> [restapi](#provider\_restapi) | >= 1.18.0 |
+| <a name="provider_elasticstack"></a> [elasticstack](#provider\_elasticstack) | ~> 0.6.2 |
 
 ## Modules
 
@@ -19,8 +19,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [restapi_object.agent_policy](https://registry.terraform.io/providers/Mastercard/restapi/latest/docs/resources/object) | resource |
-| [restapi_object.enrollment_token](https://registry.terraform.io/providers/Mastercard/restapi/latest/docs/data-sources/object) | data source |
+| [elasticstack_fleet_agent_policy.agent_policy](https://registry.terraform.io/providers/elastic/elasticstack/latest/docs/resources/fleet_agent_policy) | resource |
+| [elasticstack_fleet_enrollment_tokens.enrollment_token](https://registry.terraform.io/providers/elastic/elasticstack/latest/docs/data-sources/fleet_enrollment_tokens) | data source |
 
 ## Inputs
 
@@ -35,6 +35,7 @@ No modules.
 | <a name="input_monitoring_output_id"></a> [monitoring\_output\_id](#input\_monitoring\_output\_id) | ID of the Fleet monitoring output. Use this to choose a non-default output. | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of Agent policy. | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace for the policy. Controls namespace of monitoring data. | `string` | `"default"` | no |
+| <a name="input_skip_destroy"></a> [skip\_destroy](#input\_skip\_destroy) | If true, the agent policy will not be deleted at destroy time, and instead just removed from the Terraform state. | `bool` | `false` | no |
 
 ## Outputs
 

@@ -44,3 +44,9 @@ variable "fleet_server_host_id" {
   type        = string
   default     = null
 }
+
+variable "skip_destroy" {
+  description = "If true, the agent policy will not be deleted at destroy time, and instead just removed from the Terraform state."
+  type        = bool
+  default     = false
+}
