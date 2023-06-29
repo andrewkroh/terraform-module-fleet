@@ -66,22 +66,8 @@
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [
         "application",
-        "auth",
-        "core",
-        "cpu",
-        "diskio",
-        "filesystem",
-        "fsstat",
-        "load",
-        "memory",
-        "network",
-        "process",
-        "process_summary",
         "security",
-        "socket_summary",
-        "syslog",
-        "system",
-        "uptime"
+        "system"
       ],
       "data_stream": "application",
       "data_stream_variables_json": "${jsonencode({\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
