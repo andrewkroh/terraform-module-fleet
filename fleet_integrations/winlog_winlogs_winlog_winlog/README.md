@@ -33,7 +33,7 @@ No resources.
 | <a name="input_ignore_older"></a> [ignore\_older](#input\_ignore\_older) | If this option is specified, events that are older than the specified amount of time are ignored. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h". | `string` | `"72h"` | no |
 | <a name="input_language"></a> [language](#input\_language) | The language ID the events will be rendered in. The language will be forced regardless of the system language. A complete list of language IDs can be found [here](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). It defaults to `0`, which indicates to use the system language. E.g.: `0x0409` for `en-US` | `string` | `0` | no |
 | <a name="input_preserve_original_event"></a> [preserve\_original\_event](#input\_preserve\_original\_event) | Preserves a raw copy of the original XML event, added to the field `event.original` | `bool` | `false` | no |
-| <a name="input_providers"></a> [providers](#input\_providers) | A list of providers (source names) to include. | `list(string)` | `null` | no |
+| <a name="input_providers_names"></a> [providers\_names](#input\_providers\_names) | A list of providers (source names) to include. | `list(string)` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to include in the published event | `list(string)` | `null` | no |
 
 ## Outputs

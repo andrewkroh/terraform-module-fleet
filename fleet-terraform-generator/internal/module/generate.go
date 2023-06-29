@@ -297,6 +297,11 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable, ignoreShadowing bo
 		name += "_yaml"
 	}
 
+	// 'providers' is a reserved word in Terraform.
+	if name == "providers" {
+		name = "providers_names"
+	}
+
 	// Don't allow variables shadowing. See https://github.com/elastic/package-spec/issues/421
 	if !ignoreShadowing {
 		if existing, found := m[name]; found {
