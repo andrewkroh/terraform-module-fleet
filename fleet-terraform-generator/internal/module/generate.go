@@ -182,13 +182,29 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		return nil, err
 	}
 
-	// Get a list of data streams so that we can disable all the ones not being
-	// used. This avoids validation errors for required variables.
-	allDataStreams := maps.Keys(pkg.DataStreams)
-	if len(policyTemplate.DataStreams) > 0 {
-		allDataStreams = policyTemplate.DataStreams
+	dataStreamsForInput := []string{} // Declare empty slice.
+	{
+		// Get a list of data streams so that we can disable all the ones not being
+		// used. This avoids validation errors for required variables.
+		allDataStreams := maps.Keys(pkg.DataStreams)
+		// If the policy template declares specific data streams then honor that list.
+		if len(policyTemplate.DataStreams) > 0 {
+			allDataStreams = policyTemplate.DataStreams
+		}
+		// Filter data streams to only include ones with the selected input type.
+		for _, dataStreamName := range allDataStreams {
+			ds, found := pkg.DataStreams[dataStreamName]
+			if !found {
+				continue
+			}
+			for _, stream := range ds.Manifest.Streams {
+				if stream.Input == inputName {
+					dataStreamsForInput = append(dataStreamsForInput, dataStreamName)
+				}
+			}
+		}
+		sort.Strings(dataStreamsForInput)
 	}
-	sort.Strings(allDataStreams)
 
 	packagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}"
 	if dataStreamName == "" {
@@ -214,7 +230,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 					PackageVariablesJSON:    packageLevelVarExpression,
 					InputVariablesJSON:      inputLevelVarExpression,
 					DataStreamVariablesJSON: dataStreamVarExpression,
-					AllDataStreams:          allDataStreams,
+					AllDataStreams:          dataStreamsForInput,
 				}),
 			},
 		},

@@ -66,10 +66,8 @@
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [
         "forwarded",
-        "perfmon",
         "powershell",
         "powershell_operational",
-        "service",
         "sysmon_operational"
       ],
       "data_stream": "sysmon_operational",
