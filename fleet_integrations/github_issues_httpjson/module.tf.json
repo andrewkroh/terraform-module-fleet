@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the github package to use.",
-      "default": "1.13.0"
+      "default": "1.15.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -53,7 +53,7 @@
     },
     "interval": {
       "type": "string",
-      "description": "Interval at which the alerts will be pulled. The value must be between 2m and 1h.",
+      "description": "Interval at which the alerts will be pulled. The value must be between 2m and 1h. Supported units for this parameter are h/m/s.",
       "default": "10m",
       "nullable": false
     },

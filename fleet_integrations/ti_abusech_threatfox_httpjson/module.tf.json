@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "1.13.0"
+      "default": "1.14.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -42,6 +42,7 @@
     },
     "interval": {
       "type": "string",
+      "description": "Interval at which the logs will be pulled. Supported units for this parameter are h/m/s.",
       "default": "24h",
       "nullable": false
     },
