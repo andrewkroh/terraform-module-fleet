@@ -7,6 +7,12 @@
       "default": "cel.cel",
       "nullable": false
     },
+    "delete_redacted_fields": {
+      "type": "bool",
+      "description": "The default behavior for field redaction is to replace characters with `*`s. If field value length or presence will\nleak information, the fields can be deleted from logging by setting this configuration to true.\n",
+      "default": false,
+      "nullable": false
+    },
     "enable_request_tracer": {
       "type": "bool",
       "description": "The request tracer logs HTTP requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-cel.html#_resource_tracer_filename) for details.\n",
@@ -34,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cel package to use.",
-      "default": "1.0.0"
+      "default": "1.1.0"
     },
     "oauth_azure_resource": {
       "type": "string",
@@ -124,6 +130,11 @@
       "description": "Program is the CEL program that is executed each polling period to get and transform the API data.\nMore information can be found in the [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-cel.html#_execution).\n",
       "default": "# // Fetch the agent's public IP every minute and note when the last request was made.\n# // It does not use the Resource URL configuration value.\n# bytes(get(\"https://api.ipify.org/?format=json\").Body).as(body, {\n#     \"events\": [body.decode_json().with({\n#         \"last_requested_at\": has(state.cursor) \u0026\u0026 has(state.cursor.last_requested_at) ?\n#             state.cursor.last_requested_at\n#         :\n#             now\n#     })],\n#     \"cursor\": {\"last_requested_at\": now}\n# })\n",
       "nullable": false
+    },
+    "redact_fields": {
+      "type": "list(string)",
+      "description": "Fields to redact in debug logs. When logging at debug-level the input state and CEL evaluation state are included\nin logs. This may leak secrets, so list sensitive state fields in this configuration.\n",
+      "default": null
     },
     "regexp_yaml": {
       "type": "string",
@@ -225,7 +236,7 @@
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  \"data_stream.dataset\" = var.data_stream_dataset\n  enable_request_tracer = var.enable_request_tracer\n  oauth_azure_resource = var.oauth_azure_resource\n  oauth_azure_tenant_id = var.oauth_azure_tenant_id\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  oauth_google_credentials_file = var.oauth_google_credentials_file\n  oauth_google_credentials_json = var.oauth_google_credentials_json\n  oauth_google_delegated_account = var.oauth_google_delegated_account\n  oauth_google_jwt_file = var.oauth_google_jwt_file\n  oauth_google_jwt_json = var.oauth_google_jwt_json\n  oauth_id = var.oauth_id\n  oauth_provider = var.oauth_provider\n  oauth_scopes = var.oauth_scopes\n  oauth_secret = var.oauth_secret\n  oauth_token_url = var.oauth_token_url\n  password = var.password\n  pipeline = var.pipeline\n  processors = var.processors_yaml\n  program = var.program\n  regexp = var.regexp_yaml\n  resource_interval = var.resource_interval\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  resource_url = var.resource_url\n  state = var.state_yaml\n  tags = var.tags\n  username = var.username\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  \"data_stream.dataset\" = var.data_stream_dataset\n  delete_redacted_fields = var.delete_redacted_fields\n  enable_request_tracer = var.enable_request_tracer\n  oauth_azure_resource = var.oauth_azure_resource\n  oauth_azure_tenant_id = var.oauth_azure_tenant_id\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  oauth_google_credentials_file = var.oauth_google_credentials_file\n  oauth_google_credentials_json = var.oauth_google_credentials_json\n  oauth_google_delegated_account = var.oauth_google_delegated_account\n  oauth_google_jwt_file = var.oauth_google_jwt_file\n  oauth_google_jwt_json = var.oauth_google_jwt_json\n  oauth_id = var.oauth_id\n  oauth_provider = var.oauth_provider\n  oauth_scopes = var.oauth_scopes\n  oauth_secret = var.oauth_secret\n  oauth_token_url = var.oauth_token_url\n  password = var.password\n  pipeline = var.pipeline\n  processors = var.processors_yaml\n  program = var.program\n  redact_fields = var.redact_fields\n  regexp = var.regexp_yaml\n  resource_interval = var.resource_interval\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  resource_url = var.resource_url\n  state = var.state_yaml\n  tags = var.tags\n  username = var.username\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "namespace": "${var.fleet_data_stream_namespace}",
