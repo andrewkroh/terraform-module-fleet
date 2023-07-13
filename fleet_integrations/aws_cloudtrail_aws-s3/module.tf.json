@@ -61,7 +61,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "1.46.2"
+      "default": "1.46.3"
     },
     "max_number_of_messages": {
       "type": "number",
