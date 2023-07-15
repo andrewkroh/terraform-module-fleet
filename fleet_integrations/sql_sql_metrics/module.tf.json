@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sql package to use.",
-      "default": "0.2.1"
+      "default": "0.3.0"
     },
     "hosts": {
       "type": "list(string)",
@@ -36,6 +36,11 @@
         "root:test@tcp(127.0.0.1:3306)/"
       ],
       "nullable": false
+    },
+    "merge_results": {
+      "type": "bool",
+      "description": "Merge results from multiple queries to a single event (restrictions apply)",
+      "default": false
     },
     "period": {
       "type": "string",
@@ -58,7 +63,7 @@
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  driver = var.driver\n  hosts = var.hosts\n  period = var.period\n  sql_queries = var.sql_queries_yaml\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  sql_queries = var.sql_queries_yaml\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "sql/metrics",
       "namespace": "${var.fleet_data_stream_namespace}",
