@@ -62,6 +62,7 @@
     "fleet_package_policy": {
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [],
+      "all_input_types": [],
       "data_stream": "",
       "data_stream_variables_json": "${jsonencode({\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  sql_queries = var.sql_queries_yaml\n})}",
       "description": "${var.fleet_package_policy_description}",

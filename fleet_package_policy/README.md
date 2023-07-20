@@ -26,7 +26,8 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_agent_policy_id"></a> [agent\_policy\_id](#input\_agent\_policy\_id) | ID of the agent policy to add the package policy to. | `string` | n/a | yes |
-| <a name="input_all_data_streams"></a> [all\_data\_streams](#input\_all\_data\_streams) | List of all data streams in the package policy. This is necessary to disable all data streams except the one being used. | `list(string)` | `[]` | no |
+| <a name="input_all_data_streams"></a> [all\_data\_streams](#input\_all\_data\_streams) | List of all data streams associated to the input type in the policy template. This is necessary to disable all data streams except the one being used. | `list(string)` | `[]` | no |
+| <a name="input_all_input_types"></a> [all\_input\_types](#input\_all\_input\_types) | List of all input types in the package policy template. This is necessary to disable all inputs except the one being used. | `list(string)` | `[]` | no |
 | <a name="input_data_stream"></a> [data\_stream](#input\_data\_stream) | Name of the data\_stream within the integration (e.g. "log"). | `any` | n/a | yes |
 | <a name="input_data_stream_variables_json"></a> [data\_stream\_variables\_json](#input\_data\_stream\_variables\_json) | JSON encoded data stream specific variables. | `string` | `"{}"` | no |
 | <a name="input_description"></a> [description](#input\_description) | Description to apply to the package policy. | `string` | `""` | no |

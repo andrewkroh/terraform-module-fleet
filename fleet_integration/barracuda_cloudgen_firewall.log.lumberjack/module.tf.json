@@ -81,6 +81,9 @@
       "all_data_streams": [
         "log"
       ],
+      "all_input_types": [
+        "lumberjack"
+      ],
       "data_stream": "log",
       "data_stream_variables_json": "${jsonencode({\n  listen_address = var.listen_address\n  listen_port = var.listen_port\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  ssl = var.ssl_yaml\n  tags = var.tags\n  versions = var.versions\n})}",
       "description": "${var.fleet_package_policy_description}",

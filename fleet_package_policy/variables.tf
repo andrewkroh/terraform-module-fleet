@@ -88,7 +88,13 @@ variable "input_variables_json" {
 }
 
 variable "all_data_streams" {
-  description = "List of all data streams in the package policy. This is necessary to disable all data streams except the one being used."
+  description = "List of all data streams associated to the input type in the policy template. This is necessary to disable all data streams except the one being used."
+  type        = list(string)
+  default     = []
+}
+
+variable "all_input_types" {
+  description = "List of all input types in the package policy template. This is necessary to disable all inputs except the one being used."
   type        = list(string)
   default     = []
 }

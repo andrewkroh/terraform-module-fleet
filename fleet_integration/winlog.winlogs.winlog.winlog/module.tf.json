@@ -85,6 +85,10 @@
       "all_data_streams": [
         "winlog"
       ],
+      "all_input_types": [
+        "winlog",
+        "httpjson"
+      ],
       "data_stream": "winlog",
       "data_stream_variables_json": "${jsonencode({\n  channel = var.channel\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  preserve_original_event = var.preserve_original_event\n  providers = var.providers_names\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
