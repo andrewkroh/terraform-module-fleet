@@ -19,7 +19,7 @@ module "agent_policy_github" {
 
 // Add GitHub Issues data stream to the agent policy.
 module "integration_github_issues" {
-  source                = "../../fleet_integrations/github_issues_httpjson"
+  source                = "../../fleet_integration/github.issues.httpjson"
   fleet_agent_policy_id = module.agent_policy_github.id
   access_token          = var.github_token
   owner                 = "elastic"

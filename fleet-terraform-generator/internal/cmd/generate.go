@@ -42,7 +42,7 @@ const (
 func GenerateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "generate",
-		Short: "List all Fleet packages, policy templates, data streams, and inputs.",
+		Short: "Generate a Terraform module for managing a Fleet package policy.",
 		RunE:  generateModuleRunE,
 	}
 	cmd.PersistentFlags().String(packagesDirectoryFlagName, "", "Directory containing Fleet packages.")
@@ -61,7 +61,7 @@ func GenerateCmd() *cobra.Command {
 
 	cmd.PersistentFlags().Bool(generateIgnoreVariableShadowingFlagName, false, "Ignore variable shadowing errors in Fleet packages.")
 
-	cmd.PersistentFlags().String(generateOutputPathFlagName, "", "Output path. It creates a new sub-directory named based on the package, policy template, data stream, and input.")
+	cmd.PersistentFlags().String(generateOutputPathFlagName, "", "Output path. It creates a new sub-directory named based on the package type, package name, policy template, data stream, and input.")
 	must(cmd.MarkPersistentFlagRequired(generateOutputPathFlagName))
 
 	batchCmd := &cobra.Command{
@@ -111,7 +111,7 @@ func generateModuleRunE(cmd *cobra.Command, _ []string) error {
 		return fmt.Errorf("output dir %q is not a directory", outputDir)
 	}
 
-	err = generateTerraformModuleToDisk(pkgsDir, packageName, policyTemplateName, dataStreamName, inputName, outputDir, allowVariableShadowing)
+	err = generateTerraformModuleToDisk(pkgsDir, policyTemplateName, dataStreamName, inputName, outputDir, allowVariableShadowing)
 	if err != nil {
 		s := module.Specifier{
 			Integration:    packageName,
@@ -156,7 +156,7 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 
 	var errs []error
 	for _, s := range specs {
-		if err = generateTerraformModuleToDisk(s.Path, s.Integration, s.PolicyTemplate, s.DataStream, s.Input, outputDir, allowVariableShadowing); err != nil {
+		if err = generateTerraformModuleToDisk(s.Path, s.PolicyTemplate, s.DataStream, s.Input, outputDir, allowVariableShadowing); err != nil {
 			errs = append(errs, fmt.Errorf("error generating module for %s: %w", s.String(), err))
 		}
 	}
@@ -167,14 +167,14 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func generateTerraformModuleToDisk(path, packageName, policyTemplateName, dataStreamName, inputName, outputDir string, allowVariableShadowing bool) error {
+func generateTerraformModuleToDisk(path, policyTemplateName, dataStreamName, inputName, outputDir string, allowVariableShadowing bool) error {
 	tf, err := module.Generate(path, policyTemplateName, dataStreamName, inputName, allowVariableShadowing)
 	if err != nil {
 		return err
 	}
 
-	outputPath := filepath.Join(outputDir, tf.Name, "module.tf.json")
-	if err = os.Mkdir(filepath.Dir(outputPath), 0o700); err != nil {
+	outputPath := filepath.Join(outputDir, "fleet_"+tf.PackageType, tf.Name, "module.tf.json")
+	if err = os.MkdirAll(filepath.Dir(outputPath), 0o700); err != nil {
 		if !errors.Is(err, os.ErrExist) {
 			return fmt.Errorf("failed to create directory for module: %w", err)
 		}

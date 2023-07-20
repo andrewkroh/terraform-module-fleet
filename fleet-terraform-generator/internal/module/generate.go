@@ -36,8 +36,9 @@ import (
 )
 
 type Terraform struct {
-	Name string
-	File *terraform.File
+	Name        string
+	PackageType string // Package type (input or integration).
+	File        *terraform.File
 }
 
 // Generate generates a Terraform module.
@@ -242,9 +243,19 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		},
 	}
 
+	pkgType := manifest.Type
+	if pkgType == "" {
+		pkgType = "integration"
+	}
+
+	tfModuleName := manifest.Name
+	if pkgType == "integration" {
+		tfModuleName = moduleName(manifest.Name, policyTemplateName, dataStreamName, inputName)
+	}
 	return &Terraform{
-		Name: moduleName(manifest.Name, policyTemplateName, dataStreamName, inputName),
-		File: tf,
+		Name:        tfModuleName,
+		PackageType: pkgType,
+		File:        tf,
 	}, nil
 }
 
@@ -454,9 +465,11 @@ func moduleName(integration, policyTemplate, dataStream, input string) string {
 		name = append(name, dataStream)
 	}
 	name = append(name, strings.ReplaceAll(input, "/", "_"))
-	return strings.Join(name, "_")
+	return strings.Join(name, ".")
 }
 
+// quoteIfNeeded surrounds a variable name with quotes if it contains dots.
+// HCL used in Terraform does not allow names with dots.
 func quoteIfNeeded(name string) string {
 	if strings.Contains(name, ".") {
 		return strconv.Quote(name)
