@@ -206,6 +206,10 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		}
 		sort.Strings(dataStreamsForInput)
 	}
+	inputTypesForPolicyTemplate := []string{} // Declare empty slice.
+	for _, input := range policyTemplate.Inputs {
+		inputTypesForPolicyTemplate = append(inputTypesForPolicyTemplate, input.Type)
+	}
 
 	packagePolicyName := manifest.Name + "-" + dataStreamName + "-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}"
 	if dataStreamName == "" {
@@ -232,6 +236,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 					InputVariablesJSON:      inputLevelVarExpression,
 					DataStreamVariablesJSON: dataStreamVarExpression,
 					AllDataStreams:          dataStreamsForInput,
+					AllInputTypes:           inputTypesForPolicyTemplate,
 				}),
 			},
 		},
@@ -387,6 +392,7 @@ type FleetPackagePolicyModule struct {
 	InputVariablesJSON      string   `json:"input_variables_json,omitempty"`
 	DataStreamVariablesJSON string   `json:"data_stream_variables_json,omitempty"`
 	AllDataStreams          []string `json:"all_data_streams"`
+	AllInputTypes           []string `json:"all_input_types"` // All input types in the policy template.
 }
 
 func toMap(v any) map[string]any {

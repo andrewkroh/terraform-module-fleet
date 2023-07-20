@@ -4,14 +4,22 @@ locals {
   unused_data_streams = [for data_stream in var.all_data_streams :
     data_stream if data_stream != var.data_stream
   ]
+  unused_input_types = [for input_type in var.all_input_types :
+    input_type if input_type != var.input_type
+  ]
 
-  # NOTE: This is a really painful part of Fleet. If package contains a stream that is enabled by default
+  # NOTE: This is a really painful part of Fleet. If package contains an input or stream that is enabled by default
   # and it contains required variables, then you must explicitly disable the streams in order to pass
   # validation. Beats had the same issue originally that made doing IaC hard (see
   # https://github.com/elastic/beats/issues/17256). Any time a package adds a new data stream that is
   # enabled by default AND contains required variables then upgrades become breaking changes.
   disabled_stream_config = { for data_stream in local.unused_data_streams :
     "${var.package_name}.${data_stream}" => {
+      enabled = false
+    }
+  }
+  disabled_inputs_config = { for input_type in local.unused_input_types :
+    "${var.package_name}-${input_type}" => {
       enabled = false
     }
   }
@@ -31,7 +39,7 @@ resource "restapi_object" "package_policy" {
     namespace   = var.namespace
     description = var.description
     vars        = var.package_variables_json
-    inputs = {
+    inputs = merge({
       "${var.policy_template}-${var.input_type}" = {
         enabled = true
         vars    = var.input_variables_json == null ? null : jsondecode(var.input_variables_json)
@@ -43,6 +51,6 @@ resource "restapi_object" "package_policy" {
           }
         }, local.disabled_stream_config)
       }
-    }
+    }, local.disabled_inputs_config)
   })
 }

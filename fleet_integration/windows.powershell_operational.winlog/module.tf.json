@@ -71,6 +71,11 @@
         "powershell_operational",
         "sysmon_operational"
       ],
+      "all_input_types": [
+        "winlog",
+        "windows/metrics",
+        "httpjson"
+      ],
       "data_stream": "powershell_operational",
       "data_stream_variables_json": "${jsonencode({\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
