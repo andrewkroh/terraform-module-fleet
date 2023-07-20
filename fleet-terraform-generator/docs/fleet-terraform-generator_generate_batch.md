@@ -16,12 +16,12 @@ fleet-terraform-generator generate batch [flags]
 
 ```
       --ignore-var-shadow     Ignore variable shadowing errors in Fleet packages.
-      --out string            Output path. It creates a new sub-directory named based on the package, policy template, data stream, and input.
+      --out string            Output path. It creates a new sub-directory named based on the package type, package name, policy template, data stream, and input.
       --packages-dir string   Directory containing Fleet packages.
 ```
 
 ### SEE ALSO
 
-* [fleet-terraform-generator generate](fleet-terraform-generator_generate.md)	 - List all Fleet packages, policy templates, data streams, and inputs.
+* [fleet-terraform-generator generate](fleet-terraform-generator_generate.md)	 - Generate a Terraform module for managing a Fleet package policy.
 
 

@@ -1,6 +1,6 @@
 ## fleet-terraform-generator generate
 
-List all Fleet packages, policy templates, data streams, and inputs.
+Generate a Terraform module for managing a Fleet package policy.
 
 ```
 fleet-terraform-generator generate [flags]
@@ -13,7 +13,7 @@ fleet-terraform-generator generate [flags]
   -h, --help                     help for generate
       --ignore-var-shadow        Ignore variable shadowing errors in Fleet packages.
   -i, --input string             Input name.
-      --out string               Output path. It creates a new sub-directory named based on the package, policy template, data stream, and input.
+      --out string               Output path. It creates a new sub-directory named based on the package type, package name, policy template, data stream, and input.
   -p, --package string           Package name.
       --packages-dir string      Directory containing Fleet packages.
   -t, --policy-template string   Policy template name.

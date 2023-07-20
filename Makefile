@@ -4,9 +4,14 @@ all: fmt docs modules validate
 .PHONY: modules
 modules: fleet-modules terraform-docs
 
+# Generate fleet module. The modules are specified using selectors that are formatted as:
+#    {package_name}/{policy_template}/{data_stream}/{input_type} - for integrations
+#    {package_name/{policy_template}/{input_type} - for inputs
+# Any slashes (/) contained in the attribute values are replaced with underscores. For
+# example, if matching the input_type of "prometheus/metrics" use "prometheus_metrics".
 .PHONY: fleet-modules
 fleet-modules: install
-	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out fleet_integrations \
+	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out . \
 		"aws/cloudtrail/*/aws-s3" \
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"github/*/issues/httpjson" \
@@ -45,7 +50,7 @@ terraform-docs:
 	terraform-docs markdown table --output-file="README.md" fleet_output
 	terraform-docs markdown table --output-file="README.md" fleet_package_policy
 	terraform-docs markdown table --output-file="README.md" fleet_server_host
-	@for i in $(shell find fleet_integrations/ -name module.tf.json); do \
+	@for i in $(shell find fleet_integration/ fleet_input/ -name module.tf.json); do \
 	  module=$$(dirname $$i); \
 	  terraform-docs markdown table --output-file="README.md" "$$module" || exit 1; \
 	done
