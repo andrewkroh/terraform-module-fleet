@@ -28,16 +28,16 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "1.15.1"
+      "default": "1.15.2"
     },
     "http_client_timeout": {
       "type": "string",
       "default": "30s"
     },
     "initial_interval": {
-      "type": "string",
-      "description": "How far back to look for indicators the first time the agent is started. Defaults to 30 days, can be any number between 1-90.",
-      "default": "30",
+      "type": "number",
+      "description": "How far back to look for indicators the first time the agent is started. Defaults to 7 days, can be any number between 1-7.",
+      "default": 7,
       "nullable": false
     },
     "interval": {
