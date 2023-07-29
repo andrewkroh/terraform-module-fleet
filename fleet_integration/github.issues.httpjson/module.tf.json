@@ -45,10 +45,11 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the github package to use.",
-      "default": "1.17.0"
+      "default": "1.18.0"
     },
     "http_client_timeout": {
       "type": "string",
+      "description": "Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h.",
       "default": "60s"
     },
     "interval": {

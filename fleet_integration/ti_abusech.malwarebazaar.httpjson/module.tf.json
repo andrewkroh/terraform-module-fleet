@@ -28,10 +28,11 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "1.15.2"
+      "default": "1.16.0"
     },
     "http_client_timeout": {
       "type": "string",
+      "description": "Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h.",
       "default": "30s"
     },
     "interval": {

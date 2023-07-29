@@ -51,7 +51,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use.",
-      "default": "1.12.0"
+      "default": "1.13.0"
     },
     "interval": {
       "type": "string",
@@ -91,7 +91,7 @@
     },
     "timeout": {
       "type": "string",
-      "description": "Must provide enough time for downloading and processing the risklist. Use Go Duration syntax (eg. 5m)\n",
+      "description": "Must provide enough time for downloading and processing the risklist. Valid time units are ns, us, ms, s, m, h.\n",
       "default": "5m",
       "nullable": false
     }

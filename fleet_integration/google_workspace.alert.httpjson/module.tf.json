@@ -45,11 +45,11 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
-      "default": "2.11.0"
+      "default": "2.12.0"
     },
     "http_client_timeout": {
       "type": "string",
-      "description": "Duration of the time limit on HTTP requests. NOTE: Valid time units are ns, us, ms, s, m, h.",
+      "description": "Duration of the time limit on HTTP requests. Valid time units are ns, us, ms, s, m, h.",
       "default": "60s",
       "nullable": false
     },
