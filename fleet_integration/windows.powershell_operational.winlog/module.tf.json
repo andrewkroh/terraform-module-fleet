@@ -29,7 +29,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the windows package to use.",
-      "default": "1.29.0"
+      "default": "1.30.0"
     },
     "ignore_older": {
       "type": "string",
@@ -67,6 +67,7 @@
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [
         "applocker_exe_and_dll",
+        "applocker_msi_and_script",
         "forwarded",
         "powershell",
         "powershell_operational",
