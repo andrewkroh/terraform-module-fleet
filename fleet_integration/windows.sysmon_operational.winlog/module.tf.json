@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the windows package to use.",
-      "default": "1.31.0"
+      "default": "1.32.0"
     },
     "ignore_older": {
       "type": "string",
@@ -68,6 +68,7 @@
         "applocker_exe_and_dll",
         "applocker_msi_and_script",
         "applocker_packaged_app_deployment",
+        "applocker_packaged_app_execution",
         "forwarded",
         "powershell",
         "powershell_operational",
