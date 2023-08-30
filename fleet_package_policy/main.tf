@@ -4,8 +4,8 @@ locals {
   unused_data_streams = [for data_stream in var.all_data_streams :
     data_stream if data_stream != var.data_stream
   ]
-  unused_input_types = [for input_type in var.all_input_types :
-    input_type if input_type != var.input_type
+  unused_policy_template_inputs = [for policy_template_input in var.all_policy_template_inputs :
+    policy_template_input if policy_template_input != "${var.policy_template}-${var.input_type}"
   ]
 
   # NOTE: This is a really painful part of Fleet. If package contains an input or stream that is enabled by default
@@ -18,8 +18,8 @@ locals {
       enabled = false
     }
   }
-  disabled_inputs_config = { for input_type in local.unused_input_types :
-    "${var.package_name}-${input_type}" => {
+  disabled_inputs_config = { for policy_template_input in local.unused_policy_template_inputs :
+    policy_template_input => {
       enabled = false
     }
   }

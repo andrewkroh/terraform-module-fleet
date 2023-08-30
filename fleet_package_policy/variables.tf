@@ -93,10 +93,9 @@ variable "all_data_streams" {
   default     = []
 }
 
-variable "all_input_types" {
-  description = "List of all input types in the package policy template. This is necessary to disable all inputs except the one being used."
+variable "all_policy_template_inputs" {
+  description = "List of all policy template and input type combos. This is necessary to disable all inputs except the one being used."
   type        = list(string)
   default     = []
 }
-
 
