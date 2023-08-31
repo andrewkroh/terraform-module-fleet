@@ -51,7 +51,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use.",
-      "default": "1.14.0"
+      "default": "1.15.0"
     },
     "interval": {
       "type": "string",
@@ -108,9 +108,9 @@
       "all_data_streams": [
         "threat"
       ],
-      "all_input_types": [
-        "httpjson",
-        "logfile"
+      "all_policy_template_inputs": [
+        "ti_recordedfuture-httpjson",
+        "ti_recordedfuture-logfile"
       ],
       "data_stream": "threat",
       "data_stream_variables_json": "${jsonencode({\n  api_token = var.api_token\n  custom_url = var.custom_url\n  enable_request_tracer = var.enable_request_tracer\n  endpoint = var.endpoint\n  entity = var.entity\n  interval = var.interval\n  list = var.list\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  tags = var.tags\n  timeout = var.timeout\n})}",

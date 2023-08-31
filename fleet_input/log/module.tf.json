@@ -60,7 +60,7 @@
     "fleet_package_policy": {
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [],
-      "all_input_types": [],
+      "all_policy_template_inputs": [],
       "data_stream": "",
       "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  paths = var.paths\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
