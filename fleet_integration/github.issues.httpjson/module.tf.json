@@ -128,8 +128,8 @@
         "issues",
         "secret_scanning"
       ],
-      "all_input_types": [
-        "httpjson"
+      "all_policy_template_inputs": [
+        "github-httpjson"
       ],
       "data_stream": "issues",
       "data_stream_variables_json": "${jsonencode({\n  access_token = var.access_token\n  api_url = var.api_url\n  filter = var.filter\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  labels = var.labels\n  owner = var.owner\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  repo = var.repo\n  since = var.since\n  ssl = var.ssl_yaml\n  state = var.state\n  tags = var.tags\n})}",

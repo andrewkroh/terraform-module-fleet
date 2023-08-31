@@ -120,8 +120,8 @@
         "token",
         "user_accounts"
       ],
-      "all_input_types": [
-        "httpjson"
+      "all_policy_template_inputs": [
+        "google_workspace-httpjson"
       ],
       "data_stream": "admin",
       "data_stream_variables_json": "${jsonencode({\n  interval = var.interval\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
