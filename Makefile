@@ -16,6 +16,7 @@ fleet-modules: install
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
+		"m365_defender/*/*/*" \
 		"system/*/application/winlog" \
 		"system/*/security/winlog" \
 		"ti_abusech/*/*/httpjson" \
