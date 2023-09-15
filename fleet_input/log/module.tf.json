@@ -33,7 +33,12 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the log package to use.",
-      "default": "2.1.0"
+      "default": "2.2.0"
+    },
+    "ignore_older": {
+      "type": "string",
+      "description": "If this option is specified, events that are older than the specified amount of time are ignored. Valid time units are \"ns\", \"us\" (or \"µs\"), \"ms\", \"s\", \"m\", \"h\".",
+      "default": "72h"
     },
     "paths": {
       "type": "list(string)",
@@ -62,7 +67,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  paths = var.paths\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  ignore_older = var.ignore_older\n  paths = var.paths\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "logfile",
       "namespace": "${var.fleet_data_stream_namespace}",
