@@ -11,6 +11,11 @@
       "description": "Set the name for your dataset. Changing the dataset will send the data to a different index. You can't use `-` in the name of a dataset and only valid characters for [Elasticsearch index names](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html).\n",
       "nullable": false
     },
+    "exclude_files": {
+      "type": "list(string)",
+      "description": "Patterns to be ignored",
+      "default": null
+    },
     "fleet_agent_policy_id": {
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
@@ -33,7 +38,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the log package to use.",
-      "default": "2.2.0"
+      "default": "2.3.0"
     },
     "ignore_older": {
       "type": "string",
@@ -67,7 +72,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  ignore_older = var.ignore_older\n  paths = var.paths\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  exclude_files = var.exclude_files\n  ignore_older = var.ignore_older\n  paths = var.paths\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "logfile",
       "namespace": "${var.fleet_data_stream_namespace}",
