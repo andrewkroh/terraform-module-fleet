@@ -2,6 +2,8 @@ github.com/andrewkroh/go-fleetpkg v0.0.3 h1:kXzvF2dJwfooXxGljGLz6+bqLLQoYhqY56IT
 github.com/andrewkroh/go-fleetpkg v0.0.3/go.mod h1:FCFWIeEw6pg5dNFtIQ3f7vNA7iqTtLbiKQUyzjh477s=
 github.com/andrewkroh/go-fleetpkg v0.0.4 h1:lCc20wFaavH6HxALvLozlDdqszlxZKqLpfmoWiZtv14=
 github.com/andrewkroh/go-fleetpkg v0.0.4/go.mod h1:FCFWIeEw6pg5dNFtIQ3f7vNA7iqTtLbiKQUyzjh477s=
+github.com/andrewkroh/go-fleetpkg v0.0.8 h1:vKmmGcMPeMIQ+/sS1DHU0jTcERZBpznaNmaq1JbkLME=
+github.com/andrewkroh/go-fleetpkg v0.0.8/go.mod h1:FCFWIeEw6pg5dNFtIQ3f7vNA7iqTtLbiKQUyzjh477s=
 github.com/cpuguy83/go-md2man/v2 v2.0.2 h1:p1EgwI/C7NhT0JmVkwCD2ZBK8j4aeHQX2pMHHBfMQ6w=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

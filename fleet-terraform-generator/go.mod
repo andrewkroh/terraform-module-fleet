@@ -1,9 +1,9 @@
 module github.com/elastic/terraform-module-fleet/fleet-terraform-generator
 
-go 1.19
+go 1.21
 
 require (
-	github.com/andrewkroh/go-fleetpkg v0.0.4
+	github.com/andrewkroh/go-fleetpkg v0.0.8
 	github.com/google/go-cmp v0.5.8
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.3
