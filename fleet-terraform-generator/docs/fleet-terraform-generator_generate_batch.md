@@ -9,7 +9,8 @@ fleet-terraform-generator generate batch [flags]
 ### Options
 
 ```
-  -h, --help   help for batch
+      --continue-on-error   Continue on errors related to reading package specifications.
+  -h, --help                help for batch
 ```
 
 ### Options inherited from parent commands

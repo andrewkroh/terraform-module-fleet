@@ -76,14 +76,17 @@ func (l Specifiers) Filter(globs ...string) (Specifiers, error) {
 	return out, nil
 }
 
-func List(dir string) (Specifiers, error) {
+func List(dir string, continueOnError bool) (Specifiers, error) {
 	var result []Specifier
 
 	// Generate the product of policy_template x data_stream x input.
 	err := walkPackages(dir, func(pkg *fleetpkg.Integration, err error) error {
 		if err != nil {
-			log.Println("[WARN] Ignoring package:", err)
-			return nil
+			if continueOnError {
+				log.Println("[WARN] Ignoring package:", err)
+				return nil
+			}
+			return err
 		}
 
 		if pkg.Manifest.Type == "input" {

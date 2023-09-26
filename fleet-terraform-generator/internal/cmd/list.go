@@ -37,6 +37,9 @@ func ListCmd() *cobra.Command {
 	}
 	cmd.Flags().String(packagesDirectoryFlagName, "", "Directory containing Fleet packages.")
 	must(cmd.MarkFlagRequired(packagesDirectoryFlagName))
+
+	cmd.PersistentFlags().Bool(generateContinueOnErrorFlagName, false, "Continue on errors related to reading package specifications.")
+
 	return cmd
 }
 
@@ -45,8 +48,12 @@ func listRunE(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	continueOnError, err := cmd.Flags().GetBool(generateContinueOnErrorFlagName)
+	if err != nil {
+		return err
+	}
 
-	moduleSpecifiers, err := module.List(pkgsDir)
+	moduleSpecifiers, err := module.List(pkgsDir, continueOnError)
 	if err != nil {
 		return err
 	}
