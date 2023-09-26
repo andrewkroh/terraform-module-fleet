@@ -6,7 +6,7 @@ require (
 	github.com/andrewkroh/go-fleetpkg v0.0.8
 	github.com/google/go-cmp v0.5.8
 	github.com/spf13/cobra v1.7.0
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53
 )
 
