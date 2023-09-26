@@ -37,6 +37,7 @@ const (
 	generateInputFlagName                   = "input"
 	generateOutputPathFlagName              = "out"
 	generateIgnoreVariableShadowingFlagName = "ignore-var-shadow"
+	generateContinueOnErrorFlagName         = "continue-on-error"
 )
 
 func GenerateCmd() *cobra.Command {
@@ -70,6 +71,8 @@ func GenerateCmd() *cobra.Command {
 		RunE:  generateBatchRunE,
 	}
 	cmd.AddCommand(batchCmd)
+
+	batchCmd.PersistentFlags().Bool(generateContinueOnErrorFlagName, false, "Continue on errors related to reading package specifications.")
 
 	return cmd
 }
@@ -144,7 +147,12 @@ func generateBatchRunE(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	specs, err := module.List(pkgsDir)
+	continueOnError, err := cmd.Flags().GetBool(generateContinueOnErrorFlagName)
+	if err != nil {
+		return err
+	}
+
+	specs, err := module.List(pkgsDir, continueOnError)
 	if err != nil {
 		return err
 	}
