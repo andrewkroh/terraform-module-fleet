@@ -177,7 +177,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 	if err != nil {
 		return nil, err
 	}
-	// Empirically it appears that input package policy template variables are treated
+	// Empirically, it appears that input package policy template variables are treated
 	// the same as data stream variables.
 	dataStreamVarExpression, err := buildVariableExpression(dataStreamVarAssociations, policyTemplateLevelVarAssociations)
 	if err != nil {
@@ -200,13 +200,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		for directoryName, ds := range dataStreams {
 			for _, stream := range ds.Manifest.Streams {
 				if stream.Input == inputName {
-					var streamName string
-					if _, dataset, found := strings.Cut(ds.Manifest.Dataset, "."); found {
-						streamName = dataset
-					} else {
-						streamName = directoryName
-					}
-					dataStreamsForInput = append(dataStreamsForInput, streamName)
+					dataStreamsForInput = append(dataStreamsForInput, datasetName(directoryName, ds))
 				}
 			}
 		}
@@ -242,7 +236,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 					Namespace:               "${var.fleet_data_stream_namespace}",
 					Description:             "${var.fleet_package_policy_description}",
 					PolicyTemplate:          policyTemplate.Name,
-					DataStream:              dataStreamName,
+					DataStream:              datasetName(dataStreamName, dataStream),
 					InputType:               inputName,
 					PackageVariablesJSON:    packageLevelVarExpression,
 					InputVariablesJSON:      inputLevelVarExpression,
@@ -484,6 +478,16 @@ func moduleName(integration, policyTemplate, dataStream, input string) string {
 	}
 	name = append(name, strings.ReplaceAll(input, "/", "_"))
 	return strings.Join(name, ".")
+}
+
+func datasetName(dataStreamDirName string, m *fleetpkg.DataStream) string {
+	if m != nil {
+		if _, dataset, found := strings.Cut(m.Manifest.Dataset, "."); found {
+			return dataset
+		}
+	}
+
+	return dataStreamDirName
 }
 
 // quoteIfNeeded surrounds a variable name with quotes if it contains dots.

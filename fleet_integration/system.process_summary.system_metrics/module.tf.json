@@ -73,7 +73,7 @@
         "system-system/metrics",
         "system-httpjson"
       ],
-      "data_stream": "process_summary",
+      "data_stream": "process.summary",
       "data_stream_variables_json": "${jsonencode({\n  period = var.period\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "system/metrics",
