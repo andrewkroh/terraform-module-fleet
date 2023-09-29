@@ -31,6 +31,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 
 	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/terraform"
 )
@@ -176,7 +177,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 	if err != nil {
 		return nil, err
 	}
-	// Empirically it appears that input package policy template variables are treated
+	// Empirically, it appears that input package policy template variables are treated
 	// the same as data stream variables.
 	dataStreamVarExpression, err := buildVariableExpression(dataStreamVarAssociations, policyTemplateLevelVarAssociations)
 	if err != nil {
@@ -187,20 +188,19 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 	{
 		// Get a list of data streams so that we can disable all the ones not being
 		// used. This avoids validation errors for required variables.
-		allDataStreams := maps.Keys(pkg.DataStreams)
-		// If the policy template declares specific data streams then honor that list.
+		dataStreams := maps.Clone(pkg.DataStreams)
+
+		// If the policy template declares specific data streams, then honor that list.
 		if len(policyTemplate.DataStreams) > 0 {
-			allDataStreams = policyTemplate.DataStreams
+			maps.DeleteFunc(dataStreams, func(s string, stream *fleetpkg.DataStream) bool {
+				return !slices.Contains(policyTemplate.DataStreams, s)
+			})
 		}
 		// Filter data streams to only include ones with the selected input type.
-		for _, dataStreamName := range allDataStreams {
-			ds, found := pkg.DataStreams[dataStreamName]
-			if !found {
-				continue
-			}
+		for directoryName, ds := range dataStreams {
 			for _, stream := range ds.Manifest.Streams {
 				if stream.Input == inputName {
-					dataStreamsForInput = append(dataStreamsForInput, dataStreamName)
+					dataStreamsForInput = append(dataStreamsForInput, datasetName(directoryName, ds))
 				}
 			}
 		}
@@ -236,7 +236,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 					Namespace:               "${var.fleet_data_stream_namespace}",
 					Description:             "${var.fleet_package_policy_description}",
 					PolicyTemplate:          policyTemplate.Name,
-					DataStream:              dataStreamName,
+					DataStream:              datasetName(dataStreamName, dataStream),
 					InputType:               inputName,
 					PackageVariablesJSON:    packageLevelVarExpression,
 					InputVariablesJSON:      inputLevelVarExpression,
@@ -478,6 +478,16 @@ func moduleName(integration, policyTemplate, dataStream, input string) string {
 	}
 	name = append(name, strings.ReplaceAll(input, "/", "_"))
 	return strings.Join(name, ".")
+}
+
+func datasetName(dataStreamDirName string, m *fleetpkg.DataStream) string {
+	if m != nil {
+		if _, dataset, found := strings.Cut(m.Manifest.Dataset, "."); found {
+			return dataset
+		}
+	}
+
+	return dataStreamDirName
 }
 
 // quoteIfNeeded surrounds a variable name with quotes if it contains dots.
