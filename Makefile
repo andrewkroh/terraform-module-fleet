@@ -20,6 +20,8 @@ fleet-modules: install
 		"m365_defender/*/incident/*" \
 		"system/*/application/winlog" \
 		"system/*/security/winlog" \
+		"system/system/diskio/system_metrics" \
+		"system/system/process_summary/system_metrics" \
 		"ti_abusech/*/*/httpjson" \
 		"ti_recordedfuture/*/*/httpjson" \
 		"windows/*/powershell*/winlog" \
