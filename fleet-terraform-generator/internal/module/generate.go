@@ -31,6 +31,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 
 	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/terraform"
 )
@@ -187,20 +188,25 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 	{
 		// Get a list of data streams so that we can disable all the ones not being
 		// used. This avoids validation errors for required variables.
-		allDataStreams := maps.Keys(pkg.DataStreams)
-		// If the policy template declares specific data streams then honor that list.
+		dataStreams := maps.Clone(pkg.DataStreams)
+
+		// If the policy template declares specific data streams, then honor that list.
 		if len(policyTemplate.DataStreams) > 0 {
-			allDataStreams = policyTemplate.DataStreams
+			maps.DeleteFunc(dataStreams, func(s string, stream *fleetpkg.DataStream) bool {
+				return !slices.Contains(policyTemplate.DataStreams, s)
+			})
 		}
 		// Filter data streams to only include ones with the selected input type.
-		for _, dataStreamName := range allDataStreams {
-			ds, found := pkg.DataStreams[dataStreamName]
-			if !found {
-				continue
-			}
+		for directoryName, ds := range dataStreams {
 			for _, stream := range ds.Manifest.Streams {
 				if stream.Input == inputName {
-					dataStreamsForInput = append(dataStreamsForInput, dataStreamName)
+					var streamName string
+					if _, dataset, found := strings.Cut(ds.Manifest.Dataset, "."); found {
+						streamName = dataset
+					} else {
+						streamName = directoryName
+					}
+					dataStreamsForInput = append(dataStreamsForInput, streamName)
 				}
 			}
 		}
