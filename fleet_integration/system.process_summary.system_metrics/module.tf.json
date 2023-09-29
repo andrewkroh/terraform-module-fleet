@@ -63,7 +63,7 @@
         "memory",
         "network",
         "process",
-        "process_summary",
+        "process.summary",
         "socket_summary",
         "uptime"
       ],
