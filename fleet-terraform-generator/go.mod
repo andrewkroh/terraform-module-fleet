@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/andrewkroh/go-fleetpkg v0.0.9
-	github.com/google/go-cmp v0.5.9
+	github.com/google/go-cmp v0.6.0
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53
