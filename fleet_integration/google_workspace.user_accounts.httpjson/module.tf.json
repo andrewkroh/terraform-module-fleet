@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
-      "default": "2.16.1"
+      "default": "2.17.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -49,7 +49,7 @@
     },
     "initial_interval": {
       "type": "string",
-      "description": "How far back to pull the DHCP Lease events from Google Workspace. NOTE: Supported units for this parameter are h/m/s.",
+      "description": "How far back to pull events from Google Workspace. Supported units for this parameter are h/m/s.",
       "default": "24h",
       "nullable": false
     },
