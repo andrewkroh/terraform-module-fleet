@@ -106,6 +106,9 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 				return nil, fmt.Errorf("input type %q was not found in data stream %q", inputName, dataStreamName)
 			}
 		}
+	} else {
+		// Inject data_stream.dataset for input packages.
+		injectDataStreamDatasetVar(policyTemplate)
 	}
 
 	tfVariables := map[string]moduleVariable{
@@ -497,4 +500,30 @@ func quoteIfNeeded(name string) string {
 		return strconv.Quote(name)
 	}
 	return name
+}
+
+// injectDataStreamDatasetVar creates a data_stream.dataset variable in the
+// given policy_template if it does not exist.
+//
+// Reference: https://github.com/andrewkroh/terraform-module-fleet/issues/26
+func injectDataStreamDatasetVar(policy *fleetpkg.PolicyTemplate) {
+	const datasetVarName = "data_stream.dataset"
+	for _, v := range policy.Vars {
+		if v.Name == datasetVarName {
+			return
+		}
+	}
+
+	policy.Vars = append(policy.Vars, fleetpkg.Var{
+		Name:        datasetVarName,
+		Description: "Set the name for your dataset. Once selected a dataset cannot be changed without creating a new integration policy. You can't use - in the name of a dataset and only valid characters for Elasticsearch index names are permitted.",
+		Type:        "text",
+		Title:       "Dataset Name",
+		Default:     policy.Name,
+		Required:    pointerTo(true),
+	})
+}
+
+func pointerTo[T any](t T) *T {
+	return &t
 }

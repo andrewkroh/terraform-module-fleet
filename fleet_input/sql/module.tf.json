@@ -6,6 +6,12 @@
       "description": "Condition to filter when to apply this datastream. Refer to [Conditions](https://www.elastic.co/guide/en/fleet/current/dynamic-input-configuration.html#conditions) on how to use the available keys in conditions.",
       "default": null
     },
+    "data_stream_dataset": {
+      "type": "string",
+      "description": "Set the name for your dataset. Once selected a dataset cannot be changed without creating a new integration policy. You can't use - in the name of a dataset and only valid characters for Elasticsearch index names are permitted.",
+      "default": "sql",
+      "nullable": false
+    },
     "driver": {
       "type": "string",
       "default": "mysql",
@@ -74,7 +80,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  condition = var.condition\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  processors = var.processors_yaml\n  sql_queries = var.sql_queries_yaml\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  condition = var.condition\n  \"data_stream.dataset\" = var.data_stream_dataset\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  processors = var.processors_yaml\n  sql_queries = var.sql_queries_yaml\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "sql/metrics",
       "namespace": "${var.fleet_data_stream_namespace}",
