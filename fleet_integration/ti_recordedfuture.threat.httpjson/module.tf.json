@@ -51,7 +51,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use.",
-      "default": "1.18.0"
+      "default": "1.18.1"
     },
     "interval": {
       "type": "string",
