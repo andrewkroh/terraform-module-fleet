@@ -77,7 +77,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.8.5"
+      "default": "2.8.6"
     },
     "interval": {
       "type": "string",
@@ -194,6 +194,7 @@
         "waf-aws-s3",
         "waf-aws-cloudwatch",
         "route53-aws-cloudwatch",
+        "route53-aws-s3",
         "cloudfront-aws-s3",
         "redshift-aws/metrics",
         "kinesis-aws/metrics",
