@@ -77,7 +77,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.10.0"
+      "default": "2.11.3"
     },
     "interval": {
       "type": "string",
