@@ -23,7 +23,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the barracuda_cloudgen_firewall package to use.",
-      "default": "1.10.0"
+      "default": "1.10.1"
     },
     "listen_address": {
       "type": "string",
