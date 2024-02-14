@@ -3,7 +3,8 @@
   "variable": {
     "access_key_id": {
       "type": "string",
-      "default": null
+      "default": null,
+      "sensitive": true
     },
     "api_timeout": {
       "type": "string",
@@ -77,7 +78,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.11.3"
+      "default": "2.12.0"
     },
     "interval": {
       "type": "string",
