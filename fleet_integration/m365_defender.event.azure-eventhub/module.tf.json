@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "2.7.1"
+      "default": "2.8.0"
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",
@@ -76,6 +76,7 @@
     "storage_account_key": {
       "type": "string",
       "description": "The storage account key, this key will be used to authorize access to data in your storage account.",
+      "sensitive": true,
       "nullable": false
     },
     "tags": {

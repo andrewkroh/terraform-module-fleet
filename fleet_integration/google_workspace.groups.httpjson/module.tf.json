@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
-      "default": "2.19.2"
+      "default": "2.20.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -67,7 +67,8 @@
     "jwt_json": {
       "type": "string",
       "description": "Raw contents of the JWT file. Useful when hosting a file along with the agent is not possible.\nNOTE: Please use either JWT File or JWT JSON parameter.\n",
-      "default": null
+      "default": null,
+      "sensitive": true
     },
     "preserve_original_event": {
       "type": "bool",
