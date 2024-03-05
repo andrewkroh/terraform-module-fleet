@@ -78,7 +78,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.12.2"
+      "default": "2.13.0"
     },
     "interval": {
       "type": "string",
@@ -208,7 +208,8 @@
         "apigateway-aws-cloudwatch",
         "emr-aws/metrics",
         "emr-aws-s3",
-        "emr-aws-cloudwatch"
+        "emr-aws-cloudwatch",
+        "kafka-aws/metrics"
       ],
       "data_stream": "cloudtrail",
       "data_stream_variables_json": "${jsonencode({\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_prefix = var.bucket_list_prefix\n  cloudtrail_digest_regex = var.cloudtrail_digest_regex\n  cloudtrail_insight_regex = var.cloudtrail_insight_regex\n  cloudtrail_regex = var.cloudtrail_regex\n  collect_s3_logs = var.collect_s3_logs\n  fips_enabled = var.fips_enabled\n  interval = var.interval\n  max_number_of_messages = var.max_number_of_messages\n  number_of_workers = var.number_of_workers\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  queue_url = var.queue_url\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
