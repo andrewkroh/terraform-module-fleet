@@ -3,7 +3,7 @@
   "variable": {
     "custom_yaml": {
       "type": "string",
-      "description": "Here YAML configuration options can be used to be added to your configuration. Be careful using this as it might break your configuration file.\n",
+      "description": "Additional settings to be added to the configuration. Be careful using this as it might break the input as those settings are not validated and can override the settings specified above. See [`log` input settings docs](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html) for details.\n",
       "default": ""
     },
     "data_stream_dataset": {
@@ -38,7 +38,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the log package to use.",
-      "default": "2.3.0"
+      "default": "2.3.1"
     },
     "ignore_older": {
       "type": "string",
