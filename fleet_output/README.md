@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_elasticstack"></a> [elasticstack](#requirement\_elasticstack) | ~> 0.6.2 |
+| <a name="requirement_elasticstack"></a> [elasticstack](#requirement\_elasticstack) | >= 0.11.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_elasticstack"></a> [elasticstack](#provider\_elasticstack) | ~> 0.6.2 |
+| <a name="provider_elasticstack"></a> [elasticstack](#provider\_elasticstack) | >= 0.11.0 |
 
 ## Modules
 

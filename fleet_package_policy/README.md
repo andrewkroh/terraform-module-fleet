@@ -3,12 +3,14 @@
 
 | Name | Version |
 |------|---------|
+| <a name="requirement_elasticstack"></a> [elasticstack](#requirement\_elasticstack) | >= 0.11.0 |
 | <a name="requirement_restapi"></a> [restapi](#requirement\_restapi) | >= 1.18.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
+| <a name="provider_elasticstack"></a> [elasticstack](#provider\_elasticstack) | >= 0.11.0 |
 | <a name="provider_restapi"></a> [restapi](#provider\_restapi) | >= 1.18.0 |
 
 ## Modules
@@ -19,6 +21,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [elasticstack_fleet_integration.assets](https://registry.terraform.io/providers/elastic/elasticstack/latest/docs/resources/fleet_integration) | resource |
 | [restapi_object.package_policy](https://registry.terraform.io/providers/Mastercard/restapi/latest/docs/resources/object) | resource |
 
 ## Inputs
