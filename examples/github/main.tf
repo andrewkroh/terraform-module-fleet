@@ -10,6 +10,15 @@ provider "restapi" {
   }
 }
 
+provider "elasticstack" {
+  kibana {
+    username  = var.kibana_username
+    password  = var.kibana_password
+    insecure  = var.kibana_insecure
+    endpoints = [var.kibana_url]
+  }
+}
+
 // Create a new empty Fleet agent policy that will be used for running the GitHub integration.
 module "agent_policy_github" {
   source      = "../../fleet_agent_policy"

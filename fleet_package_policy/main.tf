@@ -25,6 +25,15 @@ locals {
   }
 }
 
+// Control the version of the installed package. Fleet will not allow
+// downgrades while there are package policies using the package. Only one
+// version of any package may be installed at one time.
+resource "elasticstack_fleet_integration" "assets" {
+  name    = var.package_name
+  version = var.package_version
+  force   = true
+}
+
 resource "restapi_object" "package_policy" {
   path         = "/api/fleet/package_policies"
   id_attribute = "item/id"
@@ -53,4 +62,8 @@ resource "restapi_object" "package_policy" {
       }
     }, local.disabled_inputs_config)
   })
+
+  depends_on = [
+    elasticstack_fleet_integration.assets,
+  ]
 }
