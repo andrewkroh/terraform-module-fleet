@@ -1,8 +1,12 @@
+TF_DOCS := go run github.com/terraform-docs/terraform-docs@v0.17.0
+
+DOCS_CHECK_UPDATE ?= false
+
 .PHONY: all
-all: fmt docs modules validate
+all: fmt modules docs validate
 
 .PHONY: modules
-modules: fleet-modules terraform-docs
+modules: fleet-modules docs
 
 # Generate fleet module. The modules are specified using selectors that are formatted as:
 #    {package_name}/{policy_template}/{data_stream}/{input_type} - for integrations
@@ -46,15 +50,13 @@ validate:
 .PHONY: docs
 docs:
 	cd fleet-terraform-generator/docs && go generate .
-
-.PHONY: terraform-docs
-terraform-docs:
-	go install github.com/terraform-docs/terraform-docs@latest
-	terraform-docs markdown table --output-file="README.md" fleet_agent_policy
-	terraform-docs markdown table --output-file="README.md" fleet_output
-	terraform-docs markdown table --output-file="README.md" fleet_package_policy
-	terraform-docs markdown table --output-file="README.md" fleet_server_host
-	@for i in $(shell find fleet_integration/ fleet_input/ -name module.tf.json); do \
-	  module=$$(dirname $$i); \
-	  terraform-docs markdown table --output-file="README.md" "$$module" || exit 1; \
+	@for i in $(shell find fleet_* -name '*.tf' -or -name '*.tf.json' -not -path '*/.terraform*' -print0 | xargs -0 -n1 dirname | sort --unique); do \
+	  module=$$i; \
+	  with_header=$$(test -f "$$module/.readme.md" && echo -n --header-from=".readme.md"); \
+	  ${TF_DOCS} markdown table --output-check=${DOCS_CHECK_UPDATE} $$with_header --output-file="README.md" "$$module" || exit 1; \
 	done
+
+# docs-check verifies that all README.md files are up to date.
+.PHONY: docs-check
+docs-check:
+	${MAKE} docs DOCS_CHECK_UPDATE=true
