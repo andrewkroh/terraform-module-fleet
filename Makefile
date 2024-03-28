@@ -33,7 +33,8 @@ fleet-modules: install
 		"winlog/*/*/winlog" \
 		"cel/*/*" \
 		"log/*/*" \
-		"sql/*/*"
+		"sql/*/*" \
+		"winlog/*/*"
 
 .PHONY: install
 install:
