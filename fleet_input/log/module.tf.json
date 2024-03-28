@@ -57,7 +57,8 @@
     },
     "tags": {
       "type": "list(string)",
-      "description": "Tags to include in the published event"
+      "description": "Tags to include in the published event",
+      "default": null
     }
   },
   "output": {

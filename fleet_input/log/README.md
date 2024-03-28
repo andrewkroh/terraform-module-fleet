@@ -32,7 +32,7 @@ No resources.
 | <a name="input_ignore_older"></a> [ignore\_older](#input\_ignore\_older) | If this option is specified, events that are older than the specified amount of time are ignored. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h". | `string` | `"72h"` | no |
 | <a name="input_paths"></a> [paths](#input\_paths) | Path to log files to be collected | `list(string)` | n/a | yes |
 | <a name="input_processors_yaml"></a> [processors\_yaml](#input\_processors\_yaml) | Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details. | `string` | `null` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | Tags to include in the published event | `list(string)` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to include in the published event | `list(string)` | `null` | no |
 
 ## Outputs
 

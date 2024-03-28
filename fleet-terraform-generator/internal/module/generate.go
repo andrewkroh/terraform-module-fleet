@@ -312,7 +312,7 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable, ignoreShadowing bo
 	if v.Default != nil {
 		// Pass the default to Terraform.
 		tfVar.Default = &terraform.NullableValue{Value: v.Default}
-	} else if v.Required != nil && !*v.Required {
+	} else if v.Required == nil || v.Required != nil && !*v.Required {
 		tfVar.Default = &terraform.NullableValue{}
 	}
 

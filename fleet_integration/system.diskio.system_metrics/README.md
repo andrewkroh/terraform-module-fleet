@@ -30,7 +30,7 @@ No resources.
 | <a name="input_period"></a> [period](#input\_period) | n/a | `string` | `"10s"` | no |
 | <a name="input_processors_yaml"></a> [processors\_yaml](#input\_processors\_yaml) | Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details. | `string` | `null` | no |
 | <a name="input_system_hostfs"></a> [system\_hostfs](#input\_system\_hostfs) | The proc filesystem base directory. | `string` | `null` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `list(string)` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `list(string)` | `null` | no |
 
 ## Outputs
 
