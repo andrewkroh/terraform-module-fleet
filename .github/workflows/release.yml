@@ -33,18 +33,21 @@ jobs:
         id: release-notes
         continue-on-error: true
         run: |
-          cd tools
-          go run ./cmd/release-notes | tee /tmp/release-notes.txt
+          cd tools && go install ./cmd/release-notes
+          release-notes > /tmp/release-notes.txt
 
       - name: draft GH release
-        if: steps.release-notes.outcome == 'success'
+        if: ${{ steps.release-notes.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: | 
+          cat /tmp/release-notes.txt
+          
           tag="$(date '+v%Y.%m.%d')"
           if [ -n "${{ inputs.version }}" ]; then
             tag="${{ inputs.version }}"
           fi
+          
           gh release create "${tag}" \
             --draft \
             --notes-file /tmp/release-notes.txt \

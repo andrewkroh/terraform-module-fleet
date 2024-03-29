@@ -64,7 +64,7 @@ func init() {
 }
 
 func Main() error {
-	if err := flagset.Parse(os.Args); err != nil {
+	if err := flagset.Parse(os.Args[1:]); err != nil {
 		return err
 	}
 
