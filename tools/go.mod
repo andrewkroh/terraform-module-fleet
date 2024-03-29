@@ -1,4 +1,4 @@
-module github.com/elastic/terraform-module-fleet/fleet-terraform-generator
+module github.com/elastic/terraform-module-fleet/tools
 
 go 1.22
 

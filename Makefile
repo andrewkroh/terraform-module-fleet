@@ -38,7 +38,7 @@ fleet-modules: install
 
 .PHONY: install
 install:
-	cd fleet-terraform-generator && go install .
+	cd tools/cmd/fleet-terraform-generator && go install .
 
 .PHONY: fmt
 fmt:
