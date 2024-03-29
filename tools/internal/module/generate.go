@@ -33,7 +33,7 @@ import (
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 
-	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/terraform"
+	"github.com/elastic/terraform-module-fleet/tools/internal/terraform"
 )
 
 type Terraform struct {

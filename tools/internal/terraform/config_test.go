@@ -24,7 +24,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/terraform"
+	"github.com/elastic/terraform-module-fleet/tools/internal/terraform"
 )
 
 func TestMarshalJSON(t *testing.T) {

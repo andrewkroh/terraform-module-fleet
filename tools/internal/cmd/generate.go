@@ -27,7 +27,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/module"
+	"github.com/elastic/terraform-module-fleet/tools/internal/module"
 )
 
 const (

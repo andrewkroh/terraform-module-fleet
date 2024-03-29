@@ -18,13 +18,16 @@
 package main
 
 import (
-	"os"
+	"log"
 
-	"github.com/elastic/terraform-module-fleet/fleet-terraform-generator/internal/cmd"
+	"github.com/spf13/cobra/doc"
+
+	"github.com/elastic/terraform-module-fleet/tools/internal/cmd"
 )
 
 func main() {
-	if err := cmd.RootCmd().Execute(); err != nil {
-		os.Exit(1)
+	err := doc.GenMarkdownTree(cmd.RootCmd(), ".")
+	if err != nil {
+		log.Fatal(err)
 	}
 }
