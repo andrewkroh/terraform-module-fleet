@@ -1,0 +1,46 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: >
+          Tag name (e.g. vYYYY.MM.DD) for this version (the tag will be created).
+          Today's date is used if left empty.
+        type: string
+  schedule:
+    - cron: '0 13 * * 4' # At 01:00 PM, only on Thur
+
+permissions:
+  contents: read
+
+jobs:
+  draft:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Need full history.
+
+      - name: release notes
+        id: release-notes
+        continue-on-error: true
+        run: >-
+          cd tools
+          go run ./cmd/release-notes | tee /tmp/release-notes.txt
+
+      - name: draft GH release
+        if: steps.release-notes.output == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          tag="$(date '+v%Y.%m.%d')"
+          if [ -n "${{ inputs.version }}" ]; then
+            tag="${{ inputs.version }}"
+          fi
+          gh release create "${tag}"
+          --draft
+          --notes-file /tmp/release-notes.txt
+          --title "${tag}"
