@@ -45,6 +45,11 @@ import (
 	"github.com/elastic/terraform-module-fleet/tools/internal/terraform"
 )
 
+var (
+	ErrNoChanges                  = errors.New("no changes detected")
+	errIntegrationsCommitNotFound = errors.New("elastic/integrations commit not found in git log")
+)
+
 var flagset = flag.NewFlagSet("", flag.ContinueOnError)
 
 // Parameters
@@ -73,6 +78,9 @@ func Main() error {
 	r, err := git.Clone(memStore, fs, &git.CloneOptions{
 		URL: gitDir,
 	})
+	if err != nil {
+		return err
+	}
 
 	if previousCommit == "" {
 		tag, err := latestGitTag(r)
@@ -108,6 +116,10 @@ func Main() error {
 	data := diffMetadata(before, after)
 	data.ElasticIntegrationsCommit = integrationsCommit
 
+	if len(data.Inputs) == 0 && len(data.Integrations) == 0 {
+		return ErrNoChanges
+	}
+
 	tmpl := htmlTmpl.Lookup("release-notes.md.gotmpl")
 	notes, err := renderTemplate(tmpl, data)
 	if err != nil {
@@ -117,8 +129,6 @@ func Main() error {
 	fmt.Printf("%s\n", notes)
 	return nil
 }
-
-var errIntegrationsCommitNotFound = errors.New("elastic/integrations commit not found in git log")
 
 // detectLatestElasticIntegrations iterates through git history to find the
 // commit ID of the elastic/integrations project that was used to generate
@@ -149,10 +159,10 @@ func detectLatestElasticIntegrations(r *git.Repository) (string, error) {
 	return commit, nil
 }
 
-var re = regexp.MustCompile(`(?m)Update to elastic/integrations@([a-f0-9]+)`)
+var updateCommitRegex = regexp.MustCompile(`(?m)Update to elastic/integrations@([a-f0-9]+)`)
 
 func parseElasticIntegrationsCommit(message string) (commit string) {
-	matches := re.FindStringSubmatch(message)
+	matches := updateCommitRegex.FindStringSubmatch(message)
 	if len(matches) == 2 {
 		return matches[1]
 	}
@@ -355,7 +365,7 @@ func latestGitTag(r *git.Repository) (*plumbing.Reference, error) {
 	}
 
 	var latestTag *plumbing.Reference
-	var latestTagTs time.Time
+	var latestTagTime time.Time
 	err = tags.ForEach(func(ref *plumbing.Reference) error {
 		commit, err := r.CommitObject(ref.Hash())
 		if err != nil {
@@ -363,11 +373,14 @@ func latestGitTag(r *git.Repository) (*plumbing.Reference, error) {
 		}
 
 		// Is this commit later?
-		if commit.Author.When.After(latestTagTs) {
+		if commit.Author.When.After(latestTagTime) {
 			latestTag = ref
 		}
 		return nil
 	})
+	if err != nil {
+		return nil, err
+	}
 
 	if latestTag == nil {
 		return nil, errors.New("no git tags found")

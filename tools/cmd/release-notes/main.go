@@ -18,6 +18,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -27,6 +28,9 @@ import (
 func main() {
 	if err := releasenotes.Main(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
+		if errors.Is(err, releasenotes.ErrNoChanges) {
+			os.Exit(2)
+		}
 		os.Exit(1)
 	}
 }

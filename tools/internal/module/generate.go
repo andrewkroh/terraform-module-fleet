@@ -195,7 +195,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 
 		// If the policy template declares specific data streams, then honor that list.
 		if len(policyTemplate.DataStreams) > 0 {
-			maps.DeleteFunc(dataStreams, func(s string, stream *fleetpkg.DataStream) bool {
+			maps.DeleteFunc(dataStreams, func(s string, _ *fleetpkg.DataStream) bool {
 				return !slices.Contains(policyTemplate.DataStreams, s)
 			})
 		}
