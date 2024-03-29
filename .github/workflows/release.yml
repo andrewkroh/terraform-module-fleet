@@ -37,7 +37,7 @@ jobs:
           go run ./cmd/release-notes | tee /tmp/release-notes.txt
 
       - name: draft GH release
-        if: steps.release-notes.output == 'success'
+        if: steps.release-notes.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         run: | 
