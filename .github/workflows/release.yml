@@ -24,6 +24,11 @@ jobs:
         with:
           fetch-depth: 0 # Need full history.
 
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.x'
+          cache-dependency-path: tools/go.sum
+
       - name: release notes
         id: release-notes
         continue-on-error: true
