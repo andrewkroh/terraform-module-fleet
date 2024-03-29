@@ -48,6 +48,10 @@ func (v *NullableValue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.Value)
 }
 
+func (v *NullableValue) UnmarshalJSON(data []byte) error {
+	return json.Unmarshal(data, &v.Value)
+}
+
 type Validation struct {
 	Condition    string `json:"condition"`
 	ErrorMessage string `json:"error_message"`
@@ -76,6 +80,17 @@ func (m Module) MarshalJSON() ([]byte, error) {
 	}
 	clone["source"] = m.Source
 	return json.Marshal(clone)
+}
+
+func (m *Module) UnmarshalJSON(data []byte) error {
+	// hack for https://github.com/golang/go/issues/6213
+	if err := json.Unmarshal(data, &m.Params); err != nil {
+		return err
+	}
+
+	m.Source, _ = m.Params["source"].(string)
+	delete(m.Params, "source")
+	return nil
 }
 
 type ModuleParams map[string]any

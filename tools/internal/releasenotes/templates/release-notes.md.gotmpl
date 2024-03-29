@@ -1,0 +1,13 @@
+{{ if .Integrations -}}
+INTEGRATIONS:
+{{ range $moduleChange := .Integrations -}}
+{{ template "change-details.md.gotmpl" $moduleChange }}
+{{- end }}
+{{- end }}
+{{ if .Inputs -}}
+INPUTS:
+{{ range $moduleChange := .Inputs -}}
+{{ template "change-details.md.gotmpl" $moduleChange }}
+{{- end }}
+{{- end }}
+Modules are based on elastic/integrations@{{ .ElasticIntegrationsCommit }}.
