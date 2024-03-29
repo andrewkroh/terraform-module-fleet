@@ -50,7 +50,6 @@ validate:
 
 .PHONY: docs
 docs:
-	cd fleet-terraform-generator/docs && go generate .
 	@for i in $(shell find fleet_* -name '*.tf' -or -name '*.tf.json' -not -path '*/.terraform*' -print0 | xargs -0 -n1 dirname | sort --unique); do \
 	  module=$$i; \
 	  with_header=$$(test -f "$$module/.readme.md" && echo -n --header-from=".readme.md"); \

@@ -1,0 +1,7 @@
+{{ if eq .Change "update" -}}
+* {{ .Package }} - Updated to {{ .Version }} from {{ .OldVersion }}
+{{ else if eq .Change "add" -}}
+* {{ .Package }} - New module based on {{ .Version }}
+{{ else if eq .Change "remove" -}}
+* {{ .Package }} - Module removed
+{{- end }}
