@@ -2,12 +2,6 @@ name: release
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: >
-          Tag name (e.g. vYYYY.MM.DD) for this version (the tag will be created).
-          Today's date is used if left empty.
-        type: string
   schedule:
     - cron: '0 13 * * 4' # At 01:00 PM, only on Thur
 
@@ -44,11 +38,7 @@ jobs:
           cat /tmp/release-notes.txt
           
           tag="$(date '+v%Y.%m.%d')"
-          if [ -n "${{ inputs.version }}" ]; then
-            tag="${{ inputs.version }}"
-          fi
           
           gh release create "${tag}" \
-            --draft \
             --notes-file /tmp/release-notes.txt \
             --title "${tag}"
