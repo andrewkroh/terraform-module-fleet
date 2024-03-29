@@ -45,7 +45,7 @@ jobs:
           if [ -n "${{ inputs.version }}" ]; then
             tag="${{ inputs.version }}"
           fi
-          gh release create "${tag}"
-          --draft
-          --notes-file /tmp/release-notes.txt
-          --title "${tag}"
+          gh release create "${tag}" \
+            --draft \
+            --notes-file /tmp/release-notes.txt \
+            --title "${tag}"
