@@ -29,9 +29,10 @@ locals {
 // downgrades while there are package policies using the package. Only one
 // version of any package may be installed at one time.
 resource "elasticstack_fleet_integration" "assets" {
-  name    = var.package_name
-  version = var.package_version
-  force   = true
+  name         = var.package_name
+  version      = var.package_version
+  force        = true
+  skip_destroy = true
 }
 
 resource "restapi_object" "package_policy" {
