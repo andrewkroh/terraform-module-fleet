@@ -59,8 +59,8 @@ var (
 )
 
 func init() {
-	flagset.StringVar(&previousCommit, "p", "", "Previous release commit. Defaults to most recent tag.")
-	flagset.StringVar(&releaseCommit, "r", "", "This release commit. Defaults to latest commit on current branch.")
+	flagset.StringVar(&previousCommit, "last-release", "", "Last release commit. Defaults to most recent tag.")
+	flagset.StringVar(&releaseCommit, "this-release", "", "This release commit. Defaults to latest commit on current branch.")
 }
 
 func Main() error {
@@ -80,6 +80,15 @@ func Main() error {
 	})
 	if err != nil {
 		return err
+	}
+
+	if flagset.Arg(0) == "last-release" {
+		tag, err := latestGitTag(r)
+		if err != nil {
+			return err
+		}
+		fmt.Println(tag.Name().String())
+		return nil
 	}
 
 	if previousCommit == "" {

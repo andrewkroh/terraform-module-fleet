@@ -27,8 +27,20 @@ jobs:
         id: release-notes
         continue-on-error: true
         run: |
-          cd tools && go install ./cmd/release-notes
-          release-notes > /tmp/release-notes.txt
+          cd tools && go install ./cmd/release-notes && cd -
+          
+          last_release="$(release-notes last-release)"
+          
+          go run github.com/hashicorp/go-changelog/cmd/changelog-build@4d68c58 \
+            -changelog-template .github/release/changelog.gotmpl \
+            -note-template .github/release/release-note.gotmpl \
+            -entries-dir ./.changelog \
+            -last-release "${last_release}" \
+            -this-release HEAD | tee /tmp/release-notes.txt
+          
+          echo >> /tmp/release-notes.txt
+          
+          release-notes -last-release "${last_release}" >> /tmp/release-notes.txt
 
       - name: draft GH release
         if: ${{ steps.release-notes.outcome == 'success' }}
