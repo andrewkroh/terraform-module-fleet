@@ -30,7 +30,6 @@ fleet-modules: install
 		"ti_recordedfuture/*/*/httpjson" \
 		"windows/*/powershell*/winlog" \
 		"windows/*/*sysmon*/winlog" \
-		"winlog/*/*/winlog" \
 		"cel/*/*" \
 		"log/*/*" \
 		"sql/*/*" \
