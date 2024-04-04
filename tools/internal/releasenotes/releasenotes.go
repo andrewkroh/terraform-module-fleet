@@ -39,6 +39,7 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
+	"github.com/go-git/go-git/v5/plumbing/revlist"
 	"github.com/go-git/go-git/v5/plumbing/storer"
 	"github.com/go-git/go-git/v5/storage/memory"
 
@@ -87,8 +88,10 @@ func Main() error {
 		if err != nil {
 			return err
 		}
-		fmt.Println(tag.Name().String())
+		fmt.Println(tag.Name().Short())
 		return nil
+	} else if flagset.NArg() > 0 {
+		return fmt.Errorf("invalid arguments: %q", flagset.Args())
 	}
 
 	if previousCommit == "" {
@@ -96,7 +99,7 @@ func Main() error {
 		if err != nil {
 			return err
 		}
-		previousCommit = tag.Name().String()
+		previousCommit = tag.Name().Short()
 	}
 	log.Println("Previous release:", previousCommit)
 
@@ -367,8 +370,19 @@ func detectDotGit() (string, error) {
 	return "", errors.New(".git directory not found")
 }
 
+// latestGitTag returns the latest tag merged into this branch (reachable from
+// HEAD).
 func latestGitTag(r *git.Repository) (*plumbing.Reference, error) {
 	tags, err := r.Tags()
+	if err != nil {
+		return nil, err
+	}
+
+	headRef, err := r.Head()
+	if err != nil {
+		return nil, err
+	}
+	reachable, err := revlist.Objects(r.Storer, []plumbing.Hash{headRef.Hash()}, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -376,6 +390,10 @@ func latestGitTag(r *git.Repository) (*plumbing.Reference, error) {
 	var latestTag *plumbing.Reference
 	var latestTagTime time.Time
 	err = tags.ForEach(func(ref *plumbing.Reference) error {
+		if !slices.Contains(reachable, ref.Hash()) {
+			return nil
+		}
+
 		commit, err := r.CommitObject(ref.Hash())
 		if err != nil {
 			return err
@@ -384,6 +402,7 @@ func latestGitTag(r *git.Repository) (*plumbing.Reference, error) {
 		// Is this commit later?
 		if commit.Author.When.After(latestTagTime) {
 			latestTag = ref
+			latestTagTime = commit.Author.When
 		}
 		return nil
 	})

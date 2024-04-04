@@ -27,7 +27,7 @@ jobs:
         id: release-notes
         continue-on-error: true
         run: |
-          cd tools && go install ./cmd/release-notes && cd -
+          go install -C tools ./cmd/release-notes
           
           last_release="$(release-notes last-release)"
           
