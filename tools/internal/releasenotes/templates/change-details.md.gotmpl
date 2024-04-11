@@ -1,5 +1,5 @@
 {{ if eq .Change "update" -}}
-* {{ .Package }} - Updated to {{ .Version }} from {{ .OldVersion }}
+* {{ .Package }} - Updated from {{ .OldVersion }} to {{ .Version }}.
 {{ else if eq .Change "add" -}}
 * {{ .Package }} - New module based on {{ .Version }}
 {{ else if eq .Change "remove" -}}
