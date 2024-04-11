@@ -18,6 +18,7 @@ fleet-modules: install
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out . \
 		"aws/cloudtrail/*/aws-s3" \
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
+		"entityanalytics_entra_id/*/entity/*" \
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
 		"m365_defender/*/event/*" \
