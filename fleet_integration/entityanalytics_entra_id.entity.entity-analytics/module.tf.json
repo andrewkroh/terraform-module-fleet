@@ -12,7 +12,7 @@
     },
     "custom_options_yaml": {
       "type": "string",
-      "description": "Specify custom configuration options for the Entity Analytics input. See\n[Entity Analytics](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-entityanalytics.html)\nfor details.",
+      "description": "Specify custom configuration options for the Entity Analytics input. See\n[Entity Analytics](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-entity-analytics.html)\nfor details.",
       "default": null
     },
     "dataset": {
@@ -43,7 +43,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the entityanalytics_entra_id package to use.",
-      "default": "1.1.0"
+      "default": "1.1.1"
     },
     "http_client_timeout": {
       "type": "string",
