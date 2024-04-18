@@ -1,0 +1,7 @@
+```release-note:enhancement
+Generate Terraform module for the `aws_logs` Fleet integration (for the aws-s3 input).
+```
+
+```release-note:enhancement
+Generate Terraform module for the `aws_logs` Fleet integration (for the aws-cloudwatch input).
+```
