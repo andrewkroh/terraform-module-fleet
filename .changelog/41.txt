@@ -1,0 +1,7 @@
+```release-note:enhancement
+Generate Terraform module for the `aws.guardduty` Fleet integration (aws-s3 input).
+```
+
+```release-note:enhancement
+Generate Terraform module for the `aws.guardduty` Fleet integration (httpjson input).
+```
