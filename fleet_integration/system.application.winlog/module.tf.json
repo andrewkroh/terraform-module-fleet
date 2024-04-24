@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the system package to use.",
-      "default": "1.55.1"
+      "default": "1.55.2"
     },
     "ignore_older": {
       "type": "string",

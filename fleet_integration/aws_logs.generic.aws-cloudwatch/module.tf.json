@@ -20,6 +20,11 @@
       "type": "string",
       "default": null
     },
+    "custom_yaml": {
+      "type": "string",
+      "description": "Additional settings to be added to the configuration. Be careful using this as it might break the input as those settings are not validated and can override the settings specified above. See [`aws-cloudwatch` input settings docs](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-aws-cloudwatch.html) for details.\n",
+      "default": ""
+    },
     "data_stream_dataset": {
       "type": "string",
       "description": "Set the name for your dataset. Changing the dataset will send the data to a different index. You can't use `-` in the name of a dataset and only valid characters for [Elasticsearch index names](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html).\n",
@@ -58,7 +63,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_logs package to use.",
-      "default": "1.1.0"
+      "default": "1.2.0"
     },
     "latency": {
       "type": "string",
@@ -175,7 +180,7 @@
         "aws_logs-aws-cloudwatch"
       ],
       "data_stream": "generic",
-      "data_stream_variables_json": "${jsonencode({\n  api_sleep = var.api_sleep\n  api_timeput = var.api_timeput\n  \"data_stream.dataset\" = var.data_stream_dataset\n  latency = var.latency\n  log_group_arn = var.log_group_arn\n  log_group_name = var.log_group_name\n  log_group_name_prefix = var.log_group_name_prefix\n  log_stream_prefix = var.log_stream_prefix\n  log_streams = var.log_streams\n  number_of_workers = var.number_of_workers\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  region_name = var.region_name\n  scan_frequency = var.scan_frequency\n  start_position = var.start_position\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  api_sleep = var.api_sleep\n  api_timeput = var.api_timeput\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  latency = var.latency\n  log_group_arn = var.log_group_arn\n  log_group_name = var.log_group_name\n  log_group_name_prefix = var.log_group_name_prefix\n  log_stream_prefix = var.log_stream_prefix\n  log_streams = var.log_streams\n  number_of_workers = var.number_of_workers\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  region_name = var.region_name\n  scan_frequency = var.scan_frequency\n  start_position = var.start_position\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "aws-cloudwatch",
       "namespace": "${var.fleet_data_stream_namespace}",
