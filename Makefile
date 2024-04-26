@@ -20,6 +20,8 @@ fleet-modules: install
 		"aws/guardduty/guardduty/*" \
 		"aws_logs/aws_logs/generic/*" \
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
+		"barracuda_cloudgen_firewall/*/*/lumberjack" \
+		"cloud_security_posture/*/*/*" \
 		"entityanalytics_entra_id/*/entity/*" \
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
