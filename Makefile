@@ -18,6 +18,7 @@ fleet-modules: install
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out . \
 		"aws/cloudtrail/*/aws-s3" \
 		"aws/guardduty/guardduty/*" \
+		"aws_bedrock/*/invocation/*" \
 		"aws_logs/aws_logs/generic/*" \
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
