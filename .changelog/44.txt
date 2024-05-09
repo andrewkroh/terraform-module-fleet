@@ -1,0 +1,3 @@
+```release-note:bug
+fleet-terraform-generator: Add handling for the reserved word `provider` within Terraform modules.
+```
