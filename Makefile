@@ -34,6 +34,7 @@ fleet-modules: install
 		"system/system/process_summary/system_metrics" \
 		"ti_abusech/*/*/httpjson" \
 		"ti_recordedfuture/*/*/httpjson" \
+		"ti_threatconnect/*/*/cel" \
 		"windows/*/powershell*/winlog" \
 		"windows/*/*sysmon*/winlog" \
 		"cel/*/*" \
