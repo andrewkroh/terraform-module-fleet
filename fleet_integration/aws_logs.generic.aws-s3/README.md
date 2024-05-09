@@ -52,7 +52,7 @@ No resources.
 | <a name="input_pipeline"></a> [pipeline](#input\_pipeline) | The Ingest Node pipeline ID to be used by the integration. | `string` | `null` | no |
 | <a name="input_preserve_original_event"></a> [preserve\_original\_event](#input\_preserve\_original\_event) | Preserves a raw copy of the original event, added to the field `event.original` | `bool` | `false` | no |
 | <a name="input_processors_yaml"></a> [processors\_yaml](#input\_processors\_yaml) | Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details. | `string` | `null` | no |
-| <a name="input_provider"></a> [provider](#input\_provider) | Name of the 3rd party S3 bucket provider like backblaze or GCP. | `string` | `null` | no |
+| <a name="input_provider_name"></a> [provider\_name](#input\_provider\_name) | Name of the 3rd party S3 bucket provider like backblaze or GCP. | `string` | `null` | no |
 | <a name="input_proxy_url"></a> [proxy\_url](#input\_proxy\_url) | URL to proxy connections in the form of http\[s\]://<user>:<password>@<server name/ip>:<port> | `string` | `null` | no |
 | <a name="input_queue_url"></a> [queue\_url](#input\_queue\_url) | URL of the AWS SQS queue that messages will be received from. | `string` | `null` | no |
 | <a name="input_role_arn"></a> [role\_arn](#input\_role\_arn) | n/a | `string` | `null` | no |
