@@ -40,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "1.9.0-preview05"
+      "default": "1.10.0-preview01"
     },
     "posture": {
       "type": "string",
