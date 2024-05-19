@@ -9,7 +9,7 @@
     "batch_size": {
       "type": "number",
       "description": "Batch size for the response of the ThreatConnect API. The maximum supported batch size value is 10000.",
-      "default": 5000,
+      "default": 2000,
       "nullable": false
     },
     "enable_request_tracer": {
@@ -39,13 +39,28 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_threatconnect package to use.",
-      "default": "0.5.1"
+      "default": "0.6.0"
     },
     "http_client_timeout": {
       "type": "string",
       "description": "Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h.",
       "default": "2m",
       "nullable": false
+    },
+    "include_attributes": {
+      "type": "bool",
+      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause the Kibana discover view to have issues.",
+      "default": false
+    },
+    "include_group_assoc": {
+      "type": "bool",
+      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause the Kibana discover view to have issues.",
+      "default": false
+    },
+    "include_indicator_assoc": {
+      "type": "bool",
+      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause the Kibana discover view to have issues.",
+      "default": false
     },
     "initial_interval": {
       "type": "string",
@@ -89,8 +104,8 @@
     },
     "ssl_yaml": {
       "type": "string",
-      "description": "i.e. certificate_authorities, supported_protocols, verification_mode etc.",
-      "default": "#certificate_authorities:\n#  - |\n#    -----BEGIN CERTIFICATE-----\n#    MIIDCjCCAfKgAwIBAgITJ706Mu2wJlKckpIvkWxEHvEyijANBgkqhkiG9w0BAQsF\n#    ADAUMRIwEAYDVQQDDAlsb2NhbGhvc3QwIBcNMTkwNzIyMTkyOTA0WhgPMjExOTA2\n#    MjgxOTI5MDRaMBQxEjAQBgNVBAMMCWxvY2FsaG9zdDCCASIwDQYJKoZIhvcNAQEB\n#    BQADggEPADCCAQoCggEBANce58Y/JykI58iyOXpxGfw0/gMvF0hUQAcUrSMxEO6n\n#    fZRA49b4OV4SwWmA3395uL2eB2NB8y8qdQ9muXUdPBWE4l9rMZ6gmfu90N5B5uEl\n#    94NcfBfYOKi1fJQ9i7WKhTjlRkMCgBkWPkUokvBZFRt8RtF7zI77BSEorHGQCk9t\n#    /D7BS0GJyfVEhftbWcFEAG3VRcoMhF7kUzYwp+qESoriFRYLeDWv68ZOvG7eoWnP\n#    PsvZStEVEimjvK5NSESEQa9xWyJOmlOKXhkdymtcUd/nXnx6UTCFgnkgzSdTWV41\n#    CI6B6aJ9svCTI2QuoIq2HxX/ix7OvW1huVmcyHVxyUECAwEAAaNTMFEwHQYDVR0O\n#    BBYEFPwN1OceFGm9v6ux8G+DZ3TUDYxqMB8GA1UdIwQYMBaAFPwN1OceFGm9v6ux\n#    8G+DZ3TUDYxqMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAG5D\n#    874A4YI7YUwOVsVAdbWtgp1d0zKcPRR+r2OdSbTAV5/gcS3jgBJ3i1BN34JuDVFw\n#    3DeJSYT3nxy2Y56lLnxDeF8CUTUtVQx3CuGkRg1ouGAHpO/6OqOhwLLorEmxi7tA\n#    H2O8mtT0poX5AnOAhzVy7QW0D/k4WaoLyckM5hUa6RtvgvLxOwA0U+VGurCDoctu\n#    8F4QOgTAWyh8EZIwaKCliFRSynDpv3JTUwtfZkxo6K6nce1RhCWFAsMvDZL8Dgc0\n#    yvgJ38BRsFOtkRuAGSf6ZUwTO8JJRRIFnpUzXflAnGivK9M13D5GEQMmIl6U9Pvk\n#    sxSmbIUfc2SGJGCJD4I=\n#    -----END CERTIFICATE-----\n"
+      "description": "Configuration for SSL communication if needed.",
+      "default": null
     },
     "tags": {
       "type": "list(string)",
@@ -102,12 +117,12 @@
     },
     "tql": {
       "type": "string",
-      "description": "Filter results based on query written in [TQL](https://knowledge.threatconnect.com/docs/threatconnect-query-language-tql).",
+      "description": "Filter results based on query written in [TQL](https://knowledge.threatconnect.com/docs/constructing-query-expressions).",
       "default": null
     },
     "url": {
       "type": "string",
-      "description": "Base URL of the ThreatConnect API. Default URL given is for the ThreatConnect's Public Cloud instance. Note: Do not include trailing slash “/” character.",
+      "description": "Base URL of the ThreatConnect API. Default URL given is for ThreatConnect's Public Cloud instance. Note: Do not include trailing slash “/” character.",
       "default": "https://app.threatconnect.com",
       "nullable": false
     }
@@ -128,7 +143,7 @@
         "threatconnect-cel"
       ],
       "data_stream": "indicator",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  ioc_expiration_duration = var.ioc_expiration_duration\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  tql = var.tql\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  include_attributes = var.include_attributes\n  include_group_assoc = var.include_group_assoc\n  include_indicator_assoc = var.include_indicator_assoc\n  initial_interval = var.initial_interval\n  interval = var.interval\n  ioc_expiration_duration = var.ioc_expiration_duration\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  tql = var.tql\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "input_variables_json": "${jsonencode({\n  access_id = var.access_id\n  proxy_url = var.proxy_url\n  secret_key = var.secret_key\n  ssl = var.ssl_yaml\n  url = var.url\n})}",
