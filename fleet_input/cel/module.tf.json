@@ -40,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cel package to use.",
-      "default": "1.9.0"
+      "default": "1.10.0"
     },
     "oauth_azure_resource": {
       "type": "string",
@@ -84,28 +84,43 @@
     },
     "oauth_id": {
       "type": "string",
-      "description": "Client ID used for Oauth2 authentication",
+      "description": "Client ID used for OAuth2 authentication",
+      "default": null
+    },
+    "oauth_okta_jwt_file": {
+      "type": "string",
+      "description": "Full path to the JWT account private key file for Okta.",
+      "default": null
+    },
+    "oauth_okta_jwt_json": {
+      "type": "string",
+      "description": "Your Okta JWT private key as raw JSON.",
+      "default": null
+    },
+    "oauth_okta_jwt_pem": {
+      "type": "string",
+      "description": "Your Okta JWT private key encoded as a PEM block.",
       "default": null
     },
     "oauth_provider": {
       "type": "string",
-      "description": "Used to configure supported oauth2 providers. Each supported provider will require specific settings. It is not set by default. Supported providers are \"azure\" and \"google\".",
+      "description": "Used to configure supported oAuth2 providers. Each supported provider will require specific settings. It is not set by default. Supported providers are \"azure\" and \"google\".",
       "default": null
     },
     "oauth_scopes": {
       "type": "list(string)",
-      "description": "A list of scopes that will be resourceed during the oauth2 flow. It is optional for all providers.",
+      "description": "A list of scopes that will be resourceed during the oAuth2 flow. It is optional for all providers.",
       "default": null
     },
     "oauth_secret": {
       "type": "string",
-      "description": "Client secret used for Oauth2 authentication",
+      "description": "Client secret used for OAuth2 authentication",
       "default": null,
       "sensitive": true
     },
     "oauth_token_url": {
       "type": "string",
-      "description": "The URL endpoint that will be used to generate the tokens during the oauth2 flow. It is required if no oauth_custom variable is set or provider is not specified in oauth_custom variable.",
+      "description": "The URL endpoint that will be used to generate the tokens during the oAuth2 flow. It is required if no oauth_custom variable is set or provider is not specified in oauth_custom variable.",
       "default": null,
       "sensitive": true
     },
@@ -237,7 +252,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  \"data_stream.dataset\" = var.data_stream_dataset\n  delete_redacted_fields = var.delete_redacted_fields\n  enable_request_tracer = var.enable_request_tracer\n  oauth_azure_resource = var.oauth_azure_resource\n  oauth_azure_tenant_id = var.oauth_azure_tenant_id\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  oauth_google_credentials_file = var.oauth_google_credentials_file\n  oauth_google_credentials_json = var.oauth_google_credentials_json\n  oauth_google_delegated_account = var.oauth_google_delegated_account\n  oauth_google_jwt_file = var.oauth_google_jwt_file\n  oauth_google_jwt_json = var.oauth_google_jwt_json\n  oauth_id = var.oauth_id\n  oauth_provider = var.oauth_provider\n  oauth_scopes = var.oauth_scopes\n  oauth_secret = var.oauth_secret\n  oauth_token_url = var.oauth_token_url\n  password = var.password\n  pipeline = var.pipeline\n  processors = var.processors_yaml\n  program = var.program\n  redact_fields = var.redact_fields\n  regexp = var.regexp_yaml\n  resource_interval = var.resource_interval\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  resource_url = var.resource_url\n  state = var.state_yaml\n  tags = var.tags\n  username = var.username\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  \"data_stream.dataset\" = var.data_stream_dataset\n  delete_redacted_fields = var.delete_redacted_fields\n  enable_request_tracer = var.enable_request_tracer\n  oauth_azure_resource = var.oauth_azure_resource\n  oauth_azure_tenant_id = var.oauth_azure_tenant_id\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  oauth_google_credentials_file = var.oauth_google_credentials_file\n  oauth_google_credentials_json = var.oauth_google_credentials_json\n  oauth_google_delegated_account = var.oauth_google_delegated_account\n  oauth_google_jwt_file = var.oauth_google_jwt_file\n  oauth_google_jwt_json = var.oauth_google_jwt_json\n  oauth_id = var.oauth_id\n  oauth_okta_jwt_file = var.oauth_okta_jwt_file\n  oauth_okta_jwt_json = var.oauth_okta_jwt_json\n  oauth_okta_jwt_pem = var.oauth_okta_jwt_pem\n  oauth_provider = var.oauth_provider\n  oauth_scopes = var.oauth_scopes\n  oauth_secret = var.oauth_secret\n  oauth_token_url = var.oauth_token_url\n  password = var.password\n  pipeline = var.pipeline\n  processors = var.processors_yaml\n  program = var.program\n  redact_fields = var.redact_fields\n  regexp = var.regexp_yaml\n  resource_interval = var.resource_interval\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  resource_url = var.resource_url\n  state = var.state_yaml\n  tags = var.tags\n  username = var.username\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "namespace": "${var.fleet_data_stream_namespace}",

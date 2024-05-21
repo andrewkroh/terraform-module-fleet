@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_threatconnect package to use.",
-      "default": "0.6.0"
+      "default": "0.6.1"
     },
     "http_client_timeout": {
       "type": "string",
