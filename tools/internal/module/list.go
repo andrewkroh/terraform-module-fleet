@@ -18,6 +18,7 @@
 package module
 
 import (
+	"fmt"
 	"log"
 	"path/filepath"
 	"sort"
@@ -59,6 +60,7 @@ func (l Specifiers) Filter(globs ...string) (Specifiers, error) {
 
 	set := map[Specifier]struct{}{}
 	for _, glob := range globs {
+		foundMatch := false
 		for _, specifier := range l {
 			match, err := filepath.Match(glob, specifier.String())
 			if err != nil {
@@ -68,6 +70,10 @@ func (l Specifiers) Filter(globs ...string) (Specifiers, error) {
 				continue
 			}
 			set[specifier] = struct{}{}
+			foundMatch = true
+		}
+		if !foundMatch {
+			return nil, fmt.Errorf("package specifier %q does not match any known package", glob)
 		}
 	}
 
