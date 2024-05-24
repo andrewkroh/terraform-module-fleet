@@ -1,0 +1,9 @@
+```release-note:enhancement
+fleet-terraform-generator: Glob patterns that do not match any package will now trigger an error.
+```
+
+```release-note:breaking-change
+Removed stale Terraform modules for the ti_abusech package that were for the httpjson input.
+This package was rewritten to use the CEL input. So update any module references to use the
+new modules for the CEL input.
+```
