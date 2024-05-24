@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "1.25.0"
+      "default": "2.0.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -37,8 +37,8 @@
     },
     "interval": {
       "type": "string",
-      "description": "Interval at which the logs will be pulled. Supported units for this parameter are h/m/s.",
-      "default": "10m",
+      "description": "Interval for polling indicators from AbuseCH data dump. As data dump is generated every 5 minutes, it should be greater than 5 minutes. Default `1h`.",
+      "default": "1h",
       "nullable": false
     },
     "preserve_original_event": {
@@ -65,13 +65,14 @@
       "type": "list(string)",
       "default": [
         "forwarded",
-        "abusech-malware"
+        "abusech-url"
       ],
       "nullable": false
     },
     "url": {
       "type": "string",
-      "default": "https://urlhaus-api.abuse.ch/v1/payloads/recent/",
+      "description": "Active URL API fetches URLs that are either actively distributing malware or that have been added to URLhaus within the past 90 days.",
+      "default": "https://urlhaus.abuse.ch/downloads/json",
       "nullable": false
     }
   },
@@ -91,16 +92,16 @@
         "url"
       ],
       "all_policy_template_inputs": [
-        "ti_abusech-httpjson"
+        "ti_abusech-cel"
       ],
-      "data_stream": "malware",
+      "data_stream": "url",
       "data_stream_variables_json": "${jsonencode({\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
-      "input_type": "httpjson",
+      "input_type": "cel",
       "input_variables_json": "${jsonencode({\n  enable_request_tracer = var.enable_request_tracer\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "ti_abusech",
-      "package_policy_name": "ti_abusech-malware-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
+      "package_policy_name": "ti_abusech-url-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "ti_abusech",
       "source": "../../fleet_package_policy"

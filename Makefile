@@ -15,6 +15,8 @@ modules: fleet-modules docs
 # example, if matching the input_type of "prometheus/metrics" use "prometheus_metrics".
 .PHONY: fleet-modules
 fleet-modules: install
+	rm -f fleet_integration/*/*
+	rm -f fleet_input/*/*
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out . \
 		"aws/cloudtrail/*/aws-s3" \
 		"aws/guardduty/guardduty/*" \
@@ -32,7 +34,7 @@ fleet-modules: install
 		"system/*/security/winlog" \
 		"system/system/diskio/system_metrics" \
 		"system/system/process_summary/system_metrics" \
-		"ti_abusech/*/*/httpjson" \
+		"ti_abusech/*/*/cel" \
 		"ti_recordedfuture/*/*/httpjson" \
 		"ti_threatconnect/*/*/cel" \
 		"windows/*/powershell*/winlog" \
