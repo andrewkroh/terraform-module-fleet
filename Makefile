@@ -15,6 +15,8 @@ modules: fleet-modules docs
 # example, if matching the input_type of "prometheus/metrics" use "prometheus_metrics".
 .PHONY: fleet-modules
 fleet-modules: install
+	rm -f fleet_integration/*/*
+	rm -f fleet_input/*/*
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out . \
 		"aws/cloudtrail/*/aws-s3" \
 		"aws/guardduty/guardduty/*" \
