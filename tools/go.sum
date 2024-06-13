@@ -5,8 +5,8 @@ github.com/Microsoft/go-winio v0.6.1 h1:9/kr64B9VUZrLm5YYwbGtUJnMgqWVOdUAXu6Migc
 github.com/Microsoft/go-winio v0.6.1/go.mod h1:LRdKpFKfdobln8UmuiYcKPot9D2v6svN5+sAH+4kjUM=
 github.com/ProtonMail/go-crypto v1.0.0 h1:LRuvITjQWX+WIfr930YHG2HNfjR1uOfyf5vE0kC2U78=
 github.com/ProtonMail/go-crypto v1.0.0/go.mod h1:EjAoLdwvbIOoOQr3ihjnSoLZRtE8azugULFRteWMNc0=
-github.com/andrewkroh/go-fleetpkg v0.0.10 h1:Cxxv954rF0C3wfzZ66N/ThTQq59WCIC4fKueU1E+/Ec=
-github.com/andrewkroh/go-fleetpkg v0.0.10/go.mod h1:JQilDTlODAFyMsV9xym87XVO3sBSLByraJ4eBOTWwG8=
+github.com/andrewkroh/go-fleetpkg v0.0.11 h1:612DdK4kpIjGHpnKkkM03TADshQhanvzdFdVGrgPRco=
+github.com/andrewkroh/go-fleetpkg v0.0.11/go.mod h1:MITAIQejOn9H4LH0t19sh1qGAlzXYnUXY4MHK3Vfg5g=
 github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be h1:9AeTilPcZAjCFIImctFaOjnTIavg87rW78vTPkQqLI8=
 github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be/go.mod h1:ySMOLuWl6zY27l47sB3qLNK6tF2fkHG55UZxx8oIVo4=
 github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5 h1:0CwZNZbxp69SHPdPJAN/hZIm0C4OItdklCFmMRWYpio=
