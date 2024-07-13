@@ -33,7 +33,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the windows package to use.",
-      "default": "1.45.1"
+      "default": "1.46.0"
     },
     "ignore_older": {
       "type": "string",
@@ -78,7 +78,8 @@
         "forwarded",
         "powershell",
         "powershell_operational",
-        "sysmon_operational"
+        "sysmon_operational",
+        "windows_defender"
       ],
       "all_policy_template_inputs": [
         "windows-winlog",
