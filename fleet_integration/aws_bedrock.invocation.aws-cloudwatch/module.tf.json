@@ -52,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_bedrock package to use.",
-      "default": "0.2.0"
+      "default": "0.3.0"
     },
     "latency": {
       "type": "string",
@@ -166,7 +166,8 @@
       ],
       "all_policy_template_inputs": [
         "aws_bedrock-aws-s3",
-        "aws_bedrock-aws-cloudwatch"
+        "aws_bedrock-aws-cloudwatch",
+        "aws_bedrock-aws/metrics"
       ],
       "data_stream": "invocation",
       "data_stream_variables_json": "${jsonencode({\n  api_sleep = var.api_sleep\n  api_timeput = var.api_timeput\n  latency = var.latency\n  log_group_arn = var.log_group_arn\n  log_group_name = var.log_group_name\n  log_group_name_prefix = var.log_group_name_prefix\n  log_stream_prefix = var.log_stream_prefix\n  log_streams = var.log_streams\n  number_of_workers = var.number_of_workers\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  region_name = var.region_name\n  scan_frequency = var.scan_frequency\n  start_position = var.start_position\n  tags = var.tags\n})}",

@@ -92,7 +92,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_bedrock package to use.",
-      "default": "0.2.0"
+      "default": "0.3.0"
     },
     "include_s3_metadata": {
       "type": "list(string)",
@@ -211,7 +211,8 @@
       ],
       "all_policy_template_inputs": [
         "aws_bedrock-aws-s3",
-        "aws_bedrock-aws-cloudwatch"
+        "aws_bedrock-aws-cloudwatch",
+        "aws_bedrock-aws/metrics"
       ],
       "data_stream": "invocation",
       "data_stream_variables_json": "${jsonencode({\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_interval = var.bucket_list_interval\n  bucket_list_prefix = var.bucket_list_prefix\n  buffer_size = var.buffer_size\n  content_type = var.content_type\n  encoding = var.encoding\n  expand_event_list_from_field = var.expand_event_list_from_field\n  file_selectors = var.file_selectors_yaml\n  fips_enabled = var.fips_enabled\n  include_s3_metadata = var.include_s3_metadata\n  max_bytes = var.max_bytes\n  max_number_of_messages = var.max_number_of_messages\n  non_aws_bucket_name = var.non_aws_bucket_name\n  number_of_workers = var.number_of_workers\n  path_style = var.path_style\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  provider = var.provider_name\n  queue_url = var.queue_url\n  \"sqs.max_receive_count\" = var.sqs_max_receive_count\n  \"sqs.wait_time\" = var.sqs_wait_time\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
