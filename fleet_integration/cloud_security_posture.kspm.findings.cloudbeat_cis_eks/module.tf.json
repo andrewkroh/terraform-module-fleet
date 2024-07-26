@@ -9,6 +9,11 @@
       "type": "string",
       "default": null
     },
+    "condition": {
+      "type": "string",
+      "description": "Condition to filter when to collect this input. See [Dynamic Input Configuration](https://www.elastic.co/guide/en/fleet/current/dynamic-input-configuration.html) for details.\n",
+      "default": null
+    },
     "credential_profile_name": {
       "type": "string",
       "default": null
@@ -40,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "1.10.0-preview03"
+      "default": "1.10.0-preview04"
     },
     "posture": {
       "type": "string",
@@ -88,7 +93,7 @@
         "vuln_mgmt-cloudbeat/vuln_mgmt_aws"
       ],
       "data_stream": "findings",
-      "data_stream_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  \"aws.credentials.type\" = var.aws_credentials_type\n  credential_profile_name = var.credential_profile_name\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  \"aws.credentials.type\" = var.aws_credentials_type\n  condition = var.condition\n  credential_profile_name = var.credential_profile_name\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cloudbeat/cis_eks",
       "namespace": "${var.fleet_data_stream_namespace}",
