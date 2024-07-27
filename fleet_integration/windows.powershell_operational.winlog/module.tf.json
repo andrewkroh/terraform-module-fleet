@@ -34,7 +34,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the windows package to use.",
-      "default": "1.46.1"
+      "default": "1.47.0"
     },
     "ignore_older": {
       "type": "string",
