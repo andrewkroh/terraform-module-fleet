@@ -21,6 +21,11 @@
       "default": "all",
       "nullable": false
     },
+    "enable_request_tracer": {
+      "type": "bool",
+      "description": "The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-entity-analytics.html#_tracer_enabled) for details.",
+      "default": null
+    },
     "fleet_agent_policy_id": {
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
@@ -43,7 +48,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the entityanalytics_entra_id package to use.",
-      "default": "1.2.0"
+      "default": "1.3.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -130,7 +135,7 @@
         "entity-entity-analytics"
       ],
       "data_stream": "entity",
-      "data_stream_variables_json": "${jsonencode({\n  api_endpoint = var.api_endpoint\n  client_id = var.client_id\n  custom_options = var.custom_options_yaml\n  dataset = var.dataset\n  http_client_timeout = var.http_client_timeout\n  login_endpoint = var.login_endpoint\n  login_scopes = var.login_scopes\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  secret = var.secret\n  ssl = var.ssl_yaml\n  sync_interval = var.sync_interval\n  tags = var.tags\n  tenant_id = var.tenant_id\n  update_interval = var.update_interval\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  api_endpoint = var.api_endpoint\n  client_id = var.client_id\n  custom_options = var.custom_options_yaml\n  dataset = var.dataset\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  login_endpoint = var.login_endpoint\n  login_scopes = var.login_scopes\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  secret = var.secret\n  ssl = var.ssl_yaml\n  sync_interval = var.sync_interval\n  tags = var.tags\n  tenant_id = var.tenant_id\n  update_interval = var.update_interval\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "entity-analytics",
       "namespace": "${var.fleet_data_stream_namespace}",
