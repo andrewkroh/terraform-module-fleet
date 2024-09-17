@@ -8,6 +8,9 @@ on:
   push:
     branches:
       - 'main'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   integrations:
@@ -44,7 +47,7 @@ jobs:
         run: echo "modified=$(if git status --porcelain --untracked-files=no | grep -q -E 'module.tf.json$|README.md$'; then echo "true"; else echo "false"; fi)" >> $GITHUB_OUTPUT
 
       - name: commit updated modules
-        if: steps.is-changed.outputs.modified == 'true'
+        if: github.event_name != 'pull_request' && steps.is-changed.outputs.modified == 'true'
         env:
           INTEGRATIONS_COMMIT: ${{ steps.integrations.outputs.commit }}
         run: |
