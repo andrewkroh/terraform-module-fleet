@@ -31,7 +31,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the aws package to use. | `string` | `"2.24.1"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the aws package to use. | `string` | `"2.25.0"` | no |
 | <a name="input_http_client_timeout"></a> [http\_client\_timeout](#input\_http\_client\_timeout) | Duration of the time limit on HTTP requests. Note: Valid time units are ns, us, ms, s, m, h. | `string` | `"30s"` | no |
 | <a name="input_initial_interval"></a> [initial\_interval](#input\_initial\_interval) | How far back to pull the Amazon GuardDuty Findings from AWS. NOTE: Supported units for this parameter are h/m/s. | `string` | `"24h"` | no |
 | <a name="input_interval"></a> [interval](#input\_interval) | Interval to fetch Amazon GuardDuty Findings from AWS. NOTE: Supported units for this parameter are h/m/s. | `string` | `"1m"` | no |
