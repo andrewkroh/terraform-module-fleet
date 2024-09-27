@@ -92,7 +92,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_bedrock package to use.",
-      "default": "0.9.0"
+      "default": "0.9.1"
     },
     "include_s3_metadata": {
       "type": "list(string)",
