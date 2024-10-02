@@ -52,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_bedrock package to use.",
-      "default": "0.9.1"
+      "default": "0.10.0"
     },
     "latency": {
       "type": "string",
