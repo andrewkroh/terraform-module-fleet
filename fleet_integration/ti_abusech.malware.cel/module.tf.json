@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "2.3.4"
+      "default": "2.3.5"
     },
     "http_client_timeout": {
       "type": "string",
