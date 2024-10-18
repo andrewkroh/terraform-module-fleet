@@ -16,13 +16,13 @@
     "cloud_formation_credentials_template": {
       "type": "string",
       "description": "Template URL to Cloud Formation Cloud Credentials Stack",
-      "default": "https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateURL=https://elastic-cspm-cft.s3.eu-central-1.amazonaws.com/cloudformation-cspm-direct-access-key-ACCOUNT_TYPE-8.15.0.yml",
+      "default": "https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateURL=https://elastic-cspm-cft.s3.eu-central-1.amazonaws.com/cloudformation-cspm-direct-access-key-ACCOUNT_TYPE-8.16.0.yml",
       "nullable": false
     },
     "cloud_formation_template": {
       "type": "string",
       "description": "Template URL to Cloud Formation Quick Create Stack",
-      "default": "https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateURL=https://elastic-cspm-cft.s3.eu-central-1.amazonaws.com/cloudformation-cspm-ACCOUNT_TYPE-8.15.0.yml\u0026stackName=Elastic-Cloud-Security-Posture-Management\u0026param_EnrollmentToken=FLEET_ENROLLMENT_TOKEN\u0026param_FleetUrl=FLEET_URL\u0026param_ElasticAgentVersion=KIBANA_VERSION\u0026param_ElasticArtifactServer=https://artifacts.elastic.co/downloads/beats/elastic-agent",
+      "default": "https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateURL=https://elastic-cspm-cft.s3.eu-central-1.amazonaws.com/cloudformation-cspm-ACCOUNT_TYPE-8.16.0.yml\u0026stackName=Elastic-Cloud-Security-Posture-Management\u0026param_EnrollmentToken=FLEET_ENROLLMENT_TOKEN\u0026param_FleetUrl=FLEET_URL\u0026param_ElasticAgentVersion=KIBANA_VERSION\u0026param_ElasticArtifactServer=https://artifacts.elastic.co/downloads/beats/elastic-agent",
       "nullable": false
     },
     "condition": {
@@ -61,7 +61,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "1.11.0-preview11"
+      "default": "1.11.0-preview13"
     },
     "posture": {
       "type": "string",
