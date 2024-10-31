@@ -52,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.30.1"
+      "default": "2.31.0"
     },
     "http_client_timeout": {
       "type": "string",
