@@ -31,7 +31,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cel package to use. | `string` | `"1.12.0"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cel package to use. | `string` | `"1.13.0"` | no |
 | <a name="input_oauth_azure_resource"></a> [oauth\_azure\_resource](#input\_oauth\_azure\_resource) | Optional setting for the accessed WebAPI resource when using azure provider. | `string` | `null` | no |
 | <a name="input_oauth_azure_tenant_id"></a> [oauth\_azure\_tenant\_id](#input\_oauth\_azure\_tenant\_id) | Optional setting used for authentication when using Azure provider. Since it is used in the process to generate the token\_url, it can’t be used in combination with it. | `string` | `null` | no |
 | <a name="input_oauth_endpoint_params_yaml"></a> [oauth\_endpoint\_params\_yaml](#input\_oauth\_endpoint\_params\_yaml) | Set of values that will be sent on each resource to the token\_url. Each param key can have multiple values. Can be set for all providers except google. | `string` | `null` | no |
@@ -70,6 +70,7 @@ No resources.
 | <a name="input_state_yaml"></a> [state\_yaml](#input\_state\_yaml) | State is the initial state to be provided to the program. If it has a cursor field, that field will be overwritten by any stored cursor, but will be available if no stored cursor exists.<br>More information can be found in the [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-cel.html#input-state-cel). | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `list(string)` | <pre>[<br>  "forwarded"<br>]</pre> | no |
 | <a name="input_username"></a> [username](#input\_username) | The username to be used with Basic Auth headers | `string` | `null` | no |
+| <a name="input_xsd"></a> [xsd](#input\_xsd) | The XSD needed for correct parsing and ingestion of XML documents using decode\_xml CEL extension.<br>More information can be found in the [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-cel.html#xsd-cel). | `string` | `"# order: |\n#   <xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n#     <xs:element name=\"order\">\n#       <xs:complexType>\n#         <xs:sequence>\n#           <xs:element name=\"sender\" type=\"xs:string\"/>\n#           <xs:element name=\"address\">\n#             <xs:complexType>\n#               <xs:sequence>\n#                 <xs:element name=\"name\" type=\"xs:string\"/>\n#                 <xs:element name=\"company\" type=\"xs:string\"/>\n"` | no |
 
 ## Outputs
 
