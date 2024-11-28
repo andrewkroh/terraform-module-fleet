@@ -63,7 +63,12 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_logs package to use.",
-      "default": "1.4.2"
+      "default": "1.5.0"
+    },
+    "include_linked_accounts_with_prefix": {
+      "type": "bool",
+      "description": "Include log groups from linked accounts when using `log_group_name_prefix` to derive the monitoring log groups.",
+      "default": null
     },
     "latency": {
       "type": "string",
@@ -180,7 +185,7 @@
         "aws_logs-aws-cloudwatch"
       ],
       "data_stream": "generic",
-      "data_stream_variables_json": "${jsonencode({\n  api_sleep = var.api_sleep\n  api_timeput = var.api_timeput\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  latency = var.latency\n  log_group_arn = var.log_group_arn\n  log_group_name = var.log_group_name\n  log_group_name_prefix = var.log_group_name_prefix\n  log_stream_prefix = var.log_stream_prefix\n  log_streams = var.log_streams\n  number_of_workers = var.number_of_workers\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  region_name = var.region_name\n  scan_frequency = var.scan_frequency\n  start_position = var.start_position\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  api_sleep = var.api_sleep\n  api_timeput = var.api_timeput\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  include_linked_accounts_with_prefix = var.include_linked_accounts_with_prefix\n  latency = var.latency\n  log_group_arn = var.log_group_arn\n  log_group_name = var.log_group_name\n  log_group_name_prefix = var.log_group_name_prefix\n  log_stream_prefix = var.log_stream_prefix\n  log_streams = var.log_streams\n  number_of_workers = var.number_of_workers\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  region_name = var.region_name\n  scan_frequency = var.scan_frequency\n  start_position = var.start_position\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "aws-cloudwatch",
       "namespace": "${var.fleet_data_stream_namespace}",
