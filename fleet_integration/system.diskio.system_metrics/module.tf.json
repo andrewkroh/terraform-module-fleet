@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the system package to use.",
-      "default": "1.62.1"
+      "default": "1.63.0"
     },
     "period": {
       "type": "string",
@@ -75,6 +75,7 @@
       ],
       "all_policy_template_inputs": [
         "system-logfile",
+        "system-journald",
         "system-winlog",
         "system-system/metrics",
         "system-httpjson"
