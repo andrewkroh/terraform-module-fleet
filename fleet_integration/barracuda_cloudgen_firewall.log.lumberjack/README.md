@@ -25,7 +25,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the barracuda\_cloudgen\_firewall package to use. | `string` | `"1.13.0"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the barracuda\_cloudgen\_firewall package to use. | `string` | `"1.14.0"` | no |
 | <a name="input_listen_address"></a> [listen\_address](#input\_listen\_address) | The bind address to listen for TCP connections. Set to `0.0.0.0` to bind to all available interfaces. | `string` | `"localhost"` | no |
 | <a name="input_listen_port"></a> [listen\_port](#input\_listen\_port) | The TCP port number to listen on. | `number` | `5044` | no |
 | <a name="input_preserve_original_event"></a> [preserve\_original\_event](#input\_preserve\_original\_event) | Preserves a raw copy of the original event, added to the field `event.original` | `bool` | `false` | no |

@@ -30,7 +30,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the entityanalytics\_entra\_id package to use. | `string` | `"1.3.1"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the entityanalytics\_entra\_id package to use. | `string` | `"1.4.0"` | no |
 | <a name="input_http_client_timeout"></a> [http\_client\_timeout](#input\_http\_client\_timeout) | Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h. | `string` | `"30s"` | no |
 | <a name="input_login_endpoint"></a> [login\_endpoint](#input\_login\_endpoint) | URL for OAuth2 logins. | `string` | `"https://login.microsoftonline.com"` | no |
 | <a name="input_login_scopes"></a> [login\_scopes](#input\_login\_scopes) | Scopes for OAuth2 token. | `list(string)` | <pre>[<br>  "https://graph.microsoft.com/.default"<br>]</pre> | no |
