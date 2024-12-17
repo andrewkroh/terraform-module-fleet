@@ -4,6 +4,7 @@
     "connection_string": {
       "type": "string",
       "description": "The connection string required to communicate with Event Hubs. See [Get an Event Hubs connection string](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string) to learn more.",
+      "sensitive": true,
       "nullable": false
     },
     "consumer_group": {
@@ -39,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "2.17.0"
+      "default": "2.17.1"
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",

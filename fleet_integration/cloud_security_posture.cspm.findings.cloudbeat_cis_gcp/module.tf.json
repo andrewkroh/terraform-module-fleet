@@ -4,7 +4,7 @@
     "cloud_shell_url": {
       "type": "string",
       "description": "A URL to CloudShell for creating a new deployment",
-      "default": "https://shell.cloud.google.com/cloudshell/?ephemeral=true\u0026cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Felastic%2Fcloudbeat\u0026cloudshell_git_branch=8.16\u0026cloudshell_workspace=deploy%2Fdeployment-manager\u0026show=terminal",
+      "default": "https://shell.cloud.google.com/cloudshell/?ephemeral=true\u0026cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Felastic%2Fcloudbeat\u0026cloudshell_git_branch=8.17\u0026cloudshell_workspace=deploy%2Fdeployment-manager\u0026show=terminal",
       "nullable": false
     },
     "condition": {
@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "1.12.0-preview02"
+      "default": "1.12.0"
     },
     "gcp_account_type": {
       "type": "string",
