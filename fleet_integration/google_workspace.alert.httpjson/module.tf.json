@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
-      "default": "2.28.0"
+      "default": "2.29.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -150,7 +150,8 @@
         "user_accounts"
       ],
       "all_policy_template_inputs": [
-        "google_workspace-httpjson"
+        "google_workspace-httpjson",
+        "google_workspace-cel"
       ],
       "data_stream": "alert",
       "data_stream_variables_json": "${jsonencode({\n  alert_center_api_host = var.alert_center_api_host\n  interval = var.interval\n  page_size = var.page_size\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n})}",

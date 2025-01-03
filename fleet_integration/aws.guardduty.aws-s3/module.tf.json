@@ -6,6 +6,11 @@
       "default": null,
       "sensitive": true
     },
+    "access_point_arn": {
+      "type": "string",
+      "description": "Mandatory if the \"Collect logs via S3 Bucket\" switch is on. It is a required parameter for collecting logs via the AWS S3 Bucket unless you set a Bucket ARN.",
+      "default": null
+    },
     "api_timeout": {
       "type": "string",
       "description": "The maximum duration of AWS API can take. The maximum is half of the visibility timeout value. NOTE: Supported units for this parameter are h/m/s.",
@@ -13,7 +18,7 @@
     },
     "bucket_arn": {
       "type": "string",
-      "description": "It is a required parameter for collecting logs via the AWS S3 Bucket.",
+      "description": "Mandatory if the \"Collect logs via S3 Bucket\" switch is on. It is a required parameter for collecting logs via the AWS S3 Bucket unless you set an Access Point ARN. In case both configurations are added, this one takes precedence.",
       "default": null
     },
     "bucket_list_prefix": {
@@ -78,7 +83,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.36.1"
+      "default": "2.38.0"
     },
     "interval": {
       "type": "string",
@@ -225,7 +230,7 @@
         "kafka-aws/metrics"
       ],
       "data_stream": "guardduty",
-      "data_stream_variables_json": "${jsonencode({\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_prefix = var.bucket_list_prefix\n  collect_s3_logs = var.collect_s3_logs\n  custom = var.custom_yaml\n  endpoint = var.endpoint\n  file_selectors = var.file_selectors_yaml\n  fips_enabled = var.fips_enabled\n  interval = var.interval\n  max_number_of_messages = var.max_number_of_messages\n  number_of_workers = var.number_of_workers\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  queue_url = var.queue_url\n  region = var.region\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  access_point_arn = var.access_point_arn\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_prefix = var.bucket_list_prefix\n  collect_s3_logs = var.collect_s3_logs\n  custom = var.custom_yaml\n  endpoint = var.endpoint\n  file_selectors = var.file_selectors_yaml\n  fips_enabled = var.fips_enabled\n  interval = var.interval\n  max_number_of_messages = var.max_number_of_messages\n  number_of_workers = var.number_of_workers\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  queue_url = var.queue_url\n  region = var.region\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "aws-s3",
       "namespace": "${var.fleet_data_stream_namespace}",

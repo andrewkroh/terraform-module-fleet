@@ -6,6 +6,11 @@
       "default": null,
       "sensitive": true
     },
+    "access_point_arn": {
+      "type": "string",
+      "description": "ARN of the AWS S3 Access Point that will be polled for list operation. (This is an alternative to the Bucket ARN, and required when `queue_url`, `bucket_arn` or `non_aws_bucket_name` are not set).",
+      "default": null
+    },
     "api_timeout": {
       "type": "string",
       "description": "The maximum duration of AWS API can take. The maximum is half of the visibility timeout value.",
@@ -13,7 +18,7 @@
     },
     "bucket_arn": {
       "type": "string",
-      "description": "ARN of the AWS S3 bucket that will be polled for list operation. (Required when `queue_url` and `non_aws_bucket_name` are not set).",
+      "description": "ARN of the AWS S3 bucket that will be polled for list operation. (Required when `queue_url`, `access_point_arn` and `non_aws_bucket_name` are not set).",
       "default": null
     },
     "bucket_list_interval": {
@@ -103,7 +108,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_logs package to use.",
-      "default": "1.5.1"
+      "default": "1.6.0"
     },
     "include_s3_metadata": {
       "type": "list(string)",
@@ -122,12 +127,12 @@
     },
     "non_aws_bucket_name": {
       "type": "string",
-      "description": "Name of the S3 bucket that will be polled for list operation. Required for 3rd party S3 compatible services. (Required when queue_url and bucket_arn are not set).",
+      "description": "Name of the S3 bucket that will be polled for list operation. Required for 3rd party S3 compatible services. (Required when `queue_url`, `bucket_arn` or `access_point_arn` are not set).",
       "default": null
     },
     "number_of_workers": {
       "type": "number",
-      "description": "Number of workers that will process the S3 objects listed. (Required when `bucket_arn` is set).",
+      "description": "Number of workers that will process the S3 objects listed. (Required when `bucket_arn` or `access_point_arn` are set).",
       "default": 1
     },
     "parsers_yaml": {
@@ -230,7 +235,7 @@
         "aws_logs-aws-cloudwatch"
       ],
       "data_stream": "generic",
-      "data_stream_variables_json": "${jsonencode({\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_interval = var.bucket_list_interval\n  bucket_list_prefix = var.bucket_list_prefix\n  buffer_size = var.buffer_size\n  content_type = var.content_type\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  encoding = var.encoding\n  expand_event_list_from_field = var.expand_event_list_from_field\n  file_selectors = var.file_selectors_yaml\n  fips_enabled = var.fips_enabled\n  include_s3_metadata = var.include_s3_metadata\n  max_bytes = var.max_bytes\n  max_number_of_messages = var.max_number_of_messages\n  non_aws_bucket_name = var.non_aws_bucket_name\n  number_of_workers = var.number_of_workers\n  parsers = var.parsers_yaml\n  path_style = var.path_style\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  provider = var.provider_name\n  queue_url = var.queue_url\n  \"sqs.max_receive_count\" = var.sqs_max_receive_count\n  \"sqs.wait_time\" = var.sqs_wait_time\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  access_point_arn = var.access_point_arn\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_interval = var.bucket_list_interval\n  bucket_list_prefix = var.bucket_list_prefix\n  buffer_size = var.buffer_size\n  content_type = var.content_type\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  encoding = var.encoding\n  expand_event_list_from_field = var.expand_event_list_from_field\n  file_selectors = var.file_selectors_yaml\n  fips_enabled = var.fips_enabled\n  include_s3_metadata = var.include_s3_metadata\n  max_bytes = var.max_bytes\n  max_number_of_messages = var.max_number_of_messages\n  non_aws_bucket_name = var.non_aws_bucket_name\n  number_of_workers = var.number_of_workers\n  parsers = var.parsers_yaml\n  path_style = var.path_style\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  provider = var.provider_name\n  queue_url = var.queue_url\n  \"sqs.max_receive_count\" = var.sqs_max_receive_count\n  \"sqs.wait_time\" = var.sqs_wait_time\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "aws-s3",
       "namespace": "${var.fleet_data_stream_namespace}",
