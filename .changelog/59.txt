@@ -1,0 +1,3 @@
+```release-note:bug
+fleet-terraform-generator: Update andrewkroh/go-fleetpkg dependency to fix manifest.yml parsing of `policy_templates_behavior`.
+```
