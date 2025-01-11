@@ -52,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_bedrock package to use.",
-      "default": "0.18.1"
+      "default": "0.19.0"
     },
     "include_linked_accounts_with_prefix": {
       "type": "bool",
