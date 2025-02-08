@@ -21,6 +21,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_condition"></a> [condition](#input\_condition) | Condition to filter when to collect this input. See [Dynamic Input Configuration](https://www.elastic.co/guide/en/fleet/current/dynamic-input-configuration.html) for details. | `string` | `null` | no |
 | <a name="input_data_stream_dataset"></a> [data\_stream\_dataset](#input\_data\_stream\_dataset) | Dataset to write data to. Changing the dataset will send the data to a different index. You can't use `-` in the name of a dataset and only valid characters for [Elasticsearch index names](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html). | `string` | `"cel.cel"` | no |
 | <a name="input_delete_redacted_fields"></a> [delete\_redacted\_fields](#input\_delete\_redacted\_fields) | The default behavior for field redaction is to replace characters with `*`s. If field value length or presence will<br>leak information, the fields can be deleted from logging by setting this configuration to true. | `bool` | `false` | no |
 | <a name="input_digest_no_reuse"></a> [digest\_no\_reuse](#input\_digest\_no\_reuse) | Selecting no challenge reuse prevents the transport from reusing digest challenges | `bool` | `null` | no |
@@ -31,7 +32,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cel package to use. | `string` | `"1.13.0"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cel package to use. | `string` | `"1.14.0"` | no |
 | <a name="input_oauth_azure_resource"></a> [oauth\_azure\_resource](#input\_oauth\_azure\_resource) | Optional setting for the accessed WebAPI resource when using azure provider. | `string` | `null` | no |
 | <a name="input_oauth_azure_tenant_id"></a> [oauth\_azure\_tenant\_id](#input\_oauth\_azure\_tenant\_id) | Optional setting used for authentication when using Azure provider. Since it is used in the process to generate the token\_url, it can’t be used in combination with it. | `string` | `null` | no |
 | <a name="input_oauth_endpoint_params_yaml"></a> [oauth\_endpoint\_params\_yaml](#input\_oauth\_endpoint\_params\_yaml) | Set of values that will be sent on each resource to the token\_url. Each param key can have multiple values. Can be set for all providers except google. | `string` | `null` | no |
