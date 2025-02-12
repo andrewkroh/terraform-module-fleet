@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the github package to use.",
-      "default": "2.3.0"
+      "default": "2.3.1"
     },
     "http_client_timeout": {
       "type": "string",
@@ -96,6 +96,7 @@
     },
     "ssl_yaml": {
       "type": "string",
+      "description": "SSL configuration options. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html#ssl-common-config) for details.",
       "default": null
     },
     "state": {

@@ -23,7 +23,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the barracuda_cloudgen_firewall package to use.",
-      "default": "1.14.0"
+      "default": "1.14.1"
     },
     "listen_address": {
       "type": "string",
@@ -50,7 +50,7 @@
     },
     "ssl_yaml": {
       "type": "string",
-      "description": "Options for enabling TLS mode. See the [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html) for a list of all options.",
+      "description": "SSL configuration options. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html#ssl-common-config) for details.",
       "default": null
     },
     "tags": {

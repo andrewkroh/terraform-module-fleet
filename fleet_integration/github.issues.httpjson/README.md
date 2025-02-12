@@ -29,7 +29,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the github package to use. | `string` | `"2.3.0"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the github package to use. | `string` | `"2.3.1"` | no |
 | <a name="input_http_client_timeout"></a> [http\_client\_timeout](#input\_http\_client\_timeout) | Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h. | `string` | `"60s"` | no |
 | <a name="input_interval"></a> [interval](#input\_interval) | Interval at which the alerts will be pulled. The value must be between 2m and 1h. Supported units for this parameter are h/m/s. | `string` | `"10m"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A list of comma separated label names. Example - bug,ui,@high | `string` | `null` | no |
@@ -39,7 +39,7 @@ No resources.
 | <a name="input_proxy_url"></a> [proxy\_url](#input\_proxy\_url) | URL to proxy connections in the form of http\[s\]://<user>:<password>@<server name/ip>:<port> | `string` | `null` | no |
 | <a name="input_repo"></a> [repo](#input\_repo) | The GitHub Repository. If not provided, alerts for all the repositories of the owner will be ingested | `string` | `null` | no |
 | <a name="input_since"></a> [since](#input\_since) | Only show notifications updated after the given time are returned. This is a timestamp in ISO 8601 format - `YYYY-MM-DDTHH:MM:SSZ`. | `string` | `null` | no |
-| <a name="input_ssl_yaml"></a> [ssl\_yaml](#input\_ssl\_yaml) | n/a | `string` | `null` | no |
+| <a name="input_ssl_yaml"></a> [ssl\_yaml](#input\_ssl\_yaml) | SSL configuration options. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html#ssl-common-config) for details. | `string` | `null` | no |
 | <a name="input_state"></a> [state](#input\_state) | Indicates the state of the issues to return. | `string` | `"all"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `list(string)` | <pre>[<br>  "forwarded",<br>  "github-issues"<br>]</pre> | no |
 
