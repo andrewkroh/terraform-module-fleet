@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "2.21.1"
+      "default": "2.22.0"
     },
     "http_client_timeout": {
       "type": "string",

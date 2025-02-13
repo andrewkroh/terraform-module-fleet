@@ -61,7 +61,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cel package to use.",
-      "default": "1.14.0"
+      "default": "1.15.0"
     },
     "oauth_azure_resource": {
       "type": "string",
