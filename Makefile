@@ -35,6 +35,7 @@ fleet-modules: install
 		"system/*/security/winlog" \
 		"system/system/diskio/system_metrics" \
 		"system/system/process_summary/system_metrics" \
+		"tenable_io/*/vulnerability/*" \
 		"ti_abusech/*/*/cel" \
 		"ti_recordedfuture/*/*/httpjson" \
 		"ti_threatconnect/*/*/cel" \
