@@ -3,7 +3,7 @@
   "variable": {
     "channel": {
       "type": "string",
-      "description": "Name of Windows event log channel (eg. Microsoft-Windows-PowerShell/Operational)",
+      "description": "Name of Windows event log channel (eg. Microsoft-Windows-PowerShell/Operational). It expects a single channel name. To collect multiple channels, add multiple integrations.",
       "nullable": false
     },
     "custom_yaml": {
@@ -44,7 +44,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the winlog package to use.",
-      "default": "2.3.0"
+      "default": "2.4.0"
     },
     "ignore_older": {
       "type": "string",
@@ -55,6 +55,11 @@
       "type": "string",
       "description": "The language ID the events will be rendered in. The language will be forced regardless of the system language. A complete list of language IDs can be found [here](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). It defaults to `0`, which indicates to use the system language. E.g.: `0x0409` for `en-US`",
       "default": 0
+    },
+    "level": {
+      "type": "string",
+      "description": "A list of event levels to include. The value is a comma-separated list of levels. Accepted levels are: `critical`, `error`, `warning`, `information`, and `verbose`.",
+      "default": null
     },
     "pipeline": {
       "type": "string",
@@ -76,6 +81,11 @@
       "type": "list(string)",
       "description": "Tags to include in the published event",
       "default": null
+    },
+    "xml_query": {
+      "type": "string",
+      "description": "Provide a custom XML query. This option is mutually exclusive with the `name`, `event_id`, `ignore_older`, `level`, and `providers` options. These options should be included in the XML query directly. Furthermore, an id must be provided. Custom XML queries provide more flexibility and advanced options than the simpler query options.",
+      "default": null
     }
   },
   "output": {
@@ -90,7 +100,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  channel = var.channel\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  providers = var.providers_names\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  channel = var.channel\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  level = var.level\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  providers = var.providers_names\n  tags = var.tags\n  xml_query = var.xml_query\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "winlog",
       "namespace": "${var.fleet_data_stream_namespace}",
