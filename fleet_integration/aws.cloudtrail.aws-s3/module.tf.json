@@ -93,7 +93,12 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.41.1"
+      "default": "2.42.0"
+    },
+    "ignore_older": {
+      "type": "string",
+      "description": "If set, ignore S3 objects whose Last-Modified time is before the ignore older timespan. Timespan is checked from the current time to S3 object's Last-Modified time. Accepts a duration like `48h`, `2h30m`.",
+      "default": null
     },
     "interval": {
       "type": "string",
@@ -153,6 +158,11 @@
     "shared_credential_file": {
       "type": "string",
       "description": "Directory of the shared credentials file",
+      "default": null
+    },
+    "start_timestamp": {
+      "type": "string",
+      "description": "If set, only read S3 objects with last modified timestamp newer than the given timestamp. Accepts a timestamp in `YYYY-MM-DDTHH:MM:SSZ` format. For example, \"2020-10-10T10:30:00Z\" (UTC) or \"2020-10-10T10:30:00Z+02:30\" (with zone offset).",
       "default": null
     },
     "tags": {
@@ -233,7 +243,7 @@
         "kafka-aws/metrics"
       ],
       "data_stream": "cloudtrail",
-      "data_stream_variables_json": "${jsonencode({\n  access_point_arn = var.access_point_arn\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_prefix = var.bucket_list_prefix\n  cloudtrail_digest_regex = var.cloudtrail_digest_regex\n  cloudtrail_insight_regex = var.cloudtrail_insight_regex\n  cloudtrail_regex = var.cloudtrail_regex\n  collect_s3_logs = var.collect_s3_logs\n  custom = var.custom_yaml\n  endpoint = var.endpoint\n  fips_enabled = var.fips_enabled\n  interval = var.interval\n  max_number_of_messages = var.max_number_of_messages\n  number_of_workers = var.number_of_workers\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  queue_url = var.queue_url\n  region = var.region\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  access_point_arn = var.access_point_arn\n  api_timeout = var.api_timeout\n  bucket_arn = var.bucket_arn\n  bucket_list_prefix = var.bucket_list_prefix\n  cloudtrail_digest_regex = var.cloudtrail_digest_regex\n  cloudtrail_insight_regex = var.cloudtrail_insight_regex\n  cloudtrail_regex = var.cloudtrail_regex\n  collect_s3_logs = var.collect_s3_logs\n  custom = var.custom_yaml\n  endpoint = var.endpoint\n  fips_enabled = var.fips_enabled\n  ignore_older = var.ignore_older\n  interval = var.interval\n  max_number_of_messages = var.max_number_of_messages\n  number_of_workers = var.number_of_workers\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  queue_url = var.queue_url\n  region = var.region\n  start_timestamp = var.start_timestamp\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "aws-s3",
       "namespace": "${var.fleet_data_stream_namespace}",
