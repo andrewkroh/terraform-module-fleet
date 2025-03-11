@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
-      "default": "2.32.0"
+      "default": "2.33.0"
     },
     "http_client_timeout": {
       "type": "string",
