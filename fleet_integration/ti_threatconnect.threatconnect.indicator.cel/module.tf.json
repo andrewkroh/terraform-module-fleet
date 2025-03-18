@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_threatconnect package to use.",
-      "default": "1.8.0"
+      "default": "1.9.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -49,17 +49,22 @@
     },
     "include_attributes": {
       "type": "bool",
-      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause the Kibana discover view to have issues.",
+      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause problems when using the Kibana discover view.",
       "default": false
     },
     "include_group_assoc": {
       "type": "bool",
-      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause the Kibana discover view to have issues.",
+      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause problems when using the Kibana discover view.",
+      "default": false
+    },
+    "include_group_assoc_attribs": {
+      "type": "bool",
+      "description": "This requires the API user account to have the option \"Allow User to Exceed API Link Limit\" enabled. Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause problems when using the Kibana discover view.",
       "default": false
     },
     "include_indicator_assoc": {
       "type": "bool",
-      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause the Kibana discover view to have issues.",
+      "description": "Elastic has a default async search response size of 10MB. Enabling this option may result in larger response size, which may cause problems when using the Kibana discover view.",
       "default": false
     },
     "initial_interval": {
@@ -143,7 +148,7 @@
         "threatconnect-cel"
       ],
       "data_stream": "indicator",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  include_attributes = var.include_attributes\n  include_group_assoc = var.include_group_assoc\n  include_indicator_assoc = var.include_indicator_assoc\n  initial_interval = var.initial_interval\n  interval = var.interval\n  ioc_expiration_duration = var.ioc_expiration_duration\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  tql = var.tql\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  include_attributes = var.include_attributes\n  include_group_assoc = var.include_group_assoc\n  include_group_assoc_attribs = var.include_group_assoc_attribs\n  include_indicator_assoc = var.include_indicator_assoc\n  initial_interval = var.initial_interval\n  interval = var.interval\n  ioc_expiration_duration = var.ioc_expiration_duration\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  tql = var.tql\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "input_variables_json": "${jsonencode({\n  access_id = var.access_id\n  proxy_url = var.proxy_url\n  secret_key = var.secret_key\n  ssl = var.ssl_yaml\n  url = var.url\n})}",
