@@ -2,6 +2,12 @@ name: release
 
 on:
   workflow_dispatch:
+    inputs:
+      draft:
+        description: 'Create as draft release'
+        type: boolean
+        default: false
+        required: false
   schedule:
     - cron: '0 13 * * 4' # At 01:00 PM, only on Thur
 
@@ -52,5 +58,6 @@ jobs:
           tag="$(date '+v%Y.%m.%d')"
           
           gh release create "${tag}" \
+            ${{ github.event.inputs.draft == 'true' && '--draft' || '' }} \
             --notes-file /tmp/release-notes.txt \
             --title "${tag}"
