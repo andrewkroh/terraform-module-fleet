@@ -4,7 +4,7 @@
     "arm_template_url": {
       "type": "string",
       "description": "A URL to the ARM Template for creating a new deployment",
-      "default": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F8.18%2Fdeploy%2Fazure%2FARM-for-ACCOUNT_TYPE.json",
+      "default": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F8.19%2Fdeploy%2Fazure%2FARM-for-ACCOUNT_TYPE.json",
       "nullable": false
     },
     "azure_account_type": {
@@ -78,7 +78,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "1.13.0"
+      "default": "1.14.0-preview01"
     },
     "posture": {
       "type": "string",
