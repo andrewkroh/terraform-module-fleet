@@ -47,7 +47,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "2.45.2"
+      "default": "3.0.0"
     },
     "interval": {
       "type": "string",
@@ -126,6 +126,7 @@
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [
         "securityhub_findings",
+        "securityhub_findings_full_posture",
         "securityhub_insights"
       ],
       "all_policy_template_inputs": [
