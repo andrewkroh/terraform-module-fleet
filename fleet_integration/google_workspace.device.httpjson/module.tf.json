@@ -7,6 +7,12 @@
       "default": "https://www.googleapis.com",
       "nullable": false
     },
+    "application_name_for_url": {
+      "type": "string",
+      "description": "Do not modify. The application name used to build the endpoint URL.",
+      "default": "mobile",
+      "nullable": false
+    },
     "delegated_account": {
       "type": "string",
       "description": "Email of the admin user used to access the API.",
@@ -39,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
-      "default": "2.39.1"
+      "default": "2.39.2"
     },
     "http_client_timeout": {
       "type": "string",
@@ -55,8 +61,8 @@
     },
     "interval": {
       "type": "string",
-      "description": "Duration between requests to the API. Google Workspace defaults to a 2 hour polling interval because Google reports can go from some minutes up to 3 days of delay. For more details on this, you can read more at https://support.google.com/a/answer/7061566. NOTE: Supported units for this parameter are h/m/s.",
-      "default": "2h",
+      "description": "Duration between requests to the API. NOTE: Supported units for this parameter are h/m/s.",
+      "default": "15m",
       "nullable": false
     },
     "jwt_file": {
@@ -69,6 +75,12 @@
       "description": "Raw contents of the JWT file. Useful when hosting a file along with the agent is not possible.\nNOTE: Please use either JWT File or JWT JSON parameter.\n",
       "default": null,
       "sensitive": true
+    },
+    "lag_time": {
+      "type": "string",
+      "description": "The lag time allowed for when fetching this report. Lag times vary by report, and go up to a few hours. There are more details in the [Google Workspace Admin documentation](https://support.google.com/a/answer/7061566). NOTE: Supported units for this parameter are h/m/s.",
+      "default": "3m",
+      "nullable": false
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",
@@ -142,7 +154,7 @@
         "google_workspace-cel"
       ],
       "data_stream": "device",
-      "data_stream_variables_json": "${jsonencode({\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  application_name_for_url = var.application_name_for_url\n  interval = var.interval\n  lag_time = var.lag_time\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "httpjson",
       "input_variables_json": "${jsonencode({\n  api_host = var.api_host\n  delegated_account = var.delegated_account\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  jwt_file = var.jwt_file\n  jwt_json = var.jwt_json\n  user_key = var.user_key\n})}",
