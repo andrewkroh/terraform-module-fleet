@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the system package to use.",
-      "default": "1.69.0"
+      "default": "2.0.0"
     },
     "period": {
       "type": "string",
@@ -77,8 +77,7 @@
         "system-logfile",
         "system-journald",
         "system-winlog",
-        "system-system/metrics",
-        "system-httpjson"
+        "system-system/metrics"
       ],
       "data_stream": "process.summary",
       "data_stream_variables_json": "${jsonencode({\n  degrade_on_partial = var.degrade_on_partial\n  period = var.period\n  processors = var.processors_yaml\n  tags = var.tags\n})}",

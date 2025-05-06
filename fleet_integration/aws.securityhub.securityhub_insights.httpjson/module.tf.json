@@ -47,7 +47,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "3.2.0"
+      "default": "3.3.0"
     },
     "interval": {
       "type": "string",
@@ -134,7 +134,6 @@
         "billing-aws/metrics",
         "cloudtrail-aws-s3",
         "cloudtrail-aws-cloudwatch",
-        "cloudtrail-httpjson",
         "cloudwatch-aws-cloudwatch",
         "cloudwatch-aws/metrics",
         "dynamodb-aws/metrics",

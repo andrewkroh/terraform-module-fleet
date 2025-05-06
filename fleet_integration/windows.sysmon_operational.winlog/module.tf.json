@@ -33,7 +33,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the windows package to use.",
-      "default": "2.5.5"
+      "default": "3.0.0"
     },
     "ignore_older": {
       "type": "string",
@@ -83,8 +83,7 @@
       ],
       "all_policy_template_inputs": [
         "windows-winlog",
-        "windows-windows/metrics",
-        "windows-httpjson"
+        "windows-windows/metrics"
       ],
       "data_stream": "sysmon_operational",
       "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",

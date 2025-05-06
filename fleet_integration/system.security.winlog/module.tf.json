@@ -33,7 +33,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the system package to use.",
-      "default": "1.69.0"
+      "default": "2.0.0"
     },
     "ignore_older": {
       "type": "string",
@@ -79,8 +79,7 @@
         "system-logfile",
         "system-journald",
         "system-winlog",
-        "system-system/metrics",
-        "system-httpjson"
+        "system-system/metrics"
       ],
       "data_stream": "security",
       "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
