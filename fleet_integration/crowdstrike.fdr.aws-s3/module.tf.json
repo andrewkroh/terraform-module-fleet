@@ -69,7 +69,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "1.65.0"
+      "default": "1.65.1"
     },
     "is_fdr_queue": {
       "type": "bool",

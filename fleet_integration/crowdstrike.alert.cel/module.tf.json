@@ -3,8 +3,8 @@
   "variable": {
     "batch_size": {
       "type": "number",
-      "description": "Batch size for the response of the CrowdStrike API. It must be between 1 - 10000.",
-      "default": 10000,
+      "description": "Batch size for the response of the CrowdStrike API. It must be between 1 - 1000.",
+      "default": 1000,
       "nullable": false
     },
     "client_id": {
@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "1.65.0"
+      "default": "1.65.1"
     },
     "http_client_timeout": {
       "type": "string",
