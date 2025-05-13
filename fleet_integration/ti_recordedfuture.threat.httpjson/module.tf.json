@@ -51,7 +51,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use.",
-      "default": "1.29.0"
+      "default": "1.30.0"
     },
     "interval": {
       "type": "string",
@@ -109,6 +109,7 @@
         "threat"
       ],
       "all_policy_template_inputs": [
+        "ti_recordedfuture-cel",
         "ti_recordedfuture-httpjson",
         "ti_recordedfuture-logfile"
       ],
