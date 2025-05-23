@@ -25,6 +25,9 @@ fleet-modules: install
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"cloud_security_posture/*/*/*" \
+		"crowdstrike/*/fdr/aws-s3" \
+		"crowdstrike/*/*/cel" \
+		"crowdstrike/*/*/streaming" \
 		"entityanalytics_entra_id/*/entity/*" \
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
