@@ -50,6 +50,7 @@ fleet-modules: install
 		"winlog/*/*"
 	# Ignore shadowing for these packages. See https://github.com/elastic/integrations/issues/6148.
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --ignore-var-shadow --out . \
+		"aws/inspector/*/*" \
 		"aws/securityhub/*/*"
 
 .PHONY: install
