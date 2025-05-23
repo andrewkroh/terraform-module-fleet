@@ -34,7 +34,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the crowdstrike package to use. | `string` | `"1.69.0"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the crowdstrike package to use. | `string` | `"1.70.0"` | no |
 | <a name="input_is_fdr_queue"></a> [is\_fdr\_queue](#input\_is\_fdr\_queue) | By default the FDR queue is expected. This option must be set to `false` if you are using your own queue. | `bool` | `true` | no |
 | <a name="input_keep_metadata"></a> [keep\_metadata](#input\_keep\_metadata) | Keep the aidmaster and userinfo documents after they have been used for event enrichment. | `bool` | `false` | no |
 | <a name="input_long_fields"></a> [long\_fields](#input\_long\_fields) | Choose to `Index` or `Delete` long fields. Fields longer than 1024 bytes (except `event.original`) will be kept (indexed) or deleted based on this option. | `string` | `"index_long_fields"` | no |
