@@ -25,9 +25,6 @@ fleet-modules: install
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"barracuda_cloudgen_firewall/*/*/lumberjack" \
 		"cloud_security_posture/*/*/*" \
-		"crowdstrike/*/fdr/aws-s3" \
-		"crowdstrike/*/*/cel" \
-		"crowdstrike/*/*/streaming" \
 		"entityanalytics_entra_id/*/entity/*" \
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
@@ -50,6 +47,7 @@ fleet-modules: install
 		"winlog/*/*"
 	# Ignore shadowing for these packages. See https://github.com/elastic/integrations/issues/6148.
 	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --ignore-var-shadow --out . \
+		"aws/inspector/*/*" \
 		"aws/securityhub/*/*"
 
 .PHONY: install
