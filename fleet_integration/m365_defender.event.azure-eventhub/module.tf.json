@@ -40,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "3.7.0"
+      "default": "3.8.0"
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",
@@ -103,7 +103,8 @@
       ],
       "all_policy_template_inputs": [
         "m365_defender-httpjson",
-        "m365_defender-azure-eventhub"
+        "m365_defender-azure-eventhub",
+        "m365_defender-cel"
       ],
       "data_stream": "event",
       "data_stream_variables_json": "${jsonencode({\n  connection_string = var.connection_string\n  consumer_group = var.consumer_group\n  eventhub = var.eventhub\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  resource_manager_endpoint = var.resource_manager_endpoint\n  storage_account = var.storage_account\n  storage_account_container = var.storage_account_container\n  storage_account_key = var.storage_account_key\n  tags = var.tags\n})}",

@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "3.7.0"
+      "default": "3.8.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -140,7 +140,8 @@
       ],
       "all_policy_template_inputs": [
         "m365_defender-httpjson",
-        "m365_defender-azure-eventhub"
+        "m365_defender-azure-eventhub",
+        "m365_defender-cel"
       ],
       "data_stream": "incident",
       "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  request_url = var.request_url\n  tags = var.tags\n})}",
