@@ -1,0 +1,3 @@
+```release-note:enhancement
+Generate Terraform modules for the TI CrowdStrike Fleet integration.
+```

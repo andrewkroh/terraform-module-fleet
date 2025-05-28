@@ -40,6 +40,7 @@ fleet-modules: install
 		"system/system/process_summary/system_metrics" \
 		"tenable_io/*/vulnerability/*" \
 		"ti_abusech/*/*/cel" \
+		"ti_crowdstrike/*/*/cel" \
 		"ti_recordedfuture/*/*/httpjson" \
 		"ti_threatconnect/*/*/cel" \
 		"windows/*/powershell*/winlog" \
