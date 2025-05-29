@@ -36,12 +36,6 @@
       "default": true,
       "nullable": false
     },
-    "fdr_parsing_script": {
-      "type": "string",
-      "description": "The JS script used to parse the custom format of SQS FDR notifications.",
-      "default": "function parse(n) {\n  var m = JSON.parse(n);\n  var evts = [];\n  var files = m.files;\n  var bucket = m.bucket;\n  if (!Array.isArray(files) || (files.length == 0) || bucket == null || bucket == \"\") {\n    return evts;\n  }\n  files.sort(function(a, b) {\n    var isMetadata = function(a) {\n      return a.path \u0026\u0026 ((a.path.indexOf(\"aidmaster\") !== -1) || (a.path.indexOf(\"userinfo\") !== -1));\n    };\n    var cmp = function(a, b) {\n      if (a \u003c b) {\n        return -1;\n      }\n      if (a \u003e b) {\n        return 1;\n      }\n      return 0;\n    };\n    if (isMetadata(a) === isMetadata(b)) {\n      return cmp(a.path, b.path);\n    }\n    if (isMetadata(a)) {\n      return -1;\n    }\n    return 1;\n  });\n  files.forEach(function(f){\n    var evt = new S3EventV2();\n    evt.SetS3BucketName(bucket);\n    evt.SetS3ObjectKey(f.path);\n    evts.push(evt);\n  });\n  return evts;\n}\n",
-      "nullable": false
-    },
     "fips_enabled": {
       "type": "bool",
       "description": "Enabling this option changes the service name from `s3` to `s3-fips` for connecting to the correct service endpoint.",
@@ -69,13 +63,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "1.71.0"
-    },
-    "is_fdr_queue": {
-      "type": "bool",
-      "description": "By default the FDR queue is expected. This option must be set to `false` if you are using your own queue.\n",
-      "default": true,
-      "nullable": false
+      "default": "1.72.0"
     },
     "keep_metadata": {
       "type": "bool",
@@ -200,7 +188,7 @@
         "crowdstrike-cel"
       ],
       "data_stream": "fdr",
-      "data_stream_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  api_timeout = var.api_timeout\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  enable_deduplication = var.enable_deduplication\n  endpoint = var.endpoint\n  enrich_metadata = var.enrich_metadata\n  fdr_parsing_script = var.fdr_parsing_script\n  fips_enabled = var.fips_enabled\n  is_fdr_queue = var.is_fdr_queue\n  keep_metadata = var.keep_metadata\n  long_fields = var.long_fields\n  long_fields_max_length = var.long_fields_max_length\n  max_number_of_messages = var.max_number_of_messages\n  metadata_cache_capacity = var.metadata_cache_capacity\n  metadata_cache_write_interval = var.metadata_cache_write_interval\n  metadata_ttl = var.metadata_ttl\n  number_of_workers = var.number_of_workers\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  prune_fields = var.prune_fields\n  queue_url = var.queue_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  api_timeout = var.api_timeout\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  enable_deduplication = var.enable_deduplication\n  endpoint = var.endpoint\n  enrich_metadata = var.enrich_metadata\n  fips_enabled = var.fips_enabled\n  keep_metadata = var.keep_metadata\n  long_fields = var.long_fields\n  long_fields_max_length = var.long_fields_max_length\n  max_number_of_messages = var.max_number_of_messages\n  metadata_cache_capacity = var.metadata_cache_capacity\n  metadata_cache_write_interval = var.metadata_cache_write_interval\n  metadata_ttl = var.metadata_ttl\n  number_of_workers = var.number_of_workers\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  prune_fields = var.prune_fields\n  queue_url = var.queue_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "aws-s3",
       "namespace": "${var.fleet_data_stream_namespace}",

@@ -47,7 +47,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "3.3.3"
+      "default": "3.4.0"
     },
     "initial_interval": {
       "type": "string",
@@ -142,6 +142,7 @@
         "cloudtrail-aws-cloudwatch",
         "cloudwatch-aws-cloudwatch",
         "cloudwatch-aws/metrics",
+        "config-cel",
         "dynamodb-aws/metrics",
         "ebs-aws/metrics",
         "ec2-aws-s3",
