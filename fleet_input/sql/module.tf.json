@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sql package to use.",
-      "default": "0.6.0"
+      "default": "0.7.0"
     },
     "hosts": {
       "type": "list(string)",
