@@ -25,6 +25,11 @@
       "description": "The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-httpjson.html#_request_tracer_filename) for details.",
       "default": null
     },
+    "external_id": {
+      "type": "string",
+      "description": "External ID to use when assuming a role in another account, see [the AWS documentation for use of external IDs](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)",
+      "default": null
+    },
     "fleet_agent_policy_id": {
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
@@ -47,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "3.4.0"
+      "default": "3.5.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -198,7 +203,7 @@
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "aws",
       "package_policy_name": "aws-inspector-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
-      "package_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  proxy_url = var.proxy_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
+      "package_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  external_id = var.external_id\n  proxy_url = var.proxy_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "inspector",
       "source": "../../fleet_package_policy"
