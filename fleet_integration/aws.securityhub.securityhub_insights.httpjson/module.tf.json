@@ -52,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "3.5.2"
+      "default": "3.6.0"
     },
     "interval": {
       "type": "string",
@@ -152,6 +152,7 @@
         "elb-aws-cloudwatch",
         "elb-aws/metrics",
         "lambda-aws/metrics",
+        "lambda-aws-cloudwatch",
         "natgateway-aws/metrics",
         "firewall-aws-s3",
         "firewall-aws-cloudwatch",
