@@ -1,0 +1,5 @@
+```release-note:breaking-change
+Removed the `ti_recordedfuture.threat.httpjson` module and replaced it with
+`ti_recordedfuture.threat.cel`. This is because the upstream integration
+migrated from using the httpjson input to the CEL input.
+```
