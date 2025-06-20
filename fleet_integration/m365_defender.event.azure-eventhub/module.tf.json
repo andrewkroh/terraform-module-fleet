@@ -40,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "3.9.0"
+      "default": "3.10.0"
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",
