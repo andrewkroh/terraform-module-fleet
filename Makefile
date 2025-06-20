@@ -41,7 +41,7 @@ fleet-modules: install
 		"tenable_io/*/vulnerability/*" \
 		"ti_abusech/*/*/cel" \
 		"ti_crowdstrike/*/*/cel" \
-		"ti_recordedfuture/*/*/httpjson" \
+		"ti_recordedfuture/*/*/cel" \
 		"ti_threatconnect/*/*/cel" \
 		"windows/*/powershell*/winlog" \
 		"windows/*/*sysmon*/winlog" \
