@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "3.10.0"
+      "default": "3.11.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -55,7 +55,7 @@
     },
     "initial_interval": {
       "type": "string",
-      "description": "How far back to pull the incidents from Microsoft 365 Defender. Supported units for this parameter are h/m/s.",
+      "description": "How far back to pull the incidents from Microsoft Defender XDR. Supported units for this parameter are h/m/s.",
       "default": "24h",
       "nullable": false
     },

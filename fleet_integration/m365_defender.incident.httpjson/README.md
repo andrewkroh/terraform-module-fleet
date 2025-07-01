@@ -29,9 +29,9 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the m365\_defender package to use. | `string` | `"3.10.0"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the m365\_defender package to use. | `string` | `"3.11.0"` | no |
 | <a name="input_http_client_timeout"></a> [http\_client\_timeout](#input\_http\_client\_timeout) | Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h. | `string` | `"30s"` | no |
-| <a name="input_initial_interval"></a> [initial\_interval](#input\_initial\_interval) | How far back to pull the incidents from Microsoft 365 Defender. Supported units for this parameter are h/m/s. | `string` | `"24h"` | no |
+| <a name="input_initial_interval"></a> [initial\_interval](#input\_initial\_interval) | How far back to pull the incidents from Microsoft Defender XDR. Supported units for this parameter are h/m/s. | `string` | `"24h"` | no |
 | <a name="input_interval"></a> [interval](#input\_interval) | Duration between requests to the Microsoft Security Graph API V2. Supported units for this parameter are h/m/s. | `string` | `"1m"` | no |
 | <a name="input_login_url"></a> [login\_url](#input\_login\_url) | URL of Login Server 'tenant-id and token endpoint added automatically'. | `string` | `"https://login.microsoftonline.com"` | no |
 | <a name="input_preserve_duplicate_custom_fields"></a> [preserve\_duplicate\_custom\_fields](#input\_preserve\_duplicate\_custom\_fields) | Preserve m365\_defender.incident fields that were copied to Elastic Common Schema (ECS) fields. | `bool` | `false` | no |
