@@ -3,7 +3,7 @@ module github.com/elastic/terraform-module-fleet/tools
 go 1.24.0
 
 require (
-	github.com/andrewkroh/go-fleetpkg v0.0.15
+	github.com/andrewkroh/go-fleetpkg v0.0.16
 	github.com/go-git/go-billy/v5 v5.6.2
 	github.com/go-git/go-git/v5 v5.16.2
 	github.com/google/go-cmp v0.7.0
