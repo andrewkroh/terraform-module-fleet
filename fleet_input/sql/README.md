@@ -28,7 +28,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the sql package to use. | `string` | `"0.9.0"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the sql package to use. | `string` | `"1.0.0"` | no |
 | <a name="input_hosts"></a> [hosts](#input\_hosts) | n/a | `list(string)` | <pre>[<br>  "root:test@tcp(127.0.0.1:3306)/"<br>]</pre> | no |
 | <a name="input_merge_results"></a> [merge\_results](#input\_merge\_results) | Merge results from multiple queries to a single event (restrictions apply) | `bool` | `false` | no |
 | <a name="input_period"></a> [period](#input\_period) | n/a | `string` | `"10s"` | no |

@@ -63,7 +63,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "1.76.0"
+      "default": "1.77.0"
     },
     "keep_metadata": {
       "type": "bool",

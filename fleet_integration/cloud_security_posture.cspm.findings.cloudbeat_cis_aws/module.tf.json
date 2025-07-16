@@ -25,7 +25,7 @@
     "cloud_formation_cloud_connectors_template": {
       "type": "string",
       "description": "Template URL to Cloud Formation Cloud Connectors Stack",
-      "default": "https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateURL=https://elastic-cspm-cft.s3.eu-central-1.amazonaws.com/cloudformation-cloud-connectors-ACCOUNT_TYPE-8.19.0.yml\u0026param_ElasticResourceId=RESOURCE_ID",
+      "default": "https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateURL=https://elastic-cspm-cft.s3.eu-central-1.amazonaws.com/cloudformation-cloud-connectors-ACCOUNT_TYPE-9.1.0.yml\u0026param_ElasticResourceId=RESOURCE_ID",
       "nullable": false
     },
     "cloud_formation_credentials_template": {
@@ -76,7 +76,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "2.0.0-preview04"
+      "default": "3.0.0-preview01"
     },
     "posture": {
       "type": "string",
