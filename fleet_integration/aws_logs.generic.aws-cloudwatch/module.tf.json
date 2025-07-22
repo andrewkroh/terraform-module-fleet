@@ -63,7 +63,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_logs package to use.",
-      "default": "1.8.0"
+      "default": "1.8.1"
     },
     "include_linked_accounts_with_prefix": {
       "type": "bool",

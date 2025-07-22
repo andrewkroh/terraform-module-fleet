@@ -108,7 +108,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_logs package to use.",
-      "default": "1.8.0"
+      "default": "1.8.1"
     },
     "ignore_older": {
       "type": "string",
@@ -137,7 +137,7 @@
     },
     "number_of_workers": {
       "type": "number",
-      "description": "Number of workers that will process the S3 objects listed. (Required when `bucket_arn` or `access_point_arn` are set).",
+      "description": "Number of workers that will process the S3 objects listed.",
       "default": 1
     },
     "parsers_yaml": {
