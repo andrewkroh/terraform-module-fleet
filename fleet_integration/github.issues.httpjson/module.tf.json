@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the github package to use.",
-      "default": "2.10.0"
+      "default": "2.10.1"
     },
     "http_client_timeout": {
       "type": "string",
