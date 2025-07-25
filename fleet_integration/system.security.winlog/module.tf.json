@@ -33,7 +33,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the system package to use.",
-      "default": "2.4.0"
+      "default": "2.5.1"
     },
     "ignore_older": {
       "type": "string",
@@ -44,6 +44,11 @@
       "type": "string",
       "description": "The language ID the events will be rendered in. The language will be forced regardless of the system language. A complete list of language IDs can be found https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c[here]. It defaults to `0`, which indicates to use the system language. E.g.: 0x0409 for en-US",
       "default": 0
+    },
+    "preserve_duplicate_custom_fields": {
+      "type": "bool",
+      "description": "Preserve winlog.event_data fields that were copied to Elastic Common Schema (ECS) fields.",
+      "default": null
     },
     "preserve_original_event": {
       "type": "bool",
@@ -82,7 +87,7 @@
         "system-system/metrics"
       ],
       "data_stream": "security",
-      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  custom = var.custom_yaml\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "winlog",
       "namespace": "${var.fleet_data_stream_namespace}",
