@@ -33,7 +33,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the aws\_logs package to use. | `string` | `"1.8.1"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the aws\_logs package to use. | `string` | `"1.8.2"` | no |
 | <a name="input_include_linked_accounts_with_prefix"></a> [include\_linked\_accounts\_with\_prefix](#input\_include\_linked\_accounts\_with\_prefix) | Include log groups from linked accounts when using `log_group_name_prefix` to derive the monitoring log groups. | `bool` | `null` | no |
 | <a name="input_latency"></a> [latency](#input\_latency) | The amount of time required for the logs to be available to CloudWatch Logs. Sample values, `1m` or `5m` — see Golang [time.ParseDuration](https://pkg.go.dev/time#ParseDuration) for more details. Latency translates the query's time range to consider the CloudWatch Logs latency. Example: `5m` means that the integration will query CloudWatch to search for logs available 5 minutes ago. | `string` | `null` | no |
 | <a name="input_log_group_arn"></a> [log\_group\_arn](#input\_log\_group\_arn) | ARN of the log group to collect logs from. | `string` | `null` | no |
@@ -52,7 +52,7 @@ No resources.
 | <a name="input_secret_access_key"></a> [secret\_access\_key](#input\_secret\_access\_key) | n/a | `string` | `null` | no |
 | <a name="input_session_token"></a> [session\_token](#input\_session\_token) | n/a | `string` | `null` | no |
 | <a name="input_shared_credential_file"></a> [shared\_credential\_file](#input\_shared\_credential\_file) | Directory of the shared credentials file | `string` | `null` | no |
-| <a name="input_start_position"></a> [start\_position](#input\_start\_position) | Allows user to specify if this input should read log files from the beginning or from the end. | `string` | `"beginning"` | no |
+| <a name="input_start_position"></a> [start\_position](#input\_start\_position) | Specify whether the input should start reading logs from the `beginning` (oldest log entry), `end` (newest log entry), or `lastSync` (last successful read timestamp if input ran before). | `string` | `"beginning"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `list(string)` | <pre>[<br>  "forwarded"<br>]</pre> | no |
 
 ## Outputs

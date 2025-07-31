@@ -52,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_bedrock package to use.",
-      "default": "1.2.2"
+      "default": "1.2.3"
     },
     "include_linked_accounts_with_prefix": {
       "type": "bool",
@@ -146,7 +146,7 @@
     },
     "start_position": {
       "type": "string",
-      "description": "Allows user to specify if this input should read log files from the beginning or from the end.",
+      "description": "Specify whether the input should start reading logs from the `beginning` (oldest log entry), `end` (newest log entry), or `lastSync` (last successful read timestamp if input ran before).",
       "default": "beginning"
     },
     "tags": {
