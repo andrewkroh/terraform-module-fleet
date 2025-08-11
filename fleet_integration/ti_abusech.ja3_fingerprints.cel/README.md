@@ -29,15 +29,13 @@ No resources.
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
 | <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the ti\_abusech package to use. | `string` | `"3.3.0"` | no |
 | <a name="input_http_client_timeout"></a> [http\_client\_timeout](#input\_http\_client\_timeout) | Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h. | `string` | `"30s"` | no |
-| <a name="input_initial_interval"></a> [initial\_interval](#input\_initial\_interval) | How far back to pull the threat indicators from ThreatFox in days. Can be any number between `1` to `7`. Example `5`. Default value is `7` i.e., 7 days. | `number` | `7` | no |
-| <a name="input_interval"></a> [interval](#input\_interval) | Duration between requests to the ThreatFox API. Supported units for this parameter are h/m/s. Example `24h`. | `string` | `"24h"` | no |
-| <a name="input_ioc_expiration_duration"></a> [ioc\_expiration\_duration](#input\_ioc\_expiration\_duration) | Indicator is expired after this duration since its last seen timestamp. Supported units for this parameter are d/h/m. Example `10d`. Default value is `90d` i.e., 90 days. | `string` | `"90d"` | no |
+| <a name="input_interval"></a> [interval](#input\_interval) | Duration between requests to the SSLBL API. Supported units for this parameter are h/m/s. Example `24h`. As data dump is generated every 5 minutes, it should be greater than 5 minutes. | `string` | `"1h"` | no |
 | <a name="input_preserve_original_event"></a> [preserve\_original\_event](#input\_preserve\_original\_event) | Preserves a raw copy of the original event, added to the field `event.original` | `bool` | `false` | no |
 | <a name="input_processors_yaml"></a> [processors\_yaml](#input\_processors\_yaml) | Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details. | `string` | `null` | no |
 | <a name="input_proxy_url"></a> [proxy\_url](#input\_proxy\_url) | URL to proxy connections in the form of http\[s\]://<user>:<password>@<server name/ip>:<port> | `string` | `null` | no |
 | <a name="input_ssl_yaml"></a> [ssl\_yaml](#input\_ssl\_yaml) | SSL configuration options. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html#ssl-common-config) for details. | `string` | `null` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `list(string)` | <pre>[<br>  "forwarded",<br>  "abusech-threatfox"<br>]</pre> | no |
-| <a name="input_url"></a> [url](#input\_url) | Base URL of the abuse.ch ThreatFox API to collect threat indicators. | `string` | `"https://threatfox-api.abuse.ch/api/v1/"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `list(string)` | <pre>[<br>  "forwarded",<br>  "abusech-ja3_fingerprints"<br>]</pre> | no |
+| <a name="input_url"></a> [url](#input\_url) | Base URL of the abuse.ch SSLBL API to collect active malicious JA3 fingerprints identified by SSLBL. | `string` | `"https://sslbl.abuse.ch/blacklist/ja3_fingerprints.csv"` | no |
 
 ## Outputs
 

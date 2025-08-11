@@ -43,14 +43,8 @@
     },
     "interval": {
       "type": "string",
-      "description": "Duration between requests to the MalwareBazaar API. Supported units for this parameter are h/m/s. Example `24h`.",
-      "default": "10m",
-      "nullable": false
-    },
-    "ioc_expiration_duration": {
-      "type": "string",
-      "description": "Indicator is expired after this duration since its last seen timestamp. Supported units for this parameter are d/h/m. Example `10d`. Default value is `90d` i.e., 90 days.",
-      "default": "90d",
+      "description": "Duration between requests to the SSLBL API. Supported units for this parameter are h/m/s. Example `24h`. As data dump is generated every 5 minutes, it should be greater than 5 minutes.",
+      "default": "1h",
       "nullable": false
     },
     "preserve_original_event": {
@@ -78,14 +72,14 @@
       "type": "list(string)",
       "default": [
         "forwarded",
-        "abusech-malwarebazaar"
+        "abusech-ja3_fingerprints"
       ],
       "nullable": false
     },
     "url": {
       "type": "string",
-      "description": "Base URL of the abuse.ch MalwareBazaar API to collect malware payloads.",
-      "default": "https://mb-api.abuse.ch/api/v1/",
+      "description": "Base URL of the abuse.ch SSLBL API to collect active malicious JA3 fingerprints identified by SSLBL.",
+      "default": "https://sslbl.abuse.ch/blacklist/ja3_fingerprints.csv",
       "nullable": false
     }
   },
@@ -109,14 +103,14 @@
       "all_policy_template_inputs": [
         "ti_abusech-cel"
       ],
-      "data_stream": "malwarebazaar",
-      "data_stream_variables_json": "${jsonencode({\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  ioc_expiration_duration = var.ioc_expiration_duration\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n  url = var.url\n})}",
+      "data_stream": "ja3_fingerprints",
+      "data_stream_variables_json": "${jsonencode({\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "input_variables_json": "${jsonencode({\n  auth_key = var.auth_key\n  enable_request_tracer = var.enable_request_tracer\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "ti_abusech",
-      "package_policy_name": "ti_abusech-malwarebazaar-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
+      "package_policy_name": "ti_abusech-ja3_fingerprints-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "ti_abusech",
       "source": "../../fleet_package_policy"
