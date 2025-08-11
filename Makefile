@@ -1,4 +1,5 @@
 TF_DOCS := go run github.com/terraform-docs/terraform-docs@v0.17.0
+PACKAGES_DIR ?= ../integrations/packages
 
 DOCS_CHECK_UPDATE ?= false
 
@@ -17,7 +18,7 @@ modules: fleet-modules docs
 fleet-modules: install
 	rm -f fleet_integration/*/*
 	rm -f fleet_input/*/*
-	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --out . \
+	fleet-terraform-generator generate batch --packages-dir "${PACKAGES_DIR}" --out . \
 		"aws/cloudtrail/*/aws-s3" \
 		"aws/guardduty/guardduty/*" \
 		"aws_bedrock/*/invocation/*" \
@@ -50,7 +51,7 @@ fleet-modules: install
 		"sql/*/*" \
 		"winlog/*/*"
 	# Ignore shadowing for these packages. See https://github.com/elastic/integrations/issues/6148.
-	fleet-terraform-generator generate batch --packages-dir ../integrations/packages --ignore-var-shadow --out . \
+	fleet-terraform-generator generate batch --packages-dir "${PACKAGES_DIR}" --ignore-var-shadow --out . \
 		"aws/inspector/*/*" \
 		"aws/securityhub/*/*"
 
