@@ -3,7 +3,7 @@
   "variable": {
     "auth_key": {
       "type": "string",
-      "description": "AbuseCH API key. This is required for authentication for all API requests. See [documentation](https://abuse.ch/blog/community-first/) for details.",
+      "description": "abuse.ch Auth Key. This is required for authentication for all API requests. See [documentation](https://abuse.ch/blog/community-first/) for details.",
       "sensitive": true,
       "nullable": false
     },
@@ -34,7 +34,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "3.1.0"
+      "default": "3.3.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -43,19 +43,19 @@
     },
     "initial_interval": {
       "type": "number",
-      "description": "How far back to look for indicators the first time the agent is started. Defaults to 7 days, can be any number between 1-7.",
+      "description": "How far back to pull the threat indicators from ThreatFox in days. Can be any number between `1` to `7`. Example `5`. Default value is `7` i.e., 7 days.",
       "default": 7,
       "nullable": false
     },
     "interval": {
       "type": "string",
-      "description": "Interval for polling indicators from AbuseCH Threat Fox API. Supported units for this parameter are h/m/s.",
+      "description": "Duration between requests to the ThreatFox API. Supported units for this parameter are h/m/s. Example `24h`.",
       "default": "24h",
       "nullable": false
     },
     "ioc_expiration_duration": {
       "type": "string",
-      "description": "Indicator is expired after this duration since its last seen timestamp. Use [Elasticsearch time units](https://www.elastic.co/guide/en/elasticsearch/reference/current/api-conventions.html#time-units) in days, hours, or minutes (e.g 10d). Default `90d`.",
+      "description": "Indicator is expired after this duration since its last seen timestamp. Supported units for this parameter are d/h/m. Example `10d`. Default value is `90d` i.e., 90 days.",
       "default": "90d",
       "nullable": false
     },
@@ -90,6 +90,7 @@
     },
     "url": {
       "type": "string",
+      "description": "Base URL of the abuse.ch ThreatFox API to collect threat indicators.",
       "default": "https://threatfox-api.abuse.ch/api/v1/",
       "nullable": false
     }
@@ -104,8 +105,10 @@
     "fleet_package_policy": {
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [
+        "ja3_fingerprints",
         "malware",
         "malwarebazaar",
+        "sslblacklist",
         "threatfox",
         "url"
       ],

@@ -3,7 +3,7 @@
   "variable": {
     "auth_key": {
       "type": "string",
-      "description": "AbuseCH API key. This is required for authentication for all API requests. See [documentation](https://abuse.ch/blog/community-first/) for details.",
+      "description": "abuse.ch Auth Key. This is required for authentication for all API requests. See [documentation](https://abuse.ch/blog/community-first/) for details.",
       "sensitive": true,
       "nullable": false
     },
@@ -34,7 +34,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "3.1.0"
+      "default": "3.3.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -43,7 +43,7 @@
     },
     "interval": {
       "type": "string",
-      "description": "Interval for polling indicators from AbuseCH data dump. As data dump is generated every 5 minutes, it should be greater than 5 minutes. Default `1h`.",
+      "description": "Duration between requests to the URLhaus API. Supported units for this parameter are h/m/s. Example `24h`. As data dump is generated every 5 minutes, it should be greater than 5 minutes.",
       "default": "1h",
       "nullable": false
     },
@@ -78,7 +78,7 @@
     },
     "url": {
       "type": "string",
-      "description": "Active URL API fetches URLs that are either actively distributing malware or that have been added to URLhaus within the past 90 days.",
+      "description": "Base URL of the abuse.ch URLhaus API to collect actively distributing malware URLs.",
       "default": "https://urlhaus.abuse.ch/downloads/json",
       "nullable": false
     }
@@ -93,8 +93,10 @@
     "fleet_package_policy": {
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [
+        "ja3_fingerprints",
         "malware",
         "malwarebazaar",
+        "sslblacklist",
         "threatfox",
         "url"
       ],
