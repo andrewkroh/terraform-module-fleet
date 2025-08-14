@@ -35,6 +35,7 @@ fleet-modules: install
 		"m365_defender/*/event/*" \
 		"m365_defender/*/incident/*" \
 		"qualys_vmdr/*/*/cel" \
+		"sentinel_one/*/*/httpjson" \
 		"system/*/application/winlog" \
 		"system/*/security/winlog" \
 		"system/system/diskio/system_metrics" \
