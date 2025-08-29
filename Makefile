@@ -34,6 +34,7 @@ fleet-modules: install
 		"google_workspace/*/*/httpjson" \
 		"m365_defender/*/event/*" \
 		"m365_defender/*/incident/*" \
+		"o365/*/*/cel" \
 		"qualys_vmdr/*/*/cel" \
 		"sentinel_one/*/*/httpjson" \
 		"sentinel_one/*/*/cel" \
