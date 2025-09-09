@@ -19,6 +19,7 @@ fleet-modules: install
 	rm -f fleet_integration/*/*
 	rm -f fleet_input/*/*
 	fleet-terraform-generator generate batch --packages-dir "${PACKAGES_DIR}" --out . \
+		"aws/config/*/cel" \
 		"aws/cloudtrail/*/aws-s3" \
 		"aws/guardduty/guardduty/*" \
 		"aws_bedrock/*/invocation/*" \
