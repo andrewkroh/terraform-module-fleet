@@ -14,12 +14,12 @@
     },
     "client_id": {
       "type": "string",
-      "description": "Client ID used for Oauth2 authentication",
+      "description": "Client ID used for OAuth 2.0 authentication",
       "nullable": false
     },
     "client_secret": {
       "type": "string",
-      "description": "Client secret used for Oauth2 authentication",
+      "description": "Client secret used for OAuth 2.0 authentication",
       "sensitive": true,
       "nullable": false
     },
@@ -56,7 +56,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the o365 package to use.",
-      "default": "2.27.0"
+      "default": "2.28.0"
     },
     "initial_interval": {
       "type": "string",
@@ -105,37 +105,37 @@
     },
     "resource_rate_limit_limit": {
       "type": "string",
-      "description": "The value of the response that specifies the total limit.",
+      "description": "Value of the response that specifies the total limit.",
       "default": null
     },
     "resource_redirect_forward_headers": {
       "type": "bool",
-      "description": "When set to true resource headers are forwarded in case of a redirect. Default is \"false\".",
+      "description": "If set to true resource headers are forwarded in case of a redirect. Default is \"false\".",
       "default": null
     },
     "resource_redirect_headers_ban_list": {
       "type": "list(string)",
-      "description": "When Redirect Forward Headers is set to true, all headers except the ones defined in this list will be forwarded. All headers are forwarded by default.",
+      "description": "If \"Redirect Forward Headers\" is set to true, all headers except the ones defined in this list will be forwarded. All headers are forwarded by default.",
       "default": null
     },
     "resource_redirect_max_redirects": {
       "type": "string",
-      "description": "The maximum number of redirects to follow for a resource. Default is \"10\".",
+      "description": "Maximum number of redirects to follow for a resource. Default is \"10\".",
       "default": null
     },
     "resource_retry_max_attempts": {
       "type": "string",
-      "description": "The maximum number of retries for the HTTP client. Default is \"5\".",
+      "description": "Maximum number of retries for the HTTP client. Default is \"5\".",
       "default": null
     },
     "resource_retry_wait_max": {
       "type": "string",
-      "description": "The maximum time to wait before a retry is attempted. Default is \"60s\".",
+      "description": "Maximum time to wait before a retry is attempted. Default is \"60s\".",
       "default": null
     },
     "resource_retry_wait_min": {
       "type": "string",
-      "description": "The minimum time to wait before a retry is attempted. Default is \"1s\".",
+      "description": "Minimum time to wait before a retry is attempted. Default is \"1s\".",
       "default": null
     },
     "resource_ssl_yaml": {
@@ -157,7 +157,7 @@
     },
     "token_scopes": {
       "type": "list(string)",
-      "description": "Scopes for OAuth2 token.",
+      "description": "Scopes for OAuth 2.0 token.",
       "default": [
         "https://manage.office.com/.default"
       ],
@@ -165,7 +165,7 @@
     },
     "token_url": {
       "type": "string",
-      "description": "The Base URL endpoint that will be used to generate the tokens during the oauth2 flow. If not provided, above `Azure Tenant ID` will be used for oauth2 token generation. Default value - `https://login.microsoftonline.com`",
+      "description": "Base URL endpoint that will be used to generate the tokens during the OAuth 2.0 flow. If not provided, above `Azure Tenant ID` will be used for OAuth 2.0 token generation. Default value - `https://login.microsoftonline.com`",
       "default": "https://login.microsoftonline.com",
       "sensitive": true
     },
@@ -187,8 +187,8 @@
         "audit"
       ],
       "all_policy_template_inputs": [
-        "o365-o365audit",
-        "o365-cel"
+        "o365-cel",
+        "o365-o365audit"
       ],
       "data_stream": "audit",
       "data_stream_variables_json": "${jsonencode({\n  azure_tenant_id = var.azure_tenant_id\n  batch_interval = var.batch_interval\n  client_id = var.client_id\n  client_secret = var.client_secret\n  content_types = var.content_types\n  enable_request_tracer = var.enable_request_tracer\n  initial_interval = var.initial_interval\n  interval = var.interval\n  maximum_age = var.maximum_age\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  tags = var.tags\n  token_scopes = var.token_scopes\n  token_url = var.token_url\n  url = var.url\n})}",
