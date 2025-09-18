@@ -28,6 +28,7 @@ No resources.
 | <a name="input_azure_credentials_client_certificate_path"></a> [azure\_credentials\_client\_certificate\_path](#input\_azure\_credentials\_client\_certificate\_path) | n/a | `string` | `null` | no |
 | <a name="input_azure_credentials_client_id"></a> [azure\_credentials\_client\_id](#input\_azure\_credentials\_client\_id) | n/a | `string` | `null` | no |
 | <a name="input_azure_credentials_client_secret"></a> [azure\_credentials\_client\_secret](#input\_azure\_credentials\_client\_secret) | n/a | `string` | `null` | no |
+| <a name="input_azure_credentials_cloud_connector_id"></a> [azure\_credentials\_cloud\_connector\_id](#input\_azure\_credentials\_cloud\_connector\_id) | Required when using Cloud Connectors Federated Identity | `string` | `null` | no |
 | <a name="input_azure_credentials_tenant_id"></a> [azure\_credentials\_tenant\_id](#input\_azure\_credentials\_tenant\_id) | n/a | `string` | `null` | no |
 | <a name="input_azure_credentials_type"></a> [azure\_credentials\_type](#input\_azure\_credentials\_type) | n/a | `string` | `null` | no |
 | <a name="input_azure_supports_cloud_connectors"></a> [azure\_supports\_cloud\_connectors](#input\_azure\_supports\_cloud\_connectors) | n/a | `bool` | `null` | no |
@@ -37,7 +38,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cloud\_security\_posture package to use. | `string` | `"3.1.0-preview04"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cloud\_security\_posture package to use. | `string` | `"3.1.0-preview05"` | no |
 | <a name="input_posture"></a> [posture](#input\_posture) | Chosen posture type (cspm/kspm) | `string` | n/a | yes |
 
 ## Outputs

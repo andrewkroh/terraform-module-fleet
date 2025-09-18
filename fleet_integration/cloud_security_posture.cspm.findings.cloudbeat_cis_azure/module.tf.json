@@ -35,6 +35,11 @@
       "default": null,
       "sensitive": true
     },
+    "azure_credentials_cloud_connector_id": {
+      "type": "string",
+      "description": "Required when using Cloud Connectors Federated Identity",
+      "default": null
+    },
     "azure_credentials_tenant_id": {
       "type": "string",
       "default": null
@@ -79,7 +84,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "3.1.0-preview04"
+      "default": "3.1.0-preview05"
     },
     "posture": {
       "type": "string",
@@ -108,7 +113,7 @@
         "vuln_mgmt-cloudbeat/vuln_mgmt_aws"
       ],
       "data_stream": "findings",
-      "data_stream_variables_json": "${jsonencode({\n  \"azure.account_type\" = var.azure_account_type\n  \"azure.credentials.client_certificate_password\" = var.azure_credentials_client_certificate_password\n  \"azure.credentials.client_certificate_path\" = var.azure_credentials_client_certificate_path\n  \"azure.credentials.client_id\" = var.azure_credentials_client_id\n  \"azure.credentials.client_secret\" = var.azure_credentials_client_secret\n  \"azure.credentials.tenant_id\" = var.azure_credentials_tenant_id\n  \"azure.credentials.type\" = var.azure_credentials_type\n  \"azure.supports_cloud_connectors\" = var.azure_supports_cloud_connectors\n  condition = var.condition\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  \"azure.account_type\" = var.azure_account_type\n  \"azure.credentials.client_certificate_password\" = var.azure_credentials_client_certificate_password\n  \"azure.credentials.client_certificate_path\" = var.azure_credentials_client_certificate_path\n  \"azure.credentials.client_id\" = var.azure_credentials_client_id\n  \"azure.credentials.client_secret\" = var.azure_credentials_client_secret\n  \"azure.credentials.tenant_id\" = var.azure_credentials_tenant_id\n  \"azure.credentials.type\" = var.azure_credentials_type\n  \"azure.supports_cloud_connectors\" = var.azure_supports_cloud_connectors\n  azure_credentials_cloud_connector_id = var.azure_credentials_cloud_connector_id\n  condition = var.condition\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cloudbeat/cis_azure",
       "input_variables_json": "${jsonencode({\n  arm_template_cloud_connectors_url = var.arm_template_cloud_connectors_url\n  arm_template_url = var.arm_template_url\n})}",
