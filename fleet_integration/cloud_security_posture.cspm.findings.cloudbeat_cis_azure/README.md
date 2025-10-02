@@ -21,8 +21,8 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_arm_template_cloud_connectors_url"></a> [arm\_template\_cloud\_connectors\_url](#input\_arm\_template\_cloud\_connectors\_url) | A URL to the ARM Template for creating a Cloud Connectors managed identity | `string` | `"https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2Fmain%2Fdeploy%2Fazure%2FARM-for-cloud-connectors-ACCOUNT_TYPE.json"` | no |
-| <a name="input_arm_template_url"></a> [arm\_template\_url](#input\_arm\_template\_url) | A URL to the ARM Template for creating a new deployment | `string` | `"https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F8.19%2Fdeploy%2Fazure%2FARM-for-ACCOUNT_TYPE.json"` | no |
+| <a name="input_arm_template_cloud_connectors_url"></a> [arm\_template\_cloud\_connectors\_url](#input\_arm\_template\_cloud\_connectors\_url) | A URL to the ARM Template for creating a Cloud Connectors managed identity | `string` | `"https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F9.2%2Fdeploy%2Fazure%2FARM-for-cloud-connectors-ACCOUNT_TYPE.json"` | no |
+| <a name="input_arm_template_url"></a> [arm\_template\_url](#input\_arm\_template\_url) | A URL to the ARM Template for creating a new deployment | `string` | `"https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F9.2%2Fdeploy%2Fazure%2FARM-for-ACCOUNT_TYPE.json"` | no |
 | <a name="input_azure_account_type"></a> [azure\_account\_type](#input\_azure\_account\_type) | n/a | `string` | `null` | no |
 | <a name="input_azure_credentials_client_certificate_password"></a> [azure\_credentials\_client\_certificate\_password](#input\_azure\_credentials\_client\_certificate\_password) | n/a | `string` | `null` | no |
 | <a name="input_azure_credentials_client_certificate_path"></a> [azure\_credentials\_client\_certificate\_path](#input\_azure\_credentials\_client\_certificate\_path) | n/a | `string` | `null` | no |
@@ -38,7 +38,7 @@ No resources.
 | <a name="input_fleet_data_stream_namespace"></a> [fleet\_data\_stream\_namespace](#input\_fleet\_data\_stream\_namespace) | Namespace to use for the data stream. | `string` | `"default"` | no |
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cloud\_security\_posture package to use. | `string` | `"3.1.0-preview07"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cloud\_security\_posture package to use. | `string` | `"3.1.0-preview08"` | no |
 | <a name="input_posture"></a> [posture](#input\_posture) | Chosen posture type (cspm/kspm) | `string` | n/a | yes |
 
 ## Outputs

@@ -4,13 +4,13 @@
     "arm_template_cloud_connectors_url": {
       "type": "string",
       "description": "A URL to the ARM Template for creating a Cloud Connectors managed identity",
-      "default": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2Fmain%2Fdeploy%2Fazure%2FARM-for-cloud-connectors-ACCOUNT_TYPE.json",
+      "default": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F9.2%2Fdeploy%2Fazure%2FARM-for-cloud-connectors-ACCOUNT_TYPE.json",
       "nullable": false
     },
     "arm_template_url": {
       "type": "string",
       "description": "A URL to the ARM Template for creating a new deployment",
-      "default": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F8.19%2Fdeploy%2Fazure%2FARM-for-ACCOUNT_TYPE.json",
+      "default": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Felastic%2Fcloudbeat%2F9.2%2Fdeploy%2Fazure%2FARM-for-ACCOUNT_TYPE.json",
       "nullable": false
     },
     "azure_account_type": {
@@ -84,7 +84,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "3.1.0-preview07"
+      "default": "3.1.0-preview08"
     },
     "posture": {
       "type": "string",
