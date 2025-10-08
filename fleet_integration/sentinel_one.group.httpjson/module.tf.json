@@ -3,7 +3,7 @@
   "variable": {
     "api_token": {
       "type": "string",
-      "description": "API Token with API Access Level type.",
+      "description": "API Token of the SentinelOne with API Access Level type.",
       "sensitive": true,
       "nullable": false
     },
@@ -34,7 +34,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use.",
-      "default": "1.40.0"
+      "default": "1.41.0"
     },
     "initial_interval": {
       "type": "string",
@@ -84,7 +84,7 @@
     },
     "url": {
       "type": "string",
-      "description": "SentinelOne console URL.",
+      "description": "Base URL of the SentinelOne Singularity Operations Center. It will be in the format `https://<your-tenant>.sentinelone.net`.",
       "nullable": false
     }
   },

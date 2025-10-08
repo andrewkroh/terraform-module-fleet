@@ -40,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use.",
-      "default": "1.40.0"
+      "default": "1.41.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -75,6 +75,11 @@
       "description": "URL to proxy connections in the form of http\\[s\\]://<user>:<password>@<server name/ip>:<port>. Please ensure your username and password are in URL encoded format.",
       "default": null
     },
+    "site_ids": {
+      "type": "string",
+      "description": "Comma separated list of Site IDs to filter by. Example - \"225494730938493804,225494730938493915\".",
+      "default": null
+    },
     "ssl_yaml": {
       "type": "string",
       "description": "SSL configuration options. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html#ssl-common-config) for details.",
@@ -90,7 +95,7 @@
     },
     "url": {
       "type": "string",
-      "description": "Base URL of the SentinelOne Console.",
+      "description": "Base URL of the SentinelOne Singularity Operations Center. It will be in the format `https://<your-tenant>.sentinelone.net`.",
       "nullable": false
     }
   },
@@ -112,7 +117,7 @@
         "sentinel_one-httpjson"
       ],
       "data_stream": "application",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  site_ids = var.site_ids\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "input_variables_json": "${jsonencode({\n  api_token = var.api_token\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  url = var.url\n})}",
