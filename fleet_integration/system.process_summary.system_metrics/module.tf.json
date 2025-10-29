@@ -28,7 +28,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the system package to use.",
-      "default": "2.6.3"
+      "default": "2.7.0"
     },
     "period": {
       "type": "string",
@@ -68,6 +68,7 @@
         "load",
         "memory",
         "network",
+        "ntp",
         "process",
         "process.summary",
         "socket_summary",
