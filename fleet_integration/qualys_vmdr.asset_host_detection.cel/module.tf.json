@@ -46,7 +46,13 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the qualys_vmdr package to use.",
-      "default": "6.11.0"
+      "default": "6.12.0"
+    },
+    "host_qid_list_query_limit": {
+      "type": "number",
+      "description": "Limit for the number of knowledge base IDs included in enrichment requests. This should be lowered if requests to the `/api/3.0/fo/knowledge_base/vuln/` endpoint return 414 status codes.",
+      "default": 500,
+      "nullable": false
     },
     "http_client_timeout": {
       "type": "string",
@@ -141,7 +147,7 @@
         "qualys_vmdr-cel"
       ],
       "data_stream": "asset_host_detection",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  cloud_data = var.cloud_data\n  enable_deduplication = var.enable_deduplication\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  input_parameters = var.input_parameters\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  show_igs = var.show_igs\n  tags = var.tags\n  url = var.url\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  cloud_data = var.cloud_data\n  enable_deduplication = var.enable_deduplication\n  enable_request_tracer = var.enable_request_tracer\n  host_qid_list_query_limit = var.host_qid_list_query_limit\n  http_client_timeout = var.http_client_timeout\n  input_parameters = var.input_parameters\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  show_igs = var.show_igs\n  tags = var.tags\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "input_variables_json": "${jsonencode({\n  password = var.password\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  username = var.username\n})}",
