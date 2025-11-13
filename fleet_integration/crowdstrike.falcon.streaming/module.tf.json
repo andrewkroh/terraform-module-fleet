@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "2.7.0"
+      "default": "2.8.0"
     },
     "preserve_original_event": {
       "type": "bool",
@@ -50,6 +50,16 @@
     "processors_yaml": {
       "type": "string",
       "description": "Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details.\n",
+      "default": null
+    },
+    "proxy_headers_yaml": {
+      "type": "string",
+      "description": "This specifies the headers to be sent to the proxy server.",
+      "default": null
+    },
+    "proxy_url": {
+      "type": "string",
+      "description": "URL to proxy connections in the form of http[s]://<user>:<password>@<server name/ip>:<port>. Ensure your username and password are in URL encoded format.",
       "default": null
     },
     "tags": {
@@ -96,6 +106,7 @@
       "data_stream_variables_json": "${jsonencode({\n  app_id = var.app_id\n  client_id = var.client_id\n  client_secret = var.client_secret\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  token_url = var.token_url\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "streaming",
+      "input_variables_json": "${jsonencode({\n  proxy_headers = var.proxy_headers_yaml\n  proxy_url = var.proxy_url\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "crowdstrike",
       "package_policy_name": "crowdstrike-falcon-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",

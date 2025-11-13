@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "2.7.0"
+      "default": "2.8.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -80,6 +80,11 @@
     "processors_yaml": {
       "type": "string",
       "description": "Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details.",
+      "default": null
+    },
+    "proxy_headers_yaml": {
+      "type": "string",
+      "description": "This specifies the headers to be sent to the proxy server.",
       "default": null
     },
     "proxy_url": {
@@ -148,7 +153,7 @@
       "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  query = var.query\n  select_fields = var.select_fields\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
-      "input_variables_json": "${jsonencode({\n  client_id = var.client_id\n  client_secret = var.client_secret\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  token_url = var.token_url\n  url = var.url\n})}",
+      "input_variables_json": "${jsonencode({\n  client_id = var.client_id\n  client_secret = var.client_secret\n  proxy_headers = var.proxy_headers_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  token_url = var.token_url\n  url = var.url\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "crowdstrike",
       "package_policy_name": "crowdstrike-host-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
