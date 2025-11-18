@@ -40,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use.",
-      "default": "1.43.0"
+      "default": "1.43.1"
     },
     "http_client_timeout": {
       "type": "string",
