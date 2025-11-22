@@ -56,7 +56,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the o365 package to use.",
-      "default": "2.33.1"
+      "default": "3.0.0"
     },
     "initial_interval": {
       "type": "string",
