@@ -20,14 +20,14 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-go@v6
         with:
           go-version: stable
           cache-dependency-path: tools/go.sum
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           repository: elastic/integrations
           path: integrations
