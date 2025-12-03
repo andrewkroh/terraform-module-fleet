@@ -3,8 +3,8 @@
   "variable": {
     "batch_size": {
       "type": "number",
-      "description": "Batch size for the response of the CrowdStrike API. It must be between 1 - 10000.",
-      "default": 10000,
+      "description": "Batch size for the response of the CrowdStrike API. For Commercial CIDs, it must be between 1 - 10000. For GovCloud CIDs, it must be between 1 - 5000.",
+      "default": 5000,
       "nullable": false
     },
     "client_id": {
@@ -45,7 +45,13 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "2.9.0"
+      "default": "2.10.0"
+    },
+    "gov_cloud": {
+      "type": "bool",
+      "description": "GovCloud CIDs must enable this. When enabled, the integration will use CrowdStrike’s GovCloud-supported devices endpoint (`/devices/entities/devices/v2`) instead of the standard combined endpoint (`/devices/combined/devices/v1`).",
+      "default": false,
+      "nullable": false
     },
     "http_client_timeout": {
       "type": "string",
@@ -99,7 +105,7 @@
     },
     "select_fields": {
       "type": "string",
-      "description": "The fields to return, comma delimited if specifying more than one field. For example, hostname,device_id would return device records only containing the hostname and device_id.",
+      "description": "The fields to return, comma delimited if specifying more than one field. For example, hostname,device_id would return device records only containing the hostname and device_id. This only applies to the combined devices endpoint.",
       "default": null
     },
     "ssl_yaml": {
@@ -150,7 +156,7 @@
         "crowdstrike-cel"
       ],
       "data_stream": "host",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  query = var.query\n  select_fields = var.select_fields\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  gov_cloud = var.gov_cloud\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  query = var.query\n  select_fields = var.select_fields\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "input_variables_json": "${jsonencode({\n  client_id = var.client_id\n  client_secret = var.client_secret\n  proxy_headers = var.proxy_headers_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  token_url = var.token_url\n  url = var.url\n})}",

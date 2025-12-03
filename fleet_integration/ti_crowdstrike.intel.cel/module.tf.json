@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_crowdstrike package to use.",
-      "default": "2.6.0"
+      "default": "2.6.1"
     },
     "http_client_timeout": {
       "type": "string",
