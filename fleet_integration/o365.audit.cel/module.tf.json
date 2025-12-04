@@ -56,7 +56,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the o365 package to use.",
-      "default": "3.0.0"
+      "default": "3.1.0"
     },
     "initial_interval": {
       "type": "string",
@@ -69,6 +69,11 @@
       "description": "How often the API is polled, supports seconds, minutes and hours.",
       "default": "3m",
       "nullable": false
+    },
+    "max_executions": {
+      "type": "number",
+      "description": "Maximum Executions Per Interval is the maximum number of executions that can be performed without waiting for the interval time.",
+      "default": 10000
     },
     "maximum_age": {
       "type": "string",
@@ -191,7 +196,7 @@
         "o365-o365audit"
       ],
       "data_stream": "audit",
-      "data_stream_variables_json": "${jsonencode({\n  azure_tenant_id = var.azure_tenant_id\n  batch_interval = var.batch_interval\n  client_id = var.client_id\n  client_secret = var.client_secret\n  content_types = var.content_types\n  enable_request_tracer = var.enable_request_tracer\n  initial_interval = var.initial_interval\n  interval = var.interval\n  maximum_age = var.maximum_age\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  tags = var.tags\n  token_scopes = var.token_scopes\n  token_url = var.token_url\n  url = var.url\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  azure_tenant_id = var.azure_tenant_id\n  batch_interval = var.batch_interval\n  client_id = var.client_id\n  client_secret = var.client_secret\n  content_types = var.content_types\n  enable_request_tracer = var.enable_request_tracer\n  initial_interval = var.initial_interval\n  interval = var.interval\n  max_executions = var.max_executions\n  maximum_age = var.maximum_age\n  oauth_endpoint_params = var.oauth_endpoint_params_yaml\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  resource_proxy_url = var.resource_proxy_url\n  resource_rate_limit_burst = var.resource_rate_limit_burst\n  resource_rate_limit_limit = var.resource_rate_limit_limit\n  resource_redirect_forward_headers = var.resource_redirect_forward_headers\n  resource_redirect_headers_ban_list = var.resource_redirect_headers_ban_list\n  resource_redirect_max_redirects = var.resource_redirect_max_redirects\n  resource_retry_max_attempts = var.resource_retry_max_attempts\n  resource_retry_wait_max = var.resource_retry_wait_max\n  resource_retry_wait_min = var.resource_retry_wait_min\n  resource_ssl = var.resource_ssl_yaml\n  resource_timeout = var.resource_timeout\n  tags = var.tags\n  token_scopes = var.token_scopes\n  token_url = var.token_url\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "namespace": "${var.fleet_data_stream_namespace}",
