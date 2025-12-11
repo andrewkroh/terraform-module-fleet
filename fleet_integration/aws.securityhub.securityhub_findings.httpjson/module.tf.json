@@ -52,17 +52,17 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "4.7.0"
+      "default": "5.0.0"
     },
     "initial_interval": {
       "type": "string",
-      "description": "How far back to pull the AWS Security Hub Findings from AWS. (Initial Interval should be greater than 1 hour.)",
+      "description": "How far back to pull the AWS Security Hub CSPM Findings from AWS. (Initial Interval should be greater than 1 hour.)",
       "default": "24h",
       "nullable": false
     },
     "interval": {
       "type": "string",
-      "description": "Interval to fetch AWS Security Hub Findings from AWS. (Interval should be greater than 1 hour.)",
+      "description": "Interval to fetch AWS Security Hub CSPM Findings from AWS. (Interval should be greater than 1 hour.)",
       "default": "1h",
       "nullable": false
     },

@@ -52,11 +52,11 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "4.7.0"
+      "default": "5.0.0"
     },
     "interval": {
       "type": "string",
-      "description": "Interval to fetch AWS Security Hub Insights from AWS.",
+      "description": "Interval to fetch AWS Security Hub CSPM Insights from AWS.",
       "default": "1m",
       "nullable": false
     },
