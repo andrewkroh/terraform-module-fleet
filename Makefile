@@ -33,9 +33,12 @@ fleet-modules: install
 		"entityanalytics_entra_id/*/entity/*" \
 		"github/*/issues/httpjson" \
 		"google_workspace/*/*/httpjson" \
+		"m365_defender/*/alert/*" \
 		"m365_defender/*/event/*" \
 		"m365_defender/*/incident/*" \
+		"m365_defender/*/vulnerability/*" \
 		"o365/*/*/cel" \
+		"prisma_cloud/*/*/cel" \
 		"qualys_vmdr/*/*/cel" \
 		"sentinel_one/*/*/httpjson" \
 		"sentinel_one/*/*/cel" \
