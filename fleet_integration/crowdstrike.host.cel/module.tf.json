@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "3.0.0"
+      "default": "3.1.0"
     },
     "gov_cloud": {
       "type": "bool",
