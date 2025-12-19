@@ -58,7 +58,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "5.2.0"
+      "default": "5.3.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -93,6 +93,31 @@
       "type": "string",
       "description": "URL to proxy connections in the form of http\\[s\\]://<user>:<password>@<server name/ip>:<port>",
       "default": null
+    },
+    "rate_limit": {
+      "type": "string",
+      "description": "The maximum number of API requests per second to send to AWS Config. AWS Config APIs have rate limits that vary by operation. A conservative default of 1 request per second helps avoid ThrottlingException errors. Supported time units are s (per second).",
+      "default": "1"
+    },
+    "rate_limit_burst": {
+      "type": "number",
+      "description": "The maximum burst of requests that can be made before rate limiting kicks in. This allows short bursts of requests while still respecting the overall rate limit. Default is 1 to be conservative and avoid throttling.",
+      "default": 1
+    },
+    "retry_max_attempts": {
+      "type": "number",
+      "description": "The maximum number of retries for a failed API request due to throttling or transient errors. Uses exponential backoff between retries.",
+      "default": 5
+    },
+    "retry_wait_max": {
+      "type": "string",
+      "description": "The maximum time to wait before retrying a failed request. Supported time units are s/m/h.",
+      "default": "60s"
+    },
+    "retry_wait_min": {
+      "type": "string",
+      "description": "The minimum time to wait before retrying a failed request. Supported time units are s/m/h.",
+      "default": "1s"
     },
     "role_arn": {
       "type": "string",
@@ -198,7 +223,7 @@
         "kafka-aws/metrics"
       ],
       "data_stream": "config",
-      "data_stream_variables_json": "${jsonencode({\n  aws_region = var.aws_region\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  ssl = var.ssl_yaml\n  tags = var.tags\n  tld = var.tld\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  aws_region = var.aws_region\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  rate_limit = var.rate_limit\n  rate_limit_burst = var.rate_limit_burst\n  retry_max_attempts = var.retry_max_attempts\n  retry_wait_max = var.retry_wait_max\n  retry_wait_min = var.retry_wait_min\n  ssl = var.ssl_yaml\n  tags = var.tags\n  tld = var.tld\n})}",
       "description": "${var.fleet_package_policy_description}",
       "input_type": "cel",
       "namespace": "${var.fleet_data_stream_namespace}",

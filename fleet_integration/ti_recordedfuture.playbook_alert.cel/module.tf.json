@@ -40,7 +40,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use.",
-      "default": "2.3.1"
+      "default": "2.4.0"
     },
     "http_client_timeout": {
       "type": "string",
