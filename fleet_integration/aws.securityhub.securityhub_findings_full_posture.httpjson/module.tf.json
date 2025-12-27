@@ -52,7 +52,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "5.3.1"
+      "default": "5.4.0"
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",
