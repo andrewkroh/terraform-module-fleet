@@ -97,7 +97,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws_bedrock package to use.",
-      "default": "1.5.0"
+      "default": "1.5.1"
     },
     "ignore_older": {
       "type": "string",
