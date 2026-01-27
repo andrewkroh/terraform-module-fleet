@@ -99,3 +99,14 @@ variable "all_policy_template_inputs" {
   default     = []
 }
 
+variable "force" {
+  description = <<-EOT
+    Force reinstallation of the package even if already installed. When true, bypasses "already installed"
+    checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards,
+    visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and
+    templates. Use with caution. See README for complete details and use cases.
+  EOT
+  type        = bool
+  default     = false
+}
+

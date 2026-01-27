@@ -31,7 +31,7 @@ locals {
 resource "elasticstack_fleet_integration" "assets" {
   name         = var.package_name
   version      = var.package_version
-  force        = true
+  force        = var.force
   skip_destroy = true
 }
 
