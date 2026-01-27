@@ -1,0 +1,3 @@
+```release-note:enhancement
+fleet_package_policy and generated modules - Add `force` variable to control package reinstallation behavior. When true (default), bypasses "already installed" checks and triggers complete re-installation of Fleet packages.
+```

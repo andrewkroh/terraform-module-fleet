@@ -139,6 +139,13 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 				Default:     &terraform.NullableValue{Value: ""},
 			},
 		},
+		"fleet_package_policy_force": {
+			Terraform: terraform.Variable{
+				Type:        "bool",
+				Description: "Force reinstallation of the package even if already installed. When true, bypasses \"already installed\" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates.",
+				Default:     &terraform.NullableValue{Value: true}, // Defaults to true to avoid introducing a breaking change.
+			},
+		},
 		"fleet_package_version": {
 			Terraform: terraform.Variable{
 				Type:        "string",
@@ -246,6 +253,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 					DataStreamVariablesJSON: dataStreamVarExpression,
 					AllDataStreams:          dataStreamsForInput,
 					AllPolicyTemplateInputs: allPolicyTemplateInputs,
+					Force:                   "${var.fleet_package_policy_force}",
 				}),
 			},
 		},
@@ -405,6 +413,7 @@ type FleetPackagePolicyModule struct {
 	DataStreamVariablesJSON string   `json:"data_stream_variables_json,omitempty"`
 	AllDataStreams          []string `json:"all_data_streams"`
 	AllPolicyTemplateInputs []string `json:"all_policy_template_inputs"` // All policy_template + input combos.
+	Force                   string   `json:"force,omitempty"`
 }
 
 func toMap(v any) map[string]any {

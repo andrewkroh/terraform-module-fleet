@@ -76,9 +76,9 @@ validate:
 
 .PHONY: docs
 docs:
-	@for i in $(shell find fleet_* -name '*.tf' -or -name '*.tf.json' -not -path '*/.terraform*' -print0 | xargs -0 -n1 dirname | sort --unique); do \
+	@for i in $(shell find fleet_* \( -name '*.tf' -or -name '*.tf.json' \) -not -path '*/.terraform*' -print0 | xargs -0 -n1 dirname | sort --unique); do \
 	  module=$$i; \
-	  with_header=$$(test -f "$$module/.readme.md" && echo -n --header-from=".readme.md"); \
+	  with_header=$$(test -f "$$module/.readme.md" && echo --header-from=".readme.md"); \
 	  ${TF_DOCS} markdown table --output-check=${DOCS_CHECK_UPDATE} $$with_header --output-file="README.md" "$$module" || exit 1; \
 	done
 
