@@ -76,6 +76,11 @@
       "description": "Description to use for the package policy.",
       "default": ""
     },
+    "fleet_package_policy_force": {
+      "type": "bool",
+      "description": "Force reinstallation of the package even if already installed. When true, bypasses \"already installed\" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates.",
+      "default": true
+    },
     "fleet_package_policy_name_suffix": {
       "type": "string",
       "description": "Suffix to append to the end of the package policy name.",
@@ -115,6 +120,7 @@
       "data_stream": "findings",
       "data_stream_variables_json": "${jsonencode({\n  \"azure.account_type\" = var.azure_account_type\n  \"azure.credentials.client_certificate_password\" = var.azure_credentials_client_certificate_password\n  \"azure.credentials.client_certificate_path\" = var.azure_credentials_client_certificate_path\n  \"azure.credentials.client_id\" = var.azure_credentials_client_id\n  \"azure.credentials.client_secret\" = var.azure_credentials_client_secret\n  \"azure.credentials.tenant_id\" = var.azure_credentials_tenant_id\n  \"azure.credentials.type\" = var.azure_credentials_type\n  \"azure.supports_cloud_connectors\" = var.azure_supports_cloud_connectors\n  azure_credentials_cloud_connector_id = var.azure_credentials_cloud_connector_id\n  condition = var.condition\n})}",
       "description": "${var.fleet_package_policy_description}",
+      "force": "${var.fleet_package_policy_force}",
       "input_type": "cloudbeat/cis_azure",
       "input_variables_json": "${jsonencode({\n  arm_template_cloud_connectors_url = var.arm_template_cloud_connectors_url\n  arm_template_url = var.arm_template_url\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",

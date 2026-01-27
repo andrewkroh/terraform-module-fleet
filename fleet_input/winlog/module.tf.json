@@ -36,6 +36,11 @@
       "description": "Description to use for the package policy.",
       "default": ""
     },
+    "fleet_package_policy_force": {
+      "type": "bool",
+      "description": "Force reinstallation of the package even if already installed. When true, bypasses \"already installed\" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates.",
+      "default": true
+    },
     "fleet_package_policy_name_suffix": {
       "type": "string",
       "description": "Suffix to append to the end of the package policy name.",
@@ -102,6 +107,7 @@
       "data_stream": "",
       "data_stream_variables_json": "${jsonencode({\n  channel = var.channel\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  level = var.level\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  providers = var.providers_names\n  tags = var.tags\n  xml_query = var.xml_query\n})}",
       "description": "${var.fleet_package_policy_description}",
+      "force": "${var.fleet_package_policy_force}",
       "input_type": "winlog",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "winlog",

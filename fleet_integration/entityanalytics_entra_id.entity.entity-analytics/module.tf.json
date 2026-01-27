@@ -40,6 +40,11 @@
       "description": "Description to use for the package policy.",
       "default": ""
     },
+    "fleet_package_policy_force": {
+      "type": "bool",
+      "description": "Force reinstallation of the package even if already installed. When true, bypasses \"already installed\" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates.",
+      "default": true
+    },
     "fleet_package_policy_name_suffix": {
       "type": "string",
       "description": "Suffix to append to the end of the package policy name.",
@@ -143,6 +148,7 @@
       "data_stream": "entity",
       "data_stream_variables_json": "${jsonencode({\n  api_endpoint = var.api_endpoint\n  client_id = var.client_id\n  custom_options = var.custom_options_yaml\n  dataset = var.dataset\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  login_endpoint = var.login_endpoint\n  login_scopes = var.login_scopes\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  secret = var.secret\n  ssl = var.ssl_yaml\n  sync_interval = var.sync_interval\n  tags = var.tags\n  tenant_id = var.tenant_id\n  update_interval = var.update_interval\n})}",
       "description": "${var.fleet_package_policy_description}",
+      "force": "${var.fleet_package_policy_force}",
       "input_type": "entity-analytics",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "entityanalytics_entra_id",

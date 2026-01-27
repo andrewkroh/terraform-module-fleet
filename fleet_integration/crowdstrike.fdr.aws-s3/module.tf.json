@@ -55,6 +55,11 @@
       "description": "Description to use for the package policy.",
       "default": ""
     },
+    "fleet_package_policy_force": {
+      "type": "bool",
+      "description": "Force reinstallation of the package even if already installed. When true, bypasses \"already installed\" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates.",
+      "default": true
+    },
     "fleet_package_policy_name_suffix": {
       "type": "string",
       "description": "Suffix to append to the end of the package policy name.",
@@ -190,6 +195,7 @@
       "data_stream": "fdr",
       "data_stream_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  api_timeout = var.api_timeout\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  enable_deduplication = var.enable_deduplication\n  endpoint = var.endpoint\n  enrich_metadata = var.enrich_metadata\n  fips_enabled = var.fips_enabled\n  keep_metadata = var.keep_metadata\n  long_fields = var.long_fields\n  long_fields_max_length = var.long_fields_max_length\n  max_number_of_messages = var.max_number_of_messages\n  metadata_cache_capacity = var.metadata_cache_capacity\n  metadata_cache_write_interval = var.metadata_cache_write_interval\n  metadata_ttl = var.metadata_ttl\n  number_of_workers = var.number_of_workers\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  prune_fields = var.prune_fields\n  queue_url = var.queue_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n  tags = var.tags\n  visibility_timeout = var.visibility_timeout\n})}",
       "description": "${var.fleet_package_policy_description}",
+      "force": "${var.fleet_package_policy_force}",
       "input_type": "aws-s3",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "crowdstrike",

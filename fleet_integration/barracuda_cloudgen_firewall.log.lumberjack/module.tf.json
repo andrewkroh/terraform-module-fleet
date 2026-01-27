@@ -15,6 +15,11 @@
       "description": "Description to use for the package policy.",
       "default": ""
     },
+    "fleet_package_policy_force": {
+      "type": "bool",
+      "description": "Force reinstallation of the package even if already installed. When true, bypasses \"already installed\" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates.",
+      "default": true
+    },
     "fleet_package_policy_name_suffix": {
       "type": "string",
       "description": "Suffix to append to the end of the package policy name.",
@@ -87,6 +92,7 @@
       "data_stream": "log",
       "data_stream_variables_json": "${jsonencode({\n  listen_address = var.listen_address\n  listen_port = var.listen_port\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  ssl = var.ssl_yaml\n  tags = var.tags\n  versions = var.versions\n})}",
       "description": "${var.fleet_package_policy_description}",
+      "force": "${var.fleet_package_policy_force}",
       "input_type": "lumberjack",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "barracuda_cloudgen_firewall",

@@ -31,6 +31,11 @@
       "description": "Description to use for the package policy.",
       "default": ""
     },
+    "fleet_package_policy_force": {
+      "type": "bool",
+      "description": "Force reinstallation of the package even if already installed. When true, bypasses \"already installed\" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates.",
+      "default": true
+    },
     "fleet_package_policy_name_suffix": {
       "type": "string",
       "description": "Suffix to append to the end of the package policy name.",
@@ -105,6 +110,7 @@
       "data_stream": "falcon",
       "data_stream_variables_json": "${jsonencode({\n  app_id = var.app_id\n  client_id = var.client_id\n  client_secret = var.client_secret\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  token_url = var.token_url\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
+      "force": "${var.fleet_package_policy_force}",
       "input_type": "streaming",
       "input_variables_json": "${jsonencode({\n  proxy_headers = var.proxy_headers_yaml\n  proxy_url = var.proxy_url\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
