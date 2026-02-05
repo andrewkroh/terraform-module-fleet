@@ -7,6 +7,12 @@
       "default": "https://shell.cloud.google.com/cloudshell/?ephemeral=true\u0026cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Felastic%2Fcloudbeat\u0026cloudshell_git_branch=main\u0026cloudshell_workspace=deploy%2Finfrastructure-manager%2Fgcp-elastic-agent\u0026show=terminal",
       "nullable": false
     },
+    "cloud_shell_url_cloud_connectors": {
+      "type": "string",
+      "description": "A URL to CloudShell for creating a Cloud Connectors Service Account",
+      "default": "https://shell.cloud.google.com/cloudshell/?ephemeral=true\u0026cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Felastic%2Fcloudbeat\u0026cloudshell_git_branch=main\u0026cloudshell_workspace=deploy%2Finfrastructure-manager%2Fgcp-cloud-connectors\u0026show=terminal",
+      "nullable": false
+    },
     "condition": {
       "type": "string",
       "description": "Condition to filter when to collect this input. See [Dynamic Input Configuration](https://www.elastic.co/guide/en/fleet/current/dynamic-input-configuration.html) for details.\n",
@@ -44,10 +50,19 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the cloud_security_posture package to use.",
-      "default": "3.3.0-preview02"
+      "default": "3.3.0-preview03"
     },
     "gcp_account_type": {
       "type": "string",
+      "default": null
+    },
+    "gcp_credentials_audience": {
+      "type": "string",
+      "default": null
+    },
+    "gcp_credentials_cloud_connector_id": {
+      "type": "string",
+      "description": "Required when using Cloud Connectors Managed Identity",
       "default": null
     },
     "gcp_credentials_file": {
@@ -55,6 +70,10 @@
       "default": null
     },
     "gcp_credentials_json": {
+      "type": "string",
+      "default": null
+    },
+    "gcp_credentials_service_account_email": {
       "type": "string",
       "default": null
     },
@@ -68,6 +87,10 @@
     },
     "gcp_project_id": {
       "type": "string",
+      "default": null
+    },
+    "gcp_supports_cloud_connectors": {
+      "type": "bool",
       "default": null
     },
     "posture": {
@@ -97,11 +120,11 @@
         "vuln_mgmt-cloudbeat/vuln_mgmt_aws"
       ],
       "data_stream": "findings",
-      "data_stream_variables_json": "${jsonencode({\n  condition = var.condition\n  \"gcp.account_type\" = var.gcp_account_type\n  \"gcp.credentials.file\" = var.gcp_credentials_file\n  \"gcp.credentials.json\" = var.gcp_credentials_json\n  \"gcp.credentials.type\" = var.gcp_credentials_type\n  \"gcp.organization_id\" = var.gcp_organization_id\n  \"gcp.project_id\" = var.gcp_project_id\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  condition = var.condition\n  \"gcp.account_type\" = var.gcp_account_type\n  \"gcp.credentials.audience\" = var.gcp_credentials_audience\n  \"gcp.credentials.file\" = var.gcp_credentials_file\n  \"gcp.credentials.json\" = var.gcp_credentials_json\n  \"gcp.credentials.service_account_email\" = var.gcp_credentials_service_account_email\n  \"gcp.credentials.type\" = var.gcp_credentials_type\n  \"gcp.organization_id\" = var.gcp_organization_id\n  \"gcp.project_id\" = var.gcp_project_id\n  \"gcp.supports_cloud_connectors\" = var.gcp_supports_cloud_connectors\n  gcp_credentials_cloud_connector_id = var.gcp_credentials_cloud_connector_id\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "cloudbeat/cis_gcp",
-      "input_variables_json": "${jsonencode({\n  cloud_shell_url = var.cloud_shell_url\n})}",
+      "input_variables_json": "${jsonencode({\n  cloud_shell_url = var.cloud_shell_url\n  cloud_shell_url_cloud_connectors = var.cloud_shell_url_cloud_connectors\n})}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "cloud_security_posture",
       "package_policy_name": "cloud_security_posture-findings-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",

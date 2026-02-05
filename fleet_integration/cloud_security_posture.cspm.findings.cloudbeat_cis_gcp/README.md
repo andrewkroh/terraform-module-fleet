@@ -22,6 +22,7 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cloud_shell_url"></a> [cloud\_shell\_url](#input\_cloud\_shell\_url) | A URL to CloudShell for creating a new deployment | `string` | `"https://shell.cloud.google.com/cloudshell/?ephemeral=true&cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Felastic%2Fcloudbeat&cloudshell_git_branch=main&cloudshell_workspace=deploy%2Finfrastructure-manager%2Fgcp-elastic-agent&show=terminal"` | no |
+| <a name="input_cloud_shell_url_cloud_connectors"></a> [cloud\_shell\_url\_cloud\_connectors](#input\_cloud\_shell\_url\_cloud\_connectors) | A URL to CloudShell for creating a Cloud Connectors Service Account | `string` | `"https://shell.cloud.google.com/cloudshell/?ephemeral=true&cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Felastic%2Fcloudbeat&cloudshell_git_branch=main&cloudshell_workspace=deploy%2Finfrastructure-manager%2Fgcp-cloud-connectors&show=terminal"` | no |
 | <a name="input_condition"></a> [condition](#input\_condition) | Condition to filter when to collect this input. See [Dynamic Input Configuration](https://www.elastic.co/guide/en/fleet/current/dynamic-input-configuration.html) for details. | `string` | `null` | no |
 | <a name="input_deployment"></a> [deployment](#input\_deployment) | Chosen deployment type (aws/gcp/azure/eks/k8s) | `string` | n/a | yes |
 | <a name="input_fleet_agent_policy_id"></a> [fleet\_agent\_policy\_id](#input\_fleet\_agent\_policy\_id) | Agent policy ID to add the package policy to. | `string` | n/a | yes |
@@ -29,13 +30,17 @@ No resources.
 | <a name="input_fleet_package_policy_description"></a> [fleet\_package\_policy\_description](#input\_fleet\_package\_policy\_description) | Description to use for the package policy. | `string` | `""` | no |
 | <a name="input_fleet_package_policy_force"></a> [fleet\_package\_policy\_force](#input\_fleet\_package\_policy\_force) | Force reinstallation of the package even if already installed. When true, bypasses "already installed" checks and triggers complete re-installation. This deletes and recreates Kibana assets (dashboards, visualizations), removes transforms and their destination indices, and overwrites ingest pipelines and templates. | `bool` | `true` | no |
 | <a name="input_fleet_package_policy_name_suffix"></a> [fleet\_package\_policy\_name\_suffix](#input\_fleet\_package\_policy\_name\_suffix) | Suffix to append to the end of the package policy name. | `string` | `""` | no |
-| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cloud\_security\_posture package to use. | `string` | `"3.3.0-preview02"` | no |
+| <a name="input_fleet_package_version"></a> [fleet\_package\_version](#input\_fleet\_package\_version) | Version of the cloud\_security\_posture package to use. | `string` | `"3.3.0-preview03"` | no |
 | <a name="input_gcp_account_type"></a> [gcp\_account\_type](#input\_gcp\_account\_type) | n/a | `string` | `null` | no |
+| <a name="input_gcp_credentials_audience"></a> [gcp\_credentials\_audience](#input\_gcp\_credentials\_audience) | n/a | `string` | `null` | no |
+| <a name="input_gcp_credentials_cloud_connector_id"></a> [gcp\_credentials\_cloud\_connector\_id](#input\_gcp\_credentials\_cloud\_connector\_id) | Required when using Cloud Connectors Managed Identity | `string` | `null` | no |
 | <a name="input_gcp_credentials_file"></a> [gcp\_credentials\_file](#input\_gcp\_credentials\_file) | n/a | `string` | `null` | no |
 | <a name="input_gcp_credentials_json"></a> [gcp\_credentials\_json](#input\_gcp\_credentials\_json) | n/a | `string` | `null` | no |
+| <a name="input_gcp_credentials_service_account_email"></a> [gcp\_credentials\_service\_account\_email](#input\_gcp\_credentials\_service\_account\_email) | n/a | `string` | `null` | no |
 | <a name="input_gcp_credentials_type"></a> [gcp\_credentials\_type](#input\_gcp\_credentials\_type) | n/a | `string` | `null` | no |
 | <a name="input_gcp_organization_id"></a> [gcp\_organization\_id](#input\_gcp\_organization\_id) | n/a | `string` | `null` | no |
 | <a name="input_gcp_project_id"></a> [gcp\_project\_id](#input\_gcp\_project\_id) | n/a | `string` | `null` | no |
+| <a name="input_gcp_supports_cloud_connectors"></a> [gcp\_supports\_cloud\_connectors](#input\_gcp\_supports\_cloud\_connectors) | n/a | `bool` | `null` | no |
 | <a name="input_posture"></a> [posture](#input\_posture) | Chosen posture type (cspm/kspm) | `string` | n/a | yes |
 
 ## Outputs
