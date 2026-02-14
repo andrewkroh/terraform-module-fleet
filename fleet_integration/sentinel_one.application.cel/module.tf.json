@@ -9,13 +9,13 @@
     },
     "batch_size": {
       "type": "number",
-      "description": "Batch size for the response of the Sentinel One API. The maximum supported page size value is 1000.",
+      "description": "Batch size for the response of the SentinelOne API. The maximum supported page size value is 1000.",
       "default": 1000,
       "nullable": false
     },
     "enable_request_tracer": {
       "type": "bool",
-      "description": "The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-cel.html#_resource_tracer_filename) for details.",
+      "description": "The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. Disabling the request tracer will delete any stored traces. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-cel.html#_resource_tracer_enable) for details.",
       "default": false
     },
     "fleet_agent_policy_id": {
@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use.",
-      "default": "2.1.1"
+      "default": "2.2.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -55,7 +55,7 @@
     },
     "interval": {
       "type": "string",
-      "description": "Duration between requests to the Sentinel One API. Supported units for this parameter are h/m/s.",
+      "description": "Duration between requests to the SentinelOne API. Supported units for this parameter are h/m/s.",
       "default": "24h",
       "nullable": false
     },

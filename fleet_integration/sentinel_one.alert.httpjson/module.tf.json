@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use.",
-      "default": "2.1.1"
+      "default": "2.2.0"
     },
     "initial_interval": {
       "type": "string",

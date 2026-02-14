@@ -9,7 +9,7 @@
     },
     "batch_size": {
       "type": "number",
-      "description": "Batch size for the response of the Sentinel One API. The maximum supported page size value is 1000.",
+      "description": "Batch size for the response of the SentinelOne API. The maximum supported page size value is 1000.",
       "default": 1000,
       "nullable": false
     },
@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use.",
-      "default": "2.1.1"
+      "default": "2.2.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -55,7 +55,7 @@
     },
     "interval": {
       "type": "string",
-      "description": "Duration between requests to the Sentinel One API. Supported units for this parameter are h/m/s.",
+      "description": "Duration between requests to the SentinelOne API. Supported units for this parameter are h/m/s.",
       "default": "24h",
       "nullable": false
     },
@@ -71,7 +71,7 @@
     },
     "processors_yaml": {
       "type": "string",
-      "description": "Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed.",
+      "description": "Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details.",
       "default": null
     },
     "proxy_url": {
