@@ -1,6 +1,6 @@
 module github.com/elastic/terraform-module-fleet/tools
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/andrewkroh/go-fleetpkg v0.21.0
