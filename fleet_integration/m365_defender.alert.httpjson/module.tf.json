@@ -9,12 +9,12 @@
     },
     "client_id": {
       "type": "string",
-      "description": "The client ID related to creating a new application on Azure.",
+      "description": "Client ID for Azure AD application.",
       "nullable": false
     },
     "client_secret": {
       "type": "string",
-      "description": "The secret related to the client ID.",
+      "description": "Client Secret for Azure AD application.",
       "sensitive": true,
       "nullable": false
     },
@@ -50,7 +50,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "5.7.0"
+      "default": "5.8.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -77,13 +77,13 @@
     },
     "login_url": {
       "type": "string",
-      "description": "URL of Login Server 'tenant-id and token endpoint added automatically'.",
+      "description": "The Base URL endpoint that will be used to generate the tokens during the oauth2 flow. If not provided, above `Tenant ID` will be used for oauth2 token generation.",
       "default": "https://login.microsoftonline.com",
       "nullable": false
     },
     "oauth_endpoint_params_yaml": {
       "type": "string",
-      "description": "Endpoint Params used for OAuth2 authentication as YAML. Refer to [documentation](https://www.elastic.co/docs/reference/beats/filebeat/filebeat-input-httpjson#_auth_oauth2_endpoint_params_2) for details.",
+      "description": "Set of values that will be sent on each resource to the OAuth Server URL. Each param key can have multiple values and they are appended to the URL as query parameters.",
       "default": null
     },
     "preserve_duplicate_custom_fields": {
@@ -105,7 +105,7 @@
     },
     "proxy_url": {
       "type": "string",
-      "description": "URL to proxy connections in the form of http\\[s\\]://<user>:<password>@<server name/ip>:<port>. Please ensure your username and password are in URL encoded format.",
+      "description": "URL to proxy connections in the form of http[s]://<user>:<password>@<server name/ip>:<port>. Please ensure your username and password are in URL encoded format.",
       "default": null
     },
     "request_url": {
@@ -121,6 +121,7 @@
     },
     "tags": {
       "type": "list(string)",
+      "description": "Tags for the data-stream.",
       "default": [
         "forwarded",
         "m365_defender-alert"
@@ -129,7 +130,7 @@
     },
     "tenant_id": {
       "type": "string",
-      "description": "The tenant ID related to creating a new application on Azure.",
+      "description": "Tenant ID of the Azure.",
       "nullable": false
     },
     "token_endpoint": {
