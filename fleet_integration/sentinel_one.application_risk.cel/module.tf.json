@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use.",
-      "default": "2.3.0"
+      "default": "2.4.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -115,7 +115,8 @@
       "all_data_streams": [
         "application",
         "application_risk",
-        "threat_event"
+        "threat_event",
+        "unified_alert"
       ],
       "all_policy_template_inputs": [
         "sentinel_one-cel",
