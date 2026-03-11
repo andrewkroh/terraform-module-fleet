@@ -1,0 +1,27 @@
+name: govulncheck
+
+on:
+  schedule:
+    - cron: '0 12 * * 1' # At noon UTC every Monday
+  pull_request: {}
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  govulncheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version: stable
+          cache-dependency-path: tools/go.sum
+
+      - uses: golang/govulncheck-action@v1
+        with:
+          work-dir: tools
+          repo-checkout: false
+
