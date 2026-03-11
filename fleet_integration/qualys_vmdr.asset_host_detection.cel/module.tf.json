@@ -51,7 +51,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the qualys_vmdr package to use.",
-      "default": "6.15.0"
+      "default": "6.16.0"
     },
     "host_qid_list_query_limit": {
       "type": "number",

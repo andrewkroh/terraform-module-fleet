@@ -3,17 +3,17 @@
   "variable": {
     "app_id": {
       "type": "string",
-      "description": "App ID for the CrowdStrike.",
+      "description": "This field specifies the `appId` parameter sent to the CrowdStrike API. See the CrowdStrike documentation for details.",
       "nullable": false
     },
     "client_id": {
       "type": "string",
-      "description": "Client ID for the CrowdStrike.",
+      "description": "Client ID for the CrowdStrike API.",
       "nullable": false
     },
     "client_secret": {
       "type": "string",
-      "description": "Client Secret for the CrowdStrike.",
+      "description": "Client Secret for the CrowdStrike API.",
       "sensitive": true,
       "nullable": false
     },
@@ -44,7 +44,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "3.5.0"
+      "default": "3.10.0"
     },
     "preserve_original_event": {
       "type": "bool",
@@ -77,7 +77,7 @@
     },
     "token_url": {
       "type": "string",
-      "description": "Token URL of CrowdStrike.",
+      "description": "CrowdStrike API token URL.",
       "default": "https://api.crowdstrike.com/oauth2/token",
       "sensitive": true,
       "nullable": false
