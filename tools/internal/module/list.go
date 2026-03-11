@@ -24,7 +24,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/andrewkroh/go-fleetpkg"
+	"github.com/andrewkroh/go-package-spec/pkgreader"
 
 	"golang.org/x/exp/maps"
 )
@@ -86,7 +86,7 @@ func List(dir string, continueOnError bool) (Specifiers, error) {
 	var result []Specifier
 
 	// Generate the product of policy_template x data_stream x input.
-	err := walkPackages(dir, func(pkg *fleetpkg.Integration, err error) error {
+	err := walkPackages(dir, func(pkg *pkgreader.Package, err error) error {
 		if err != nil {
 			if continueOnError {
 				log.Println("[WARN] Ignoring package:", err)
@@ -95,10 +95,12 @@ func List(dir string, continueOnError bool) (Specifiers, error) {
 			return err
 		}
 
-		if pkg.Manifest.Type == "input" {
-			for _, pt := range pkg.Manifest.PolicyTemplates {
+		manifest := pkg.Manifest()
+
+		if manifest.Type == "input" {
+			for _, pt := range pkg.InputManifest().PolicyTemplates {
 				result = append(result, Specifier{
-					Integration:    pkg.Manifest.Name,
+					Integration:    manifest.Name,
 					PolicyTemplate: pt.Name,
 					Input:          pt.Input,
 					Path:           pkg.Path(),
@@ -107,7 +109,12 @@ func List(dir string, continueOnError bool) (Specifiers, error) {
 			return nil
 		}
 
-		for _, pt := range pkg.Manifest.PolicyTemplates {
+		intManifest := pkg.IntegrationManifest()
+		if intManifest == nil {
+			return nil
+		}
+
+		for _, pt := range intManifest.PolicyTemplates {
 			// Some policy templates do not list the associated data streams so I assume
 			// this means consider all data streams in the package.
 			if len(pt.DataStreams) == 0 {
@@ -117,7 +124,7 @@ func List(dir string, continueOnError bool) (Specifiers, error) {
 			for _, dsName := range pt.DataStreams {
 				ds, found := pkg.DataStreams[dsName]
 				if !found {
-					log.Printf("WARN: In %s/%s data stream %s was not found.", pkg.Manifest.Name, pt.Name, dsName)
+					log.Printf("WARN: In %s/%s data stream %s was not found.", manifest.Name, pt.Name, dsName)
 					continue
 				}
 
@@ -126,7 +133,7 @@ func List(dir string, continueOnError bool) (Specifiers, error) {
 					for _, stream := range ds.Manifest.Streams {
 						if stream.Input == ptInput.Type {
 							result = append(result, Specifier{
-								Integration:    pkg.Manifest.Name,
+								Integration:    manifest.Name,
 								PolicyTemplate: pt.Name,
 								DataStream:     dsName,
 								Input:          ptInput.Type,
@@ -148,14 +155,14 @@ func List(dir string, continueOnError bool) (Specifiers, error) {
 	return result, nil
 }
 
-func walkPackages(dir string, walk func(pkg *fleetpkg.Integration, err error) error) error {
+func walkPackages(dir string, walk func(pkg *pkgreader.Package, err error) error) error {
 	allPackages, err := filepath.Glob(filepath.Join(dir, "*/manifest.yml"))
 	if err != nil {
 		return err
 	}
 
 	for _, manifestPath := range allPackages {
-		integration, err := fleetpkg.Read(filepath.Dir(manifestPath))
+		integration, err := pkgreader.Read(filepath.Dir(manifestPath))
 		if err = walk(integration, err); err != nil {
 			return err
 		}

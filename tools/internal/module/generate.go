@@ -27,7 +27,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/andrewkroh/go-fleetpkg"
+	"github.com/andrewkroh/go-package-spec/pkgreader"
+	"github.com/andrewkroh/go-package-spec/pkgspec"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"golang.org/x/exp/maps"
@@ -45,37 +46,39 @@ type Terraform struct {
 // Generate generates a Terraform module.
 func Generate(path, policyTemplateName, dataStreamName, inputName string, ignoreVariableShadowing bool) (*Terraform, error) {
 	// Read in the package metadata.
-	pkg, err := fleetpkg.Read(path)
+	pkg, err := pkgreader.Read(path)
 	if err != nil {
 		return nil, err
 	}
 
 	var (
-		manifest            = pkg.Manifest
-		policyTemplate      *fleetpkg.PolicyTemplate
-		policyTemplateInput *fleetpkg.Input
-		dataStream          *fleetpkg.DataStream
-		stream              *fleetpkg.Stream
+		manifest            = pkg.Manifest()
+		policyTemplate      *pkgspec.PolicyTemplate      // integration only
+		inputPolicyTemplate *pkgspec.InputPolicyTemplate  // input only
+		policyTemplateInput *pkgspec.PolicyTemplateInput  // integration only
+		dataStream          *pkgreader.DataStream         // integration only
+		stream              *pkgspec.DataStreamStream     // integration only
 	)
 
 	// Policy template.
 
-	if policyTemplateName == "" {
-		policyTemplate = &pkg.Manifest.PolicyTemplates[0]
-		policyTemplateName = policyTemplate.Name
-	} else {
-		for i, pt := range pkg.Manifest.PolicyTemplates {
-			if pt.Name == policyTemplateName {
-				policyTemplate = &pkg.Manifest.PolicyTemplates[i]
-				break
+	if manifest.Type != "input" {
+		intManifest := pkg.IntegrationManifest()
+		if policyTemplateName == "" {
+			policyTemplate = &intManifest.PolicyTemplates[0]
+			policyTemplateName = policyTemplate.Name
+		} else {
+			for i, pt := range intManifest.PolicyTemplates {
+				if pt.Name == policyTemplateName {
+					policyTemplate = &intManifest.PolicyTemplates[i]
+					break
+				}
+			}
+			if policyTemplate == nil {
+				return nil, fmt.Errorf("policy template %q not found", policyTemplateName)
 			}
 		}
-		if policyTemplate == nil {
-			return nil, fmt.Errorf("policy template %q not found", policyTemplateName)
-		}
-	}
 
-	if pkg.Manifest.Type != "input" {
 		for i, input := range policyTemplate.Inputs {
 			if input.Type == inputName {
 				policyTemplateInput = &policyTemplate.Inputs[i]
@@ -107,8 +110,24 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 			}
 		}
 	} else {
+		inputManifest := pkg.InputManifest()
+		if policyTemplateName == "" {
+			inputPolicyTemplate = &inputManifest.PolicyTemplates[0]
+			policyTemplateName = inputPolicyTemplate.Name
+		} else {
+			for i, pt := range inputManifest.PolicyTemplates {
+				if pt.Name == policyTemplateName {
+					inputPolicyTemplate = &inputManifest.PolicyTemplates[i]
+					break
+				}
+			}
+			if inputPolicyTemplate == nil {
+				return nil, fmt.Errorf("policy template %q not found", policyTemplateName)
+			}
+		}
+
 		// Inject data_stream.dataset for input packages.
-		injectDataStreamDatasetVar(policyTemplate)
+		injectDataStreamDatasetVar(inputPolicyTemplate)
 	}
 
 	tfVariables := map[string]moduleVariable{
@@ -149,18 +168,30 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		"fleet_package_version": {
 			Terraform: terraform.Variable{
 				Type:        "string",
-				Description: "Version of the " + pkg.Manifest.Name + " package to use.",
-				Default:     &terraform.NullableValue{Value: pkg.Manifest.Version},
+				Description: "Version of the " + manifest.Name + " package to use.",
+				Default:     &terraform.NullableValue{Value: manifest.Version},
 			},
 		},
 	}
 
 	// Iterate over all variables in the package and create Terraform variables.
-	packageLevelVarAssociations, err := addVariables(pkg.Manifest.Vars, tfVariables, ignoreVariableShadowing)
+	var packageVars []pkgspec.Var
+	if manifest.Type != "input" {
+		packageVars = pkg.IntegrationManifest().Vars
+	} else {
+		packageVars = pkg.InputManifest().Vars
+	}
+	packageLevelVarAssociations, err := addVariables(packageVars, tfVariables, ignoreVariableShadowing)
 	if err != nil {
 		return nil, fmt.Errorf("error adding package level variables: %w", err)
 	}
-	policyTemplateLevelVarAssociations, err := addVariables(policyTemplate.Vars, tfVariables, ignoreVariableShadowing)
+	var policyTemplateVars []pkgspec.Var
+	if policyTemplate != nil {
+		policyTemplateVars = policyTemplate.Vars
+	} else if inputPolicyTemplate != nil {
+		policyTemplateVars = inputPolicyTemplate.Vars
+	}
+	policyTemplateLevelVarAssociations, err := addVariables(policyTemplateVars, tfVariables, ignoreVariableShadowing)
 	if err != nil {
 		return nil, fmt.Errorf("error adding policy template level variables: %w", err)
 	}
@@ -201,8 +232,8 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		dataStreams := maps.Clone(pkg.DataStreams)
 
 		// If the policy template declares specific data streams, then honor that list.
-		if len(policyTemplate.DataStreams) > 0 {
-			maps.DeleteFunc(dataStreams, func(s string, _ *fleetpkg.DataStream) bool {
+		if policyTemplate != nil && len(policyTemplate.DataStreams) > 0 {
+			maps.DeleteFunc(dataStreams, func(s string, _ *pkgreader.DataStream) bool {
 				return !slices.Contains(policyTemplate.DataStreams, s)
 			})
 		}
@@ -219,8 +250,8 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 
 	// All "${policy_template.name}-${input.type}" combinations.
 	allPolicyTemplateInputs := []string{} // Declare empty slice.
-	{
-		for _, p := range manifest.PolicyTemplates {
+	if intManifest := pkg.IntegrationManifest(); intManifest != nil {
+		for _, p := range intManifest.PolicyTemplates {
 			for _, input := range p.Inputs {
 				allPolicyTemplateInputs = append(allPolicyTemplateInputs, p.Name+"-"+input.Type)
 			}
@@ -245,7 +276,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 					PackageVersion:          "${var.fleet_package_version}",
 					Namespace:               "${var.fleet_data_stream_namespace}",
 					Description:             "${var.fleet_package_policy_description}",
-					PolicyTemplate:          policyTemplate.Name,
+					PolicyTemplate:          policyTemplateName,
 					DataStream:              datasetName(dataStreamName, dataStream),
 					InputType:               inputName,
 					PackageVariablesJSON:    packageLevelVarExpression,
@@ -265,7 +296,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		},
 	}
 
-	pkgType := manifest.Type
+	pkgType := string(manifest.Type)
 	if pkgType == "" {
 		pkgType = "integration"
 	}
@@ -283,14 +314,14 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 
 type moduleVariable struct {
 	Terraform terraform.Variable // Terraform variable definition.
-	Fleet     *fleetpkg.Var      // Source of the Terraform variable in Fleet package (optional).
+	Fleet     *pkgspec.Var       // Source of the Terraform variable in Fleet package (optional).
 }
 
 // addVariables adds the given Fleet package vars to the Terraform module variables in m.
 // It returns an error if a variable with the given name already exists in the Terraform
 // module. It returns an associations mapping that contains a mapping of Fleet variable
 // names to Terraform variable names.
-func addVariables(vars []fleetpkg.Var, m map[string]moduleVariable, ignoreShadowing bool) (associations map[string]string, err error) {
+func addVariables(vars []pkgspec.Var, m map[string]moduleVariable, ignoreShadowing bool) (associations map[string]string, err error) {
 	associations = make(map[string]string, len(vars))
 	for _, v := range vars {
 		tfName, err := addVariable(v, m, ignoreShadowing)
@@ -303,7 +334,7 @@ func addVariables(vars []fleetpkg.Var, m map[string]moduleVariable, ignoreShadow
 	return associations, nil
 }
 
-func addVariable(v fleetpkg.Var, m map[string]moduleVariable, ignoreShadowing bool) (tfName string, err error) {
+func addVariable(v pkgspec.Var, m map[string]moduleVariable, ignoreShadowing bool) (tfName string, err error) {
 	tfVar := terraform.Variable{
 		Description: v.Description,
 	}
@@ -343,14 +374,14 @@ func addVariable(v fleetpkg.Var, m map[string]moduleVariable, ignoreShadowing bo
 		if existing, found := m[name]; found {
 			if existing.Fleet != nil {
 				msg := fmt.Sprintf("duplicate variable %q found at both\n\t%s:%d\n\t%s:%d", name,
-					existing.Fleet.Path(), existing.Fleet.Line(),
-					v.Path(), v.Line())
-				if diff := cmp.Diff(*existing.Fleet, v, cmpopts.IgnoreFields(fleetpkg.Var{}, "FileMetadata")); diff != "" {
+					existing.Fleet.FilePath(), existing.Fleet.Line(),
+					v.FilePath(), v.Line())
+				if diff := cmp.Diff(*existing.Fleet, v, cmpopts.IgnoreFields(pkgspec.Var{}, "FileMetadata")); diff != "" {
 					return "", fmt.Errorf(msg+"\ndiff:\n%s", diff)
 				}
 				return "", errors.New(msg)
 			}
-			return "", fmt.Errorf("duplicate variable named %q found at %s:%d", name, v.Path(), v.Line())
+			return "", fmt.Errorf("duplicate variable named %q found at %s:%d", name, v.FilePath(), v.Line())
 		}
 	}
 	m[name] = moduleVariable{Fleet: &v, Terraform: tfVar}
@@ -365,7 +396,7 @@ func moduleVariableToTerraformVariable(in map[string]moduleVariable) map[string]
 	return out
 }
 
-func isSensitive(v fleetpkg.Var) bool {
+func isSensitive(v pkgspec.Var) bool {
 	name := strings.ToLower(v.Name)
 	switch {
 	case v.Type == "password",
@@ -378,14 +409,14 @@ func isSensitive(v fleetpkg.Var) bool {
 	}
 }
 
-func dataType(v fleetpkg.Var) (string, error) {
+func dataType(v pkgspec.Var) (string, error) {
 	var tfType string
 	switch v.Type {
 	case "bool":
 		tfType = "bool"
 	case "integer":
 		tfType = "number"
-	case "password", "email", "select", "text", "textarea", "time_zone", "url", "yaml":
+	case "duration", "password", "email", "select", "text", "textarea", "time_zone", "url", "yaml":
 		tfType = "string"
 	default:
 		// package-spec controls the allow types.
@@ -495,7 +526,7 @@ func moduleName(integration, policyTemplate, dataStream, input string) string {
 	return strings.Join(name, ".")
 }
 
-func datasetName(dataStreamDirName string, m *fleetpkg.DataStream) string {
+func datasetName(dataStreamDirName string, m *pkgreader.DataStream) string {
 	if m != nil {
 		if _, dataset, found := strings.Cut(m.Manifest.Dataset, "."); found {
 			return dataset
@@ -518,7 +549,7 @@ func quoteIfNeeded(name string) string {
 // given policy_template if it does not exist.
 //
 // Reference: https://github.com/andrewkroh/terraform-module-fleet/issues/26
-func injectDataStreamDatasetVar(policy *fleetpkg.PolicyTemplate) {
+func injectDataStreamDatasetVar(policy *pkgspec.InputPolicyTemplate) {
 	const datasetVarName = "data_stream.dataset"
 	for _, v := range policy.Vars {
 		if v.Name == datasetVarName {
@@ -526,7 +557,7 @@ func injectDataStreamDatasetVar(policy *fleetpkg.PolicyTemplate) {
 		}
 	}
 
-	policy.Vars = append(policy.Vars, fleetpkg.Var{
+	policy.Vars = append(policy.Vars, pkgspec.Var{
 		Name:        datasetVarName,
 		Description: "Set the name for your dataset. Once selected a dataset cannot be changed without creating a new integration policy. You can't use - in the name of a dataset and only valid characters for Elasticsearch index names are permitted.",
 		Type:        "text",
