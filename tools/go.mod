@@ -3,13 +3,13 @@ module github.com/elastic/terraform-module-fleet/tools
 go 1.26.0
 
 require (
-	github.com/andrewkroh/go-fleetpkg v0.21.0
+	github.com/andrewkroh/go-package-spec v0.0.0-20260226233412-507d7b7dfd56
 	github.com/go-git/go-billy/v5 v5.7.0
 	github.com/go-git/go-git/v5 v5.16.5
 	github.com/google/go-cmp v0.7.0
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/exp v0.0.0-20250808145144-a408d31f581a
+	golang.org/x/exp v0.0.0-20260218203240-3dfff04db8fa
 )
 
 require (
@@ -36,7 +36,7 @@ require (
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/crypto v0.45.0 // indirect
 	golang.org/x/net v0.47.0 // indirect
-	golang.org/x/sys v0.38.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
