@@ -50,12 +50,18 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use.",
-      "default": "5.12.2"
+      "default": "5.12.3"
     },
     "http_client_timeout": {
       "type": "string",
       "description": "Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h.",
       "default": "30s",
+      "nullable": false
+    },
+    "include_alerts": {
+      "type": "bool",
+      "description": "Include associated alerts with the incident. When enabled, the alerts are split so that each generated event represents a single alert from the incident. If disabled, enable the Alerts (alerts_v2) data stream to ensure alert data is still collected.",
+      "default": true,
       "nullable": false
     },
     "initial_interval": {
@@ -155,7 +161,7 @@
         "m365_defender-cel"
       ],
       "data_stream": "incident",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  request_url = var.request_url\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  http_client_timeout = var.http_client_timeout\n  include_alerts = var.include_alerts\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  request_url = var.request_url\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "httpjson",
