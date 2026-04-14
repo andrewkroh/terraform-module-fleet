@@ -109,7 +109,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use.",
-      "default": "6.4.3"
+      "default": "6.5.0"
     },
     "ignore_older": {
       "type": "string",
