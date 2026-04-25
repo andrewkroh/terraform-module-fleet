@@ -49,7 +49,13 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the winlog package to use.",
-      "default": "2.5.0"
+      "default": "2.6.0"
+    },
+    "forwarded": {
+      "type": "bool",
+      "description": "Indicates if this will be consuming forwarded events. If `true` the integration will assume the events  were not generated in the host. This MUST be set to `true` if the integration is consuming forwarded events like in WEF setups, otherwise the integration could run in a degraded state due to inconsistencies in the events correlation. If the channel being consumed is `ForwardedEvents` this is going to be set to `true` regardless of the value set here.",
+      "default": false,
+      "nullable": false
     },
     "ignore_older": {
       "type": "string",
@@ -105,7 +111,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  channel = var.channel\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  event_id = var.event_id\n  ignore_older = var.ignore_older\n  language = var.language\n  level = var.level\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  providers = var.providers_names\n  tags = var.tags\n  xml_query = var.xml_query\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  channel = var.channel\n  custom = var.custom_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  event_id = var.event_id\n  forwarded = var.forwarded\n  ignore_older = var.ignore_older\n  language = var.language\n  level = var.level\n  pipeline = var.pipeline\n  preserve_original_event = var.preserve_original_event\n  providers = var.providers_names\n  tags = var.tags\n  xml_query = var.xml_query\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "winlog",
