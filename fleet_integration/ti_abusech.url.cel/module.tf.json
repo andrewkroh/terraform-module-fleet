@@ -39,7 +39,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use.",
-      "default": "3.7.0"
+      "default": "4.0.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -48,8 +48,14 @@
     },
     "interval": {
       "type": "string",
-      "description": "Duration between requests to the URLhaus API. Supported units for this parameter are h/m/s. Example `24h`. As data dump is generated every 5 minutes, it should be greater than 5 minutes.",
-      "default": "1h",
+      "description": "Duration between requests to the URLhaus API. The API returns at most 1000 URLs added in the last 3 days, so the interval must be short enough to avoid exceeding that limit. Too long an interval risks missing URLs; too short an interval re-collects the same URLs without benefit. Supported units: h/m/s. Example `10m`.",
+      "default": "10m",
+      "nullable": false
+    },
+    "ioc_expiration_duration": {
+      "type": "string",
+      "description": "Indicator is expired after this duration since it was first seen. Supported units for this parameter are d/h/m. Example `10d`. Default value is `90d` i.e., 90 days.",
+      "default": "90d",
       "nullable": false
     },
     "preserve_original_event": {
@@ -83,8 +89,8 @@
     },
     "url": {
       "type": "string",
-      "description": "Base URL of the abuse.ch URLhaus API to collect actively distributing malware URLs.",
-      "default": "https://urlhaus.abuse.ch/downloads/json",
+      "description": "Base URL of the abuse.ch URLhaus API to collect recently added malware URLs.",
+      "default": "https://urlhaus-api.abuse.ch/v1/urls/recent/",
       "nullable": false
     }
   },
@@ -109,7 +115,7 @@
         "ti_abusech-cel"
       ],
       "data_stream": "url",
-      "data_stream_variables_json": "${jsonencode({\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n  url = var.url\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  ioc_expiration_duration = var.ioc_expiration_duration\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  tags = var.tags\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "cel",
