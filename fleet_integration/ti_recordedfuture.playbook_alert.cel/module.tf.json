@@ -8,7 +8,7 @@
       "nullable": false
     },
     "batch_size": {
-      "type": "string",
+      "type": "number",
       "description": "Batch size for the response of the Recorded Future API. Maximum batch size can be 1000.",
       "default": 1000,
       "nullable": false
@@ -45,7 +45,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use.",
-      "default": "2.5.1"
+      "default": "2.5.2"
     },
     "http_client_timeout": {
       "type": "string",
