@@ -61,7 +61,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the o365 package to use.",
-      "default": "3.8.1"
+      "default": "3.8.3"
     },
     "initial_interval": {
       "type": "string",
@@ -155,7 +155,7 @@
     },
     "resource_timeout": {
       "type": "string",
-      "description": "Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h. Default is \"30\"s.",
+      "description": "Duration before declaring that the HTTP client connection has timed out. Valid time units are ns, us, ms, s, m, h. Default is \"60s\".",
       "default": "60s"
     },
     "tags": {
