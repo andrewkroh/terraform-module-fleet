@@ -26,6 +26,11 @@
       "description": "The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-entity-analytics.html#_tracer_enabled) for details.",
       "default": null
     },
+    "enrich_with_mfa": {
+      "type": "bool",
+      "description": "Enable enrichment of user records with MFA registration details. Requires the AuditLog.Read.All application permission in Azure in addition to the existing permissions. Populates user.entity.attributes.mfa_enabled.",
+      "default": false
+    },
     "fleet_agent_policy_id": {
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
@@ -53,7 +58,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the entityanalytics_entra_id package to use.",
-      "default": "1.9.1"
+      "default": "1.10.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -133,6 +138,21 @@
       "description": "How often incremental updates should occur. Must be less than Sync\nInterval. Expected value is a duration string (15m, 1h, 1m30, etc),\ndefaults to 15m.",
       "default": "15m",
       "nullable": false
+    },
+    "user_app_role_assignments": {
+      "type": "bool",
+      "description": "Enable enrichment of user records with their app role assignments by expanding the appRoleAssignments property. Populates user.entity.attributes.permissions.",
+      "default": false
+    },
+    "user_direct_reports": {
+      "type": "bool",
+      "description": "Enable enrichment of user records with their direct reports by expanding the directReports property. Populates user.entity.relationships.supervises. Note: Microsoft Graph limits this expansion to 20 objects per query.",
+      "default": false
+    },
+    "user_sign_in_activity": {
+      "type": "bool",
+      "description": "Enable collection of user sign-in activity by including signInActivity in the user selection. Populates user.entity.lifecycle.last_activity.",
+      "default": false
     }
   },
   "output": {
@@ -151,7 +171,7 @@
         "entity-entity-analytics"
       ],
       "data_stream": "entity",
-      "data_stream_variables_json": "${jsonencode({\n  api_endpoint = var.api_endpoint\n  client_id = var.client_id\n  custom_options = var.custom_options_yaml\n  dataset = var.dataset\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  intune_managed_devices = var.intune_managed_devices\n  login_endpoint = var.login_endpoint\n  login_scopes = var.login_scopes\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  secret = var.secret\n  ssl = var.ssl_yaml\n  sync_interval = var.sync_interval\n  tags = var.tags\n  tenant_id = var.tenant_id\n  update_interval = var.update_interval\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  api_endpoint = var.api_endpoint\n  client_id = var.client_id\n  custom_options = var.custom_options_yaml\n  dataset = var.dataset\n  enable_request_tracer = var.enable_request_tracer\n  enrich_with_mfa = var.enrich_with_mfa\n  http_client_timeout = var.http_client_timeout\n  intune_managed_devices = var.intune_managed_devices\n  login_endpoint = var.login_endpoint\n  login_scopes = var.login_scopes\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  proxy_url = var.proxy_url\n  secret = var.secret\n  ssl = var.ssl_yaml\n  sync_interval = var.sync_interval\n  tags = var.tags\n  tenant_id = var.tenant_id\n  update_interval = var.update_interval\n  user_app_role_assignments = var.user_app_role_assignments\n  user_direct_reports = var.user_direct_reports\n  user_sign_in_activity = var.user_sign_in_activity\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "entity-analytics",

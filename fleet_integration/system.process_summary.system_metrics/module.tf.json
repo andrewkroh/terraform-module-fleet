@@ -33,7 +33,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the system package to use.",
-      "default": "2.19.0"
+      "default": "2.20.0"
     },
     "period": {
       "type": "string",
