@@ -50,7 +50,7 @@
     },
     "enrich_metadata": {
       "type": "bool",
-      "description": "Uses data in aidmaster and userinfo to add host and user information to events. The aidmaster blob must contain the string \"aidmaster\" in its path and the userinfo blob path must contain \"userinfo\", and the FDR Notification Parsing Script must sort events so that aidmaster and userinfo events appear first in the stream.",
+      "description": "Deprecated — ingest-time cache enrichment will be removed in a future major version. Use query-time LOOKUP JOIN enrichment instead (see documentation). When enabled, uses data in aidmaster and userinfo to add host and user information to events via the Elastic Agent metadata cache. The aidmaster blob must contain the string \"aidmaster\" in its path and the userinfo blob path must contain \"userinfo\", and the FDR Notification Parsing Script must sort events so that aidmaster and userinfo events appear first in the stream.",
       "default": true,
       "nullable": false
     },
@@ -86,12 +86,12 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "3.24.0"
+      "default": "3.25.0"
     },
     "keep_metadata": {
       "type": "bool",
-      "description": "Keep the aidmaster and userinfo documents after they have been used for event enrichment.",
-      "default": false,
+      "description": "Deprecated — this option will be removed in a future major version when ingest-time cache enrichment is removed. Metadata events will always be indexed after removal. Keep the aidmaster and userinfo documents after they have been used for event enrichment. Must be enabled for LOOKUP JOIN query-time enrichment transforms to have source data.",
+      "default": true,
       "nullable": false
     },
     "long_fields": {
@@ -113,19 +113,19 @@
     },
     "metadata_cache_capacity": {
       "type": "string",
-      "description": "The maximum amount of metadata objects to cache. Operations that would cause the capacity to be exceeded will result in evictions of the oldest elements. The capacity should not be lower than the number of elements that are expected to be referenced when processing the input as evicted elements are lost. Values at or below zero indicate no limit. \nWARNING: This setting needs to be set only if the amount of metadata elements is known beforehand, otherwise it might lead to enrichment data loss. If you are not sure, leave it untouched.\n",
+      "description": "Deprecated — this option will be removed in a future major version when ingest-time cache enrichment is removed. The maximum amount of metadata objects to cache. Operations that would cause the capacity to be exceeded will result in evictions of the oldest elements. The capacity should not be lower than the number of elements that are expected to be referenced when processing the input as evicted elements are lost. Values at or below zero indicate no limit. WARNING: This setting needs to be set only if the amount of metadata elements is known beforehand, otherwise it might lead to enrichment data loss. If you are not sure, leave it untouched.",
       "default": 0,
       "nullable": false
     },
     "metadata_cache_write_interval": {
       "type": "string",
-      "description": "The interval between periodic cache writes to the backing file. Valid time units are h, m, s, ms, us/µs and ns. The contents are always written out to the backing file when the processor is closed. Default is zero, no periodic writes.",
+      "description": "Deprecated — this option will be removed in a future major version when ingest-time cache enrichment is removed. The interval between periodic cache writes to the backing file. Valid time units are h, m, s, ms, us/µs and ns. The contents are always written out to the backing file when the processor is closed. Default is zero, no periodic writes.",
       "default": 0,
       "nullable": false
     },
     "metadata_ttl": {
       "type": "string",
-      "description": "The period of time that metadata is considered valid for. Valid time units are h, m, s, ms, us/µs and ns.",
+      "description": "Deprecated — this option will be removed in a future major version when ingest-time cache enrichment is removed. The period of time that metadata is considered valid for. Valid time units are h, m, s, ms, us/µs and ns.",
       "default": "168h",
       "nullable": false
     },
