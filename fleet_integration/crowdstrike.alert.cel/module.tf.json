@@ -50,7 +50,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use.",
-      "default": "3.26.0"
+      "default": "3.26.1"
     },
     "http_client_timeout": {
       "type": "string",
@@ -72,7 +72,7 @@
     },
     "max_executions": {
       "type": "number",
-      "description": "Maximum number of CEL program re-evaluations per collection interval. High-volume environments with large result sets may need a higher value to complete pagination within a single interval. Set to 0 for unlimited.",
+      "description": "Maximum number of CEL program re-evaluations per collection interval. High-volume environments with large result sets may need a higher value to complete pagination within a single interval.",
       "default": 1000,
       "nullable": false
     },
