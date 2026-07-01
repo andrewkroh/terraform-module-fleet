@@ -50,7 +50,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the google_workspace package to use.",
-      "default": "3.4.1"
+      "default": "3.5.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -84,7 +84,7 @@
     "lag_time": {
       "type": "string",
       "description": "The lag time allowed for when fetching this report. Lag times vary by report, and go up to a few hours. There are more details in the [Google Workspace Admin documentation](https://support.google.com/a/answer/7061566). NOTE: Supported units for this parameter are h/m/s.",
-      "default": "1h",
+      "default": "10m",
       "nullable": false
     },
     "preserve_original_event": {
