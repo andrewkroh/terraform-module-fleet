@@ -14,11 +14,11 @@ variable "package_name" {
 }
 
 variable "package_version" {
-  description = "Package version."
+  description = "Package version. Use \"latest\" to resolve the latest available version from the package registry at plan time."
   type        = string
   validation {
-    condition     = can(regex("^\\d+\\.\\d+\\.\\d+", var.package_version))
-    error_message = "Invalid package_version version."
+    condition     = var.package_version == "latest" || can(regex("^\\d+\\.\\d+\\.\\d+", var.package_version))
+    error_message = "package_version must be a semantic version (e.g. 1.2.3) or the literal \"latest\"."
   }
 }
 
@@ -110,3 +110,12 @@ variable "force" {
   default     = false
 }
 
+variable "prerelease" {
+  description = <<-EOT
+    Include prerelease package versions when resolving package_version = "latest".
+    Required for packages whose versions are below 1.0.0 (semver treats 0.x as
+    prerelease). Has no effect when package_version is pinned.
+  EOT
+  type        = bool
+  default     = false
+}

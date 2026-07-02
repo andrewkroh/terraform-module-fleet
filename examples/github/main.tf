@@ -30,6 +30,7 @@ module "agent_policy_github" {
 module "integration_github_issues" {
   source                = "../../fleet_integration/github.issues.httpjson"
   fleet_agent_policy_id = module.agent_policy_github.id
+  fleet_package_version = "latest"
   access_token          = var.github_token
   owner                 = "elastic"
 }

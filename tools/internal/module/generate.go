@@ -168,8 +168,15 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 		"fleet_package_version": {
 			Terraform: terraform.Variable{
 				Type:        "string",
-				Description: "Version of the " + manifest.Name + " package to use.",
+				Description: "Version of the " + manifest.Name + " package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
 				Default:     &terraform.NullableValue{Value: manifest.Version},
+			},
+		},
+		"fleet_package_prerelease": {
+			Terraform: terraform.Variable{
+				Type:        "bool",
+				Description: "Include prerelease package versions when fleet_package_version is \"latest\". Required for packages below version 1.0.0.",
+				Default:     &terraform.NullableValue{Value: strings.HasPrefix(manifest.Version, "0.")},
 			},
 		},
 	}
@@ -285,6 +292,7 @@ func Generate(path, policyTemplateName, dataStreamName, inputName string, ignore
 					AllDataStreams:          dataStreamsForInput,
 					AllPolicyTemplateInputs: allPolicyTemplateInputs,
 					Force:                   "${var.fleet_package_policy_force}",
+					Prerelease:              "${var.fleet_package_prerelease}",
 				}),
 			},
 		},
@@ -445,6 +453,7 @@ type FleetPackagePolicyModule struct {
 	AllDataStreams          []string `json:"all_data_streams"`
 	AllPolicyTemplateInputs []string `json:"all_policy_template_inputs"` // All policy_template + input combos.
 	Force                   string   `json:"force,omitempty"`
+	Prerelease              string   `json:"prerelease,omitempty"`
 }
 
 func toMap(v any) map[string]any {

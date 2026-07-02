@@ -25,12 +25,28 @@ locals {
   }
 }
 
+// Resolve the latest available version of the package from the package
+// registry when package_version is "latest". Resolution happens at plan time.
+data "elasticstack_fleet_integration" "latest" {
+  count      = var.package_version == "latest" ? 1 : 0
+  name       = var.package_name
+  prerelease = var.prerelease
+}
+
+locals {
+  effective_package_version = (
+    var.package_version == "latest"
+    ? data.elasticstack_fleet_integration.latest[0].version
+    : var.package_version
+  )
+}
+
 // Control the version of the installed package. Fleet will not allow
 // downgrades while there are package policies using the package. Only one
 // version of any package may be installed at one time.
 resource "elasticstack_fleet_integration" "assets" {
   name         = var.package_name
-  version      = var.package_version
+  version      = local.effective_package_version
   force        = var.force
   skip_destroy = true
 }
@@ -43,7 +59,7 @@ resource "restapi_object" "package_policy" {
     policy_id = var.agent_policy_id
     package = {
       name    = var.package_name
-      version = var.package_version
+      version = local.effective_package_version
     }
     name        = local.policy_name
     namespace   = var.namespace
