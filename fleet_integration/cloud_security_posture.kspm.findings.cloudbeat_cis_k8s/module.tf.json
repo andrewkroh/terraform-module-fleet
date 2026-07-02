@@ -35,9 +35,14 @@
       "description": "Suffix to append to the end of the package policy name.",
       "default": ""
     },
+    "fleet_package_prerelease": {
+      "type": "bool",
+      "description": "Include prerelease package versions when fleet_package_version is \"latest\". Required for packages below version 1.0.0.",
+      "default": false
+    },
     "fleet_package_version": {
       "type": "string",
-      "description": "Version of the cloud_security_posture package to use.",
+      "description": "Version of the cloud_security_posture package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
       "default": "3.4.0"
     },
     "posture": {
@@ -77,6 +82,7 @@
       "package_variables_json": "${jsonencode({\n  deployment = var.deployment\n  posture = var.posture\n})}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "kspm",
+      "prerelease": "${var.fleet_package_prerelease}",
       "source": "../../fleet_package_policy"
     }
   }

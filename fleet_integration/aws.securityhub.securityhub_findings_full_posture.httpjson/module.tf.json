@@ -54,10 +54,15 @@
       "description": "Suffix to append to the end of the package policy name.",
       "default": ""
     },
+    "fleet_package_prerelease": {
+      "type": "bool",
+      "description": "Include prerelease package versions when fleet_package_version is \"latest\". Required for packages below version 1.0.0.",
+      "default": false
+    },
     "fleet_package_version": {
       "type": "string",
-      "description": "Version of the aws package to use.",
-      "default": "6.20.2"
+      "description": "Version of the aws package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
+      "default": "6.20.3"
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",
@@ -197,6 +202,7 @@
       "package_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  external_id = var.external_id\n  proxy_url = var.proxy_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "securityhub",
+      "prerelease": "${var.fleet_package_prerelease}",
       "source": "../../fleet_package_policy"
     }
   }

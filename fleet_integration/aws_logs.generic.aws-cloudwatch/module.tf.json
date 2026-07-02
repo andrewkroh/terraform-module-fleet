@@ -65,9 +65,14 @@
       "description": "Suffix to append to the end of the package policy name.",
       "default": ""
     },
+    "fleet_package_prerelease": {
+      "type": "bool",
+      "description": "Include prerelease package versions when fleet_package_version is \"latest\". Required for packages below version 1.0.0.",
+      "default": false
+    },
     "fleet_package_version": {
       "type": "string",
-      "description": "Version of the aws_logs package to use.",
+      "description": "Version of the aws_logs package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
       "default": "1.8.3"
     },
     "include_linked_accounts_with_prefix": {
@@ -200,6 +205,7 @@
       "package_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  endpoint = var.endpoint\n  proxy_url = var.proxy_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "aws_logs",
+      "prerelease": "${var.fleet_package_prerelease}",
       "source": "../../fleet_package_policy"
     }
   }

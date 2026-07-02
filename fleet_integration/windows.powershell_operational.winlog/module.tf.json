@@ -36,9 +36,14 @@
       "description": "Suffix to append to the end of the package policy name.",
       "default": ""
     },
+    "fleet_package_prerelease": {
+      "type": "bool",
+      "description": "Include prerelease package versions when fleet_package_version is \"latest\". Required for packages below version 1.0.0.",
+      "default": false
+    },
     "fleet_package_version": {
       "type": "string",
-      "description": "Version of the windows package to use.",
+      "description": "Version of the windows package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
       "default": "3.8.3"
     },
     "ignore_older": {
@@ -101,6 +106,7 @@
       "package_policy_name": "windows-powershell_operational-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "windows",
+      "prerelease": "${var.fleet_package_prerelease}",
       "source": "../../fleet_package_policy"
     }
   }

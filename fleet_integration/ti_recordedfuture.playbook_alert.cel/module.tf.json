@@ -42,9 +42,14 @@
       "description": "Suffix to append to the end of the package policy name.",
       "default": ""
     },
+    "fleet_package_prerelease": {
+      "type": "bool",
+      "description": "Include prerelease package versions when fleet_package_version is \"latest\". Required for packages below version 1.0.0.",
+      "default": false
+    },
     "fleet_package_version": {
       "type": "string",
-      "description": "Version of the ti_recordedfuture package to use.",
+      "description": "Version of the ti_recordedfuture package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
       "default": "2.6.0"
     },
     "http_client_timeout": {
@@ -136,6 +141,7 @@
       "package_policy_name": "ti_recordedfuture-playbook_alert-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "ti_recordedfuture",
+      "prerelease": "${var.fleet_package_prerelease}",
       "source": "../../fleet_package_policy"
     }
   }
