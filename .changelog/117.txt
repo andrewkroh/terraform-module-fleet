@@ -1,0 +1,3 @@
+```release-note:enhancement
+fleet_package_policy and generated modules - Support installing the latest package version by setting `package_version = "latest"` (`fleet_package_version = "latest"` in generated modules). The version is resolved from the package registry at plan time. A new `prerelease` variable (`fleet_package_prerelease` in generated modules) controls whether prerelease versions are considered during resolution.
+```

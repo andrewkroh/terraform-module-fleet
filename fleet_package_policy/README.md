@@ -4,6 +4,44 @@
 This module installs the Fleet package's assets, creates a package policy, and
 associates that package policy to an existing agent policy.
 
+## Package Version
+
+The `package_version` parameter controls which version of the package is
+installed. It supports two modes.
+
+### Pinned Version (Default)
+
+Set `package_version` to a semantic version (e.g. `1.2.3`) to install exactly
+that version. This is deterministic: the same configuration always produces the
+same result, and upgrades only happen when the pinned version is changed.
+
+Note that Kibana Fleet rejects installing a pinned version when a newer version
+exists in the package registry, returning HTTP 400 "out-of-date and cannot be
+installed or updated" unless `force = true` is used. This means pinned versions
+can break over time as newer package versions are published to the registry.
+
+### Latest Version
+
+Set `package_version = "latest"` to resolve the latest available version of the
+package from the package registry at plan time. Resolution uses the
+`elasticstack_fleet_integration` data source, so the concrete version is
+determined during `terraform plan` and recorded in state. Each new release of
+the package in the registry shows up as an in-place upgrade of the package and
+package policy on the next plan.
+
+This mode avoids the "out-of-date" rejection described above without resorting
+to `force = true` and its destructive reinstallation behavior. The trade-off is
+that plans are no longer fully deterministic because the resolved version
+depends on the registry contents at plan time.
+
+### Prerelease Versions
+
+The `prerelease` parameter controls whether prerelease package versions are
+considered when resolving `package_version = "latest"`. Packages with versions
+below 1.0.0 are treated as prerelease by semver, so `prerelease = true` is
+required to resolve "latest" for those packages. It has no effect when
+`package_version` is pinned.
+
 ## Force Reinstallation Parameter
 
 ### Overview
@@ -158,6 +196,7 @@ No modules.
 |------|------|
 | [elasticstack_fleet_integration.assets](https://registry.terraform.io/providers/elastic/elasticstack/latest/docs/resources/fleet_integration) | resource |
 | [restapi_object.package_policy](https://registry.terraform.io/providers/Mastercard/restapi/latest/docs/resources/object) | resource |
+| [elasticstack_fleet_integration.latest](https://registry.terraform.io/providers/elastic/elasticstack/latest/docs/data-sources/fleet_integration) | data source |
 
 ## Inputs
 
@@ -176,8 +215,9 @@ No modules.
 | <a name="input_package_name"></a> [package\_name](#input\_package\_name) | Name of the Fleet package to install (e.g. ti\_recordedfuture). | `string` | n/a | yes |
 | <a name="input_package_policy_name"></a> [package\_policy\_name](#input\_package\_policy\_name) | Name of the package policy. Defaults to "{package\_name}-{namespace}." | `any` | `null` | no |
 | <a name="input_package_variables_json"></a> [package\_variables\_json](#input\_package\_variables\_json) | JSON encoded package level variables that are shared by each stream. | `string` | `"{}"` | no |
-| <a name="input_package_version"></a> [package\_version](#input\_package\_version) | Package version. | `string` | n/a | yes |
+| <a name="input_package_version"></a> [package\_version](#input\_package\_version) | Package version. Use "latest" to resolve the latest available version from the package registry at plan time. | `string` | n/a | yes |
 | <a name="input_policy_template"></a> [policy\_template](#input\_policy\_template) | Name of the policy template (see the integration's manifest.yml). | `string` | n/a | yes |
+| <a name="input_prerelease"></a> [prerelease](#input\_prerelease) | Include prerelease package versions when resolving package\_version = "latest".<br>Required for packages whose versions are below 1.0.0 (semver treats 0.x as<br>prerelease). Has no effect when package\_version is pinned. | `bool` | `false` | no |
 
 ## Outputs
 
