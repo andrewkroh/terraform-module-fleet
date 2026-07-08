@@ -55,7 +55,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "2.6.0"
+      "default": "2.6.1"
     },
     "interval": {
       "type": "string",
