@@ -49,7 +49,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the crowdstrike package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "4.0.0"
+      "default": "4.1.0"
     },
     "preserve_original_event": {
       "type": "bool",
@@ -71,6 +71,26 @@
       "type": "string",
       "description": "URL to proxy connections in the form of http[s]://<user>:<password>@<server name/ip>:<port>. Ensure your username and password are in URL encoded format.",
       "default": null
+    },
+    "retry_infinite_retries": {
+      "type": "bool",
+      "description": "Retry failed connections indefinitely instead of terminating after the maximum number of attempts is reached. When enabled, `Retry - Maximum Attempts` is ignored. Requires Elastic Agent 8.19.19, 9.3.8, 9.4.4, or later; on earlier agents retries are silently capped at 10.",
+      "default": false
+    },
+    "retry_max_attempts": {
+      "type": "number",
+      "description": "The maximum number of times a failed connection to the Event Streams API is retried before the input terminates and needs to be restarted. Failures such as a non-200 response or bad credentials count toward this limit. Enable `Retry - Infinite Retries` to never terminate on repeated failures. On Elastic Agent 8.19.19, 9.3.8, 9.4.4, or later, transient connection-level failures (empty responses, network errors, timeouts) are retried indefinitely and do not count toward this limit; values above 10 (and `Retry - Infinite Retries`) also require those agent versions and are silently capped at 10 on earlier agents.",
+      "default": 5
+    },
+    "retry_wait_max": {
+      "type": "string",
+      "description": "The maximum time to wait before retrying a failed connection, as a duration string (for example `30s`). Back-off grows exponentially between the minimum and maximum wait.",
+      "default": "30s"
+    },
+    "retry_wait_min": {
+      "type": "string",
+      "description": "The minimum time to wait before retrying a failed connection, as a duration string (for example `1s` or `500ms`). Must be less than or equal to `Retry - Maximum Wait`.",
+      "default": "1s"
     },
     "tags": {
       "type": "list(string)",
@@ -113,7 +133,7 @@
         "crowdstrike-cel"
       ],
       "data_stream": "falcon",
-      "data_stream_variables_json": "${jsonencode({\n  app_id = var.app_id\n  client_id = var.client_id\n  client_secret = var.client_secret\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  token_url = var.token_url\n  url = var.url\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  app_id = var.app_id\n  client_id = var.client_id\n  client_secret = var.client_secret\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  retry_infinite_retries = var.retry_infinite_retries\n  retry_max_attempts = var.retry_max_attempts\n  retry_wait_max = var.retry_wait_max\n  retry_wait_min = var.retry_wait_min\n  tags = var.tags\n  token_url = var.token_url\n  url = var.url\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "streaming",

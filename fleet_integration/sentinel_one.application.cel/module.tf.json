@@ -50,7 +50,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "2.9.0"
+      "default": "2.10.0"
     },
     "http_client_timeout": {
       "type": "string",
@@ -66,7 +66,7 @@
     },
     "max_executions": {
       "type": "number",
-      "description": "Maximum number of CEL program re-evaluations per collection interval. The application stream makes two API calls per worklist entry (inventory + endpoints), so large estates may need a higher budget than the input default of 1000. Set to 0 for unlimited.",
+      "description": "Maximum number of CEL program re-evaluations per collection interval. The application stream makes two API calls per worklist entry (inventory + endpoints), so large estates may need a higher budget than the input default of 1000.",
       "default": 1000,
       "nullable": false
     },
