@@ -55,7 +55,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_recordedfuture package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "2.6.1"
+      "default": "2.7.0"
     },
     "interval": {
       "type": "string",
@@ -121,6 +121,7 @@
     "fleet_package_policy": {
       "agent_policy_id": "${var.fleet_agent_policy_id}",
       "all_data_streams": [
+        "identity_detection",
         "playbook_alert",
         "threat",
         "triggered_alert"
