@@ -50,7 +50,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "2.10.0"
+      "default": "2.11.0"
     },
     "http_client_timeout": {
       "type": "string",

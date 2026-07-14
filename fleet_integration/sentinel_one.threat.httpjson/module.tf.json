@@ -12,6 +12,12 @@
       "description": "The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. Disabling the request tracer will delete any stored traces. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-httpjson.html#_request_tracer_filename).",
       "default": false
     },
+    "enable_star_rule_enrichment": {
+      "type": "bool",
+      "description": "When enabled, each threat is followed by paginated requests to the threat timeline endpoint (`/web/api/v2.1/threats/{threat_id}/timeline`). For each timeline history entry, one document is emitted containing the full threat response with that entry nested under `timeline`. Threats whose timeline returns HTTP 200 with an empty `data` array emit a single threat document. If the timeline endpoint returns HTTP 404 (for example, when the token lacks timeline read permissions or the feature is unavailable for the tenant), the threat document is still emitted and collection advances to the next threat. Turn off to collect threats from the list endpoint only.",
+      "default": false,
+      "nullable": false
+    },
     "fleet_agent_policy_id": {
       "type": "string",
       "description": "Agent policy ID to add the package policy to."
@@ -44,7 +50,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "2.10.0"
+      "default": "2.11.0"
     },
     "initial_interval": {
       "type": "string",
@@ -56,6 +62,12 @@
       "type": "string",
       "description": "Duration between requests to the SentinelOne API. NOTE: Supported units for this parameter are h/m/s.",
       "default": "30s",
+      "nullable": false
+    },
+    "max_executions": {
+      "type": "number",
+      "description": "Maximum number of CEL program re-evaluations per collection interval. Threat enrichment makes one timeline API call per threat, so large environments may need a higher budget than the input default of 1000. Set to 0 for unlimited.",
+      "default": 1000,
       "nullable": false
     },
     "page_size": {
@@ -125,7 +137,7 @@
         "sentinel_one-httpjson"
       ],
       "data_stream": "threat",
-      "data_stream_variables_json": "${jsonencode({\n  initial_interval = var.initial_interval\n  interval = var.interval\n  page_size = var.page_size\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  enable_star_rule_enrichment = var.enable_star_rule_enrichment\n  initial_interval = var.initial_interval\n  interval = var.interval\n  max_executions = var.max_executions\n  page_size = var.page_size\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "httpjson",

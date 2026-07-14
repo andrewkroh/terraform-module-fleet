@@ -6,6 +6,11 @@
       "description": "Condition to filter when to apply this datastream. Refer to [Conditions](https://www.elastic.co/guide/en/fleet/current/dynamic-input-configuration.html#conditions) on how to use the available keys in conditions.",
       "default": null
     },
+    "cursor_yaml": {
+      "type": "string",
+      "description": "Configuration for incremental data collection. Supported keys: enabled, column, type, default, direction. See the SQL Input documentation for details.",
+      "default": "enabled: false\ncolumn: id\ntype: integer\ndefault: \"0\"\n"
+    },
     "data_stream_dataset": {
       "type": "string",
       "description": "Set the name for your dataset. Once selected a dataset cannot be changed without creating a new integration policy. You can't use - in the name of a dataset and only valid characters for Elasticsearch index names are permitted.",
@@ -49,7 +54,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sql package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "1.1.0"
+      "default": "1.2.0"
     },
     "hosts": {
       "type": "list(string)",
@@ -74,8 +79,14 @@
     },
     "sql_queries_yaml": {
       "type": "string",
+      "description": "One or more SQL queries to run each collection period, each with its own response_format (variables or table). This is the standard collection mode. Ignored when a Cursor Query is set.",
       "default": "- query: SHOW GLOBAL STATUS LIKE 'Innodb_system%'\n  response_format: variables\n        \n",
       "nullable": false
+    },
+    "sql_query": {
+      "type": "string",
+      "description": "A single SQL query for cursor-based incremental fetching, used together with Cursor Configuration (enabled: true). When set, it replaces SQL Queries and always runs with \"table\" response format. Include exactly one :cursor placeholder in the WHERE clause and an ORDER BY on the cursor column.",
+      "default": ""
     },
     "ssl_yaml": {
       "type": "string",
@@ -95,7 +106,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  condition = var.condition\n  \"data_stream.dataset\" = var.data_stream_dataset\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  processors = var.processors_yaml\n  sql_queries = var.sql_queries_yaml\n  ssl = var.ssl_yaml\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  condition = var.condition\n  cursor = var.cursor_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  processors = var.processors_yaml\n  sql_queries = var.sql_queries_yaml\n  sql_query = var.sql_query\n  ssl = var.ssl_yaml\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "sql/metrics",
