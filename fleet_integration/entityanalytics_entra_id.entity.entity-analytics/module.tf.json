@@ -63,7 +63,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the entityanalytics_entra_id package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "1.10.2"
+      "default": "1.11.0"
     },
     "http_client_timeout": {
       "type": "string",
