@@ -44,7 +44,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the qualys_vmdr package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "6.19.0"
+      "default": "6.19.1"
     },
     "http_client_timeout": {
       "type": "string",
