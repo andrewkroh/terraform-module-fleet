@@ -22,6 +22,16 @@
       "description": "The maximum duration of AWS API can take. The maximum is half of the visibility timeout value.",
       "default": null
     },
+    "assume_role_duration": {
+      "type": "string",
+      "description": "Duration of the assumed role session.",
+      "default": null
+    },
+    "assume_role_expiry_window": {
+      "type": "string",
+      "description": "Amount of time before the assumed role session expires during which credentials are refreshed.",
+      "default": null
+    },
     "bucket_arn": {
       "type": "string",
       "description": "Mandatory if the \"Collect logs via S3 Bucket\" switch is on. It is a required parameter for collecting logs via the AWS S3 Bucket unless you set an Access Point ARN. In case both configurations are added, this one takes precedence.",
@@ -114,7 +124,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "6.21.0"
+      "default": "7.0.0"
     },
     "ignore_older": {
       "type": "string",
@@ -189,6 +199,10 @@
     "start_timestamp": {
       "type": "string",
       "description": "If set, only read S3 objects with last modified timestamp newer than the given timestamp. Accepts a timestamp in `YYYY-MM-DDTHH:MM:SSZ` format. For example, \"2020-10-10T10:30:00Z\" (UTC) or \"2020-10-10T10:30:00Z+02:30\" (with zone offset).",
+      "default": null
+    },
+    "supports_identity_federation": {
+      "type": "bool",
       "default": null
     },
     "tags": {
@@ -277,7 +291,7 @@
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "aws",
       "package_policy_name": "aws-cloudtrail-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",
-      "package_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  external_id = var.external_id\n  proxy_url = var.proxy_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n})}",
+      "package_variables_json": "${jsonencode({\n  access_key_id = var.access_key_id\n  assume_role_duration = var.assume_role_duration\n  assume_role_expiry_window = var.assume_role_expiry_window\n  credential_profile_name = var.credential_profile_name\n  default_region = var.default_region\n  external_id = var.external_id\n  proxy_url = var.proxy_url\n  role_arn = var.role_arn\n  secret_access_key = var.secret_access_key\n  session_token = var.session_token\n  shared_credential_file = var.shared_credential_file\n  supports_identity_federation = var.supports_identity_federation\n})}",
       "package_version": "${var.fleet_package_version}",
       "policy_template": "cloudtrail",
       "prerelease": "${var.fleet_package_prerelease}",
