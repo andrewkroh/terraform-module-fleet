@@ -50,7 +50,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the sentinel_one package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "2.11.0"
+      "default": "2.11.1"
     },
     "http_client_timeout": {
       "type": "string",
@@ -58,10 +58,16 @@
       "default": "30s",
       "nullable": false
     },
+    "initial_interval": {
+      "type": "string",
+      "description": "How far back to look for threats on the first run. Supported units for this parameter are h/m/s.",
+      "default": "24h",
+      "nullable": false
+    },
     "interval": {
       "type": "string",
       "description": "Duration between requests to the SentinelOne API. Supported units for this parameter are h/m/s.",
-      "default": "24h",
+      "default": "5m",
       "nullable": false
     },
     "max_executions": {
@@ -135,7 +141,7 @@
         "sentinel_one-httpjson"
       ],
       "data_stream": "threat_event",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  max_executions = var.max_executions\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  site_ids = var.site_ids\n  tags = var.tags\n})}",
+      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  max_executions = var.max_executions\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  site_ids = var.site_ids\n  tags = var.tags\n})}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "cel",
