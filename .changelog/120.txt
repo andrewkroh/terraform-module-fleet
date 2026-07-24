@@ -1,0 +1,3 @@
+```release-note:bug-fix
+Generated modules now omit null package, input, and data stream variables so Fleet can apply defaults without type validation errors.
+```

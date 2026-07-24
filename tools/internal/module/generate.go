@@ -480,11 +480,11 @@ var variableExpressionTemplate = template.Must(template.New("jsonencode").
 	Funcs(template.FuncMap{
 		"quoteIfNeeded": quoteIfNeeded,
 	}).
-	Parse(`${jsonencode({
+	Parse(`${jsonencode({ for key, value in {
 {{- range $fleetVar, $tfVar := . }}
   {{ quoteIfNeeded $fleetVar }} = var.{{ $tfVar }}
 {{- end }}
-})}`))
+} : key => value if value != null })}`))
 
 func buildVariableExpression(associations ...map[string]string) (string, error) {
 	allAssociations := joinMaps(associations...)
