@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/andrewkroh/go-package-spec v0.0.0-20260515152130-7bb960f70025
-	github.com/go-git/go-billy/v5 v5.9.0
+	github.com/go-git/go-billy/v5 v5.9.1
 	github.com/go-git/go-git/v5 v5.19.1
 	github.com/google/go-cmp v0.7.0
 	github.com/spf13/cobra v1.10.2
