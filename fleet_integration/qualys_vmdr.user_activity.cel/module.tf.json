@@ -134,11 +134,11 @@
         "qualys_vmdr-cel"
       ],
       "data_stream": "user_activity",
-      "data_stream_variables_json": "${jsonencode({\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  url = var.url\n})}",
+      "data_stream_variables_json": "${jsonencode({ for key, value in {\n  batch_size = var.batch_size\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  initial_interval = var.initial_interval\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  url = var.url\n} : key =\u003e value if value != null })}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "cel",
-      "input_variables_json": "${jsonencode({\n  password = var.password\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  username = var.username\n})}",
+      "input_variables_json": "${jsonencode({ for key, value in {\n  password = var.password\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  username = var.username\n} : key =\u003e value if value != null })}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "qualys_vmdr",
       "package_policy_name": "qualys_vmdr-user_activity-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",

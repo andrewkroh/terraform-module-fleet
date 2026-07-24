@@ -140,11 +140,11 @@
         "sample-udp"
       ],
       "data_stream": "audit",
-      "data_stream_variables_json": "${jsonencode({\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  time_amount = var.time_amount\n  time_unit = var.time_unit\n  url = var.url\n})}",
+      "data_stream_variables_json": "${jsonencode({ for key, value in {\n  enable_request_tracer = var.enable_request_tracer\n  http_client_timeout = var.http_client_timeout\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  tags = var.tags\n  time_amount = var.time_amount\n  time_unit = var.time_unit\n  url = var.url\n} : key =\u003e value if value != null })}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "cel",
-      "input_variables_json": "${jsonencode({\n  password = var.password\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  username = var.username\n})}",
+      "input_variables_json": "${jsonencode({ for key, value in {\n  password = var.password\n  proxy_url = var.proxy_url\n  ssl = var.ssl_yaml\n  username = var.username\n} : key =\u003e value if value != null })}",
       "namespace": "${var.fleet_data_stream_namespace}",
       "package_name": "prisma_cloud",
       "package_policy_name": "prisma_cloud-audit-${var.fleet_data_stream_namespace}${var.fleet_package_policy_name_suffix}",

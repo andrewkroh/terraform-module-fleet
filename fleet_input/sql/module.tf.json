@@ -106,7 +106,7 @@
       "all_data_streams": [],
       "all_policy_template_inputs": [],
       "data_stream": "",
-      "data_stream_variables_json": "${jsonencode({\n  condition = var.condition\n  cursor = var.cursor_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  processors = var.processors_yaml\n  sql_queries = var.sql_queries_yaml\n  sql_query = var.sql_query\n  ssl = var.ssl_yaml\n})}",
+      "data_stream_variables_json": "${jsonencode({ for key, value in {\n  condition = var.condition\n  cursor = var.cursor_yaml\n  \"data_stream.dataset\" = var.data_stream_dataset\n  driver = var.driver\n  hosts = var.hosts\n  merge_results = var.merge_results\n  period = var.period\n  processors = var.processors_yaml\n  sql_queries = var.sql_queries_yaml\n  sql_query = var.sql_query\n  ssl = var.ssl_yaml\n} : key =\u003e value if value != null })}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "sql/metrics",
