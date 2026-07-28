@@ -77,7 +77,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "5.15.0"
+      "default": "5.15.1"
     },
     "preserve_duplicate_custom_fields": {
       "type": "bool",

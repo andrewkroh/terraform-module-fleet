@@ -3,7 +3,7 @@
   "variable": {
     "batch_size": {
       "type": "number",
-      "description": "Batch size for the response of the Incident Security Graph API V2. The maximum supported batch size value is 50.",
+      "description": "Number of incidents to request per page ($top) from the Incident Security Graph API V2. The API caps $top at 1000; larger values are silently clamped. A conservative default is used because each incident expands its alerts, which increases per-page memory.",
       "default": 50,
       "nullable": false
     },
@@ -55,7 +55,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the m365_defender package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "5.15.0"
+      "default": "5.15.1"
     },
     "http_client_timeout": {
       "type": "string",
