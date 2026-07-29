@@ -3,9 +3,9 @@
   "variable": {
     "auth_key": {
       "type": "string",
-      "description": "abuse.ch Auth Key. This is required for authentication for all API requests. See [documentation](https://abuse.ch/blog/community-first/) for details.",
-      "sensitive": true,
-      "nullable": false
+      "description": "abuse.ch Auth Key for the Community API. Required when API Type is Community API. See [documentation](https://abuse.ch/blog/community-first/) for details.",
+      "default": null,
+      "sensitive": true
     },
     "enable_request_tracer": {
       "type": "bool",
@@ -44,7 +44,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the ti_abusech package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "4.1.2"
+      "default": "4.2.0"
     },
     "http_client_timeout": {
       "type": "string",
