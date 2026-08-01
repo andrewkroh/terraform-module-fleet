@@ -72,7 +72,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the aws package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "7.1.0"
+      "default": "7.1.1"
     },
     "initial_interval": {
       "type": "string",
