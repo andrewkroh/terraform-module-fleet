@@ -56,7 +56,7 @@
     "fleet_package_version": {
       "type": "string",
       "description": "Version of the qualys_vmdr package to use. Use \"latest\" to resolve the latest available version from the package registry at plan time.",
-      "default": "6.19.1"
+      "default": "6.19.3"
     },
     "host_qid_list_query_limit": {
       "type": "number",
@@ -115,6 +115,12 @@
       "default": false,
       "nullable": false
     },
+    "show_qds": {
+      "type": "bool",
+      "description": "When this option is enabled, the `show_qds` and `show_qds_factors` parameters are sent with the Host List Detection request, so the response includes the QDS value and its contributing factors for each detection. Disable this if your Qualys subscription or API user does not have QDS available.",
+      "default": true,
+      "nullable": false
+    },
     "ssl_yaml": {
       "type": "string",
       "description": "SSL configuration options. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html#ssl-common-config) for details.",
@@ -157,7 +163,7 @@
         "qualys_vmdr-cel"
       ],
       "data_stream": "asset_host_detection",
-      "data_stream_variables_json": "${jsonencode({ for key, value in {\n  batch_size = var.batch_size\n  cloud_data = var.cloud_data\n  enable_deduplication = var.enable_deduplication\n  enable_request_tracer = var.enable_request_tracer\n  host_qid_list_query_limit = var.host_qid_list_query_limit\n  http_client_timeout = var.http_client_timeout\n  input_parameters = var.input_parameters\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  show_igs = var.show_igs\n  tags = var.tags\n  url = var.url\n} : key =\u003e value if value != null })}",
+      "data_stream_variables_json": "${jsonencode({ for key, value in {\n  batch_size = var.batch_size\n  cloud_data = var.cloud_data\n  enable_deduplication = var.enable_deduplication\n  enable_request_tracer = var.enable_request_tracer\n  host_qid_list_query_limit = var.host_qid_list_query_limit\n  http_client_timeout = var.http_client_timeout\n  input_parameters = var.input_parameters\n  interval = var.interval\n  preserve_duplicate_custom_fields = var.preserve_duplicate_custom_fields\n  preserve_original_event = var.preserve_original_event\n  processors = var.processors_yaml\n  show_igs = var.show_igs\n  show_qds = var.show_qds\n  tags = var.tags\n  url = var.url\n} : key =\u003e value if value != null })}",
       "description": "${var.fleet_package_policy_description}",
       "force": "${var.fleet_package_policy_force}",
       "input_type": "cel",
